@@ -1,0 +1,14 @@
+{
+	"extends": "@tsconfig/node14/tsconfig.json",
+	"include": ["./src/**/*"],
+	"compilerOptions": {
+		"sourceMap": true,
+		"outDir": "dist",
+		"declaration": true
+	},
+	"typedocOptions": {
+		"entryPoints": ["src/index.ts"],
+		"out": "docs",
+		// "theme": "./node_modules/typedoc-github-wiki-theme/dist"
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"name": "@osbjs/osbjs",
+	"version": "1.1.0-alpha.4",
+	"description": "a minimalist osu! storyboarding framework",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"keywords": [
+		"osu",
+		"osb"
+	],
+	"files": [
+		"dist"
+	],
+	"author": "Nanachi",
+	"license": "MIT",
+	"devDependencies": {
+		"@tsconfig/node14": "^1.0.1",
+		"@types/node": "^16.11.1",
+		"@types/uuid": "^8.3.1",
+		"eslint": "^8.0.1",
+		"prettier": "2.4.1",
+		"typescript": "^4.4.4"
+	},
+	"scripts": {
+		"prepare": "npm run build",
+		"build": "tsc",
+		"docs": "typedoc --out docs"
+	},
+	"dependencies": {
+		"sanitize-filename": "^1.6.3",
+		"typedoc": "^0.22.6",
+		"uuid": "^8.3.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nanachi-code/osbjs.git"
+	},
+	"bugs": {
+		"url": "https://github.com/nanachi-code/osbjs/issues"
+	},
+	"homepage": "https://github.com/nanachi-code/osbjs#readme"
+}
