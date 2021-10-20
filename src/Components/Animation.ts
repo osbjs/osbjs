@@ -1,4 +1,4 @@
-import { Color, Easing, Layer, Origin, Parameter, Position, ScaleVector } from '..'
+import { Color, Easing, Layer, Origin, Parameter, Vector2 } from '..'
 import { Command, CommandGroup, Loop, Trigger } from '../Commands'
 import { LoopType } from '../Enums/LoopType'
 import { Component } from './Component'
@@ -8,14 +8,14 @@ export class Animation extends Component {
 	layer: Layer
 	commands: (Command | CommandGroup)[]
 	origin: Origin
-	startPosition: Position
+	startPosition: Vector2
 	loopType: LoopType
 
 	constructor(
 		path: string,
 		layer: Layer,
-		origin: Origin = Origin.Centre,
-		startPosition: Position = new Position(320, 480),
+		origin: Origin = Origin.Center,
+		startPosition: Vector2 = new Vector2(320, 480),
 		loopType: LoopType = LoopType.LoopForever
 	) {
 		super(undefined, undefined)
@@ -31,7 +31,7 @@ export class Animation extends Component {
 		this.commands.push(new Command('F', easing, startTime, endTime, startOpacity, endOpacity))
 	}
 
-	Move(startTime: number, endTime: number, startPosition: Position, endPosition: Position, easing: Easing = Easing.Linear) {
+	Move(startTime: number, endTime: number, startPosition: Vector2, endPosition: Vector2, easing: Easing = Easing.Linear) {
 		this.commands.push(new Command('M', easing, startTime, endTime, startPosition, endPosition))
 	}
 
@@ -48,7 +48,7 @@ export class Animation extends Component {
 		return this
 	}
 
-	ScaleVec(startTime: number, endTime: number, startScale: ScaleVector, endScale: ScaleVector, easing: Easing = Easing.Linear) {
+	ScaleVec(startTime: number, endTime: number, startScale: Vector2, endScale: Vector2, easing: Easing = Easing.Linear) {
 		this.commands.push(new Command('V', easing, startTime, endTime, startScale, endScale))
 	}
 

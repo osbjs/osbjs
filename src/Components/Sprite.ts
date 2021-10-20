@@ -1,21 +1,16 @@
 import { Command, CommandGroup, Loop, Trigger } from '../Commands'
 import { Component } from './Component'
 import { Easing, Layer, Origin, Parameter } from '../Enums'
-import { Color, Position, ScaleVector } from '../Utils'
+import { Color, Vector2 } from '../Utils'
 
 export class Sprite extends Component {
 	path: string
 	layer: Layer
 	commands: (Command | CommandGroup)[]
 	origin: Origin
-	startPosition: Position
+	startPosition: Vector2
 
-	constructor(
-		path: string,
-		layer: Layer,
-		origin: Origin = Origin.Centre,
-		startPosition: Position = new Position(320, 480)
-	) {
+	constructor(path: string, layer: Layer, origin: Origin = Origin.Center, startPosition: Vector2 = new Vector2(320, 480)) {
 		super(undefined, undefined)
 		this.path = path
 		this.layer = layer
@@ -28,7 +23,7 @@ export class Sprite extends Component {
 		this.commands.push(new Command('F', easing, startTime, endTime, startOpacity, endOpacity))
 	}
 
-	Move(startTime: number, endTime: number, startPosition: Position, endPosition: Position, easing: Easing = Easing.Linear) {
+	Move(startTime: number, endTime: number, startPosition: Vector2, endPosition: Vector2, easing: Easing = Easing.Linear) {
 		this.commands.push(new Command('M', easing, startTime, endTime, startPosition, endPosition))
 	}
 
@@ -45,7 +40,7 @@ export class Sprite extends Component {
 		return this
 	}
 
-	ScaleVec(startTime: number, endTime: number, startScale: ScaleVector, endScale: ScaleVector, easing: Easing = Easing.Linear) {
+	ScaleVec(startTime: number, endTime: number, startScale: Vector2, endScale: Vector2, easing: Easing = Easing.Linear) {
 		this.commands.push(new Command('V', easing, startTime, endTime, startScale, endScale))
 	}
 

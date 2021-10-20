@@ -1,6 +1,5 @@
-import { Position } from './Position'
 import { Color } from './Color'
-import { ScaleVector } from './ScaleVector'
+import { Vector2 } from './Vector2'
 import * as MathHelpers from './MathHelpers'
 
-export { Position, Color, ScaleVector, MathHelpers }
+export { Color, Vector2, MathHelpers }

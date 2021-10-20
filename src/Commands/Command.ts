@@ -1,12 +1,12 @@
-import { Color, Easing, Position, ScaleVector } from '..'
+import { Color, Easing, Vector2 } from '..'
 
 export class Command {
 	identifier: string
 	easing: Easing
 	startTime: number
 	endTime: number
-	startValue: string | number | Color | Position | ScaleVector
-	endValue: string | number | Color | Position | ScaleVector
+	startValue: string | number | Color | Vector2
+	endValue: string | number | Color | Vector2
 	duration: number
 
 	constructor(
@@ -14,8 +14,8 @@ export class Command {
 		easing: Easing,
 		startTime: number,
 		endTime: number,
-		startValue: string | number | Color | Position | ScaleVector,
-		endValue: string | number | Color | Position | ScaleVector
+		startValue: string | number | Color | Vector2,
+		endValue: string | number | Color | Vector2
 	) {
 		this.identifier = identifier
 		this.easing = easing
