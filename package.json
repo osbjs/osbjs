@@ -32,10 +32,10 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/nanachi-code/osbjs.git"
+		"url": "git+https://github.com/osbjs/osbjs.git"
 	},
 	"bugs": {
-		"url": "https://github.com/nanachi-code/osbjs/issues"
+		"url": "https://github.com/osbjs/osbjs/issues"
 	},
-	"homepage": "https://github.com/nanachi-code/osbjs#readme"
+	"homepage": "https://github.com/osbjs/osbjs#readme"
 }
