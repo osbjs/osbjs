@@ -1,14 +1,10 @@
 import { v4 as uuidv4 } from 'uuid'
 
 export abstract class Component {
-	startTime: number|undefined
-	endTime: number|undefined
 	components: Component[]
 	uuid: string
 
-	constructor(startTime?: number, endTime?: number) {
-		this.startTime = startTime
-		this.endTime = endTime
+	constructor() {
 		this.components = []
 		this.uuid = uuidv4()
 	}
@@ -17,5 +13,15 @@ export abstract class Component {
 		this.components = this.components.concat(component)
 	}
 
-	abstract getOsbString(): string
+	protected generate() {}
+
+	getOsbString(): string {
+		this.generate()
+		let str = ``
+		this.components.forEach((component) => {
+			str += component.getOsbString()
+		})
+
+		return str
+	}
 }

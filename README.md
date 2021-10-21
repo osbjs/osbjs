@@ -36,7 +36,7 @@ sb.registerComponents(scene);
 sb.generate();
 ```
 
-Since osbjs is component-based, you can create your own `Component` and reuse it anywhere else.
+Since osbjs is component-based, you can create your own `Component` and reuse it anywhere else. Add your logic in the `generate` function and you are good to go!
 
 ```js
 // components/Flash.js
@@ -53,14 +53,6 @@ export class Flash extends Component {
 		fl.Fade(this.startTime, this.endTime, 1, 0)
 		this.registerComponents(fl)
 	}
-
-	getOsbString() {
-		let str = ''
-		this.components.forEach((component) => {
-			str += component.getOsbString()
-		})
-		return str
-	}
 }
 
 // main.js
@@ -69,7 +61,6 @@ import { Flash } from './components/Flash'
 let fl = new Flash(0, 3000)
 scene.registerComponents(fl)
 ```
-
 
 ## Documentation
 
