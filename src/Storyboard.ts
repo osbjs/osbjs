@@ -22,8 +22,6 @@ export class Storyboard {
 	}
 
 	getOsbString() {
-		this.sort()
-
 		let bg = '',
 			fg = '',
 			f = '',
@@ -89,6 +87,7 @@ export class Storyboard {
 
 	registerComponents(...components: Component[]) {
 		this.components = this.components.concat(components)
+		this.sort()
 	}
 
 	generate() {

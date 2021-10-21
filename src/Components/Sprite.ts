@@ -73,6 +73,4 @@ export class Sprite extends Component {
 
 		return str
 	}
-
-	override generate() {}
 }

@@ -18,6 +18,7 @@ export abstract class Component {
 
 	registerComponents(...component: Component[]) {
 		this.components = this.components.concat(component)
+		this.sort()
 	}
 
 	sort() {
@@ -56,7 +57,5 @@ export abstract class Component {
 		}
 	}
 
-	generate() {
-		this.sort()
-	}
+	generate() {}
 }

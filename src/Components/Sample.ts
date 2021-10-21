@@ -18,6 +18,4 @@ export class Sample extends Component {
 	getOsbString(): string {
 		return `Sample,${this.startTime},${this.layer},"${this.path}",${this.volume}\n`
 	}
-
-	override generate() {}
 }
