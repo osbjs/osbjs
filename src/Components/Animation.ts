@@ -81,4 +81,6 @@ export class Animation extends Component {
 
 		return str
 	}
+
+	override generate() {}
 }

@@ -23,6 +23,7 @@ export abstract class Component {
 	sort() {
 		for (let i = 0; i < this.components.length; i++) {
 			const component = this.components[i]
+			component.generate()
 			if (component instanceof Sprite || component instanceof Animation) {
 				switch (component.layer) {
 					case Layer.Background:
@@ -47,7 +48,6 @@ export abstract class Component {
 			} else if (component instanceof Sample) {
 				this.layers.sample.push(component)
 			} else {
-				component.sort()
 				this.layers.background = this.layers.background.concat(component.layers.background)
 				this.layers.foreground = this.layers.foreground.concat(component.layers.foreground)
 				this.layers.fail = this.layers.fail.concat(component.layers.fail)
@@ -56,7 +56,7 @@ export abstract class Component {
 		}
 	}
 
-	protected generate() {
+	generate() {
 		this.sort()
 	}
 }

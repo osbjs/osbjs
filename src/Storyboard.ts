@@ -46,7 +46,7 @@ export class Storyboard {
 			s += component.getOsbString()
 		})
 
-		let str = `[Events]\n//Background and Video events\n//Storyboard Layer 0 (Background)\n${bg}//Storyboard Layer 1 (Fail)\n${f}//Storyboard Layer 2 (Pass)${p}//Storyboard Layer 3 (Foreground)\n${fg}//Storyboard Sound Samples\n${s}`
+		let str = `[Events]\n//Background and Video events\n//Storyboard Layer 0 (Background)\n${bg}//Storyboard Layer 1 (Fail)\n${f}//Storyboard Layer 2 (Pass)\n${p}//Storyboard Layer 3 (Foreground)\n${fg}//Storyboard Sound Samples\n${s}`
 
 		return str
 	}
@@ -54,6 +54,7 @@ export class Storyboard {
 	sort() {
 		for (let i = 0; i < this.components.length; i++) {
 			const component = this.components[i]
+			component.generate()
 			if (component instanceof Sprite || component instanceof Animation) {
 				switch (component.layer) {
 					case Layer.Background:
@@ -78,7 +79,6 @@ export class Storyboard {
 			} else if (component instanceof Sample) {
 				this.layers.sample.push(component)
 			} else {
-				component.sort()
 				this.layers.background = this.layers.background.concat(component.layers.background)
 				this.layers.foreground = this.layers.foreground.concat(component.layers.foreground)
 				this.layers.fail = this.layers.fail.concat(component.layers.fail)
