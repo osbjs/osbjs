@@ -46,18 +46,7 @@ export class Storyboard {
 			s += component.getOsbString()
 		})
 
-		let str = `[Events]
-		//Background and Video events
-		//Storyboard Layer 0 (Background)
-		${bg}
-		//Storyboard Layer 1 (Fail)
-		${f}
-		//Storyboard Layer 2 (Pass)
-		${p}
-		//Storyboard Layer 3 (Foreground)
-		${fg}
-		//Storyboard Sound Samples
-		${s}`
+		let str = `[Events]\n//Background and Video events\n//Storyboard Layer 0 (Background)\n${bg}//Storyboard Layer 1 (Fail)\n${f}//Storyboard Layer 2 (Pass)${p}//Storyboard Layer 3 (Foreground)\n${fg}//Storyboard Sound Samples\n${s}`
 
 		return str
 	}
