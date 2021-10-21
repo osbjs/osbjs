@@ -10,6 +10,7 @@ export class Animation extends Component {
 	origin: Origin
 	startPosition: Vector2
 	loopType: LoopType
+	name = 'Animation'
 
 	constructor(
 		path: string,
@@ -72,7 +73,7 @@ export class Animation extends Component {
 		this.commands.push(group)
 	}
 
-	override getOsbString(): string {
+	getOsbString(): string {
 		let str = `Animation,${this.layer},${this.origin},"${this.path}",${this.startPosition.x},${this.startPosition.y}\n`
 		this.commands.forEach((command) => {
 			str += ` ${command.getOsbString()}\n`

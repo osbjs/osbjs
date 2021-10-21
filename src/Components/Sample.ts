@@ -5,6 +5,7 @@ export class Sample extends Component {
 	path: string
 	volume: number
 	startTime: number
+	name = 'Sprite'
 
 	constructor(startTime: number, layer: number, path: string, volume: number) {
 		super()
@@ -14,7 +15,7 @@ export class Sample extends Component {
 		this.volume = volume
 	}
 
-	override getOsbString(): string {
+	getOsbString(): string {
 		return `Sample,${this.startTime},${this.layer},"${this.path}",${this.volume}\n`
 	}
 }

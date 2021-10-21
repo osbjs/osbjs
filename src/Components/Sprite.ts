@@ -9,6 +9,7 @@ export class Sprite extends Component {
 	commands: (Command | CommandGroup)[]
 	origin: Origin
 	startPosition: Vector2
+	name = 'Sprite'
 
 	constructor(path: string, layer: Layer, origin: Origin = Origin.Center, startPosition: Vector2 = new Vector2(320, 480)) {
 		super()
@@ -64,7 +65,7 @@ export class Sprite extends Component {
 		this.commands.push(group)
 	}
 
-	override getOsbString(): string {
+	getOsbString(): string {
 		let str = `Sprite,${this.layer},${this.origin},"${this.path}",${this.startPosition.x},${this.startPosition.y}\n`
 		this.commands.forEach((command) => {
 			str += ` ${command.getOsbString()}\n`
