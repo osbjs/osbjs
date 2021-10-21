@@ -9,6 +9,5 @@
 	"typedocOptions": {
 		"entryPoints": ["src/index.ts"],
 		"out": "docs",
-		// "theme": "./node_modules/typedoc-github-wiki-theme/dist"
 	}
 }
