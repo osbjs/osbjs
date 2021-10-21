@@ -62,6 +62,9 @@ let fl = new Flash(0, 3000)
 scene.registerComponents(fl)
 ```
 
+## Join my discord for updates (WIP)
+https://discord.gg/t2sHY8TdMA
+
 ## Documentation
 
 1. [Storyboard](https://osbjs.vercel.app/classes/Storyboard.html)
