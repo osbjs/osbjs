@@ -77,6 +77,7 @@ export class Storyboard {
 			} else if (component instanceof Sample) {
 				this.layers.sample.push(component)
 			} else {
+				component.sort()
 				this.layers.background = this.layers.background.concat(component.layers.background)
 				this.layers.foreground = this.layers.foreground.concat(component.layers.foreground)
 				this.layers.fail = this.layers.fail.concat(component.layers.fail)
@@ -87,10 +88,10 @@ export class Storyboard {
 
 	registerComponents(...components: Component[]) {
 		this.components = this.components.concat(components)
-		this.sort()
 	}
 
 	generate() {
+		this.sort()
 		fs.mkdirSync(this.path, { recursive: true })
 		fs.writeFileSync(`${this.path}/${this.filename}`, this.getOsbString())
 	}
