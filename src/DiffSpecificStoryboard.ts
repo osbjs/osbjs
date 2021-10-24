@@ -1,3 +1,4 @@
+import { green } from 'chalk'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { Storyboard } from '.'
 
@@ -44,5 +45,7 @@ export class DiffSpecificStoryboard extends Storyboard {
 		beatmap = beatmap.replace(pattern, this.getOsbString())
 
 		writeFileSync(`${this.path}/${this.filename}`, beatmap)
+
+		console.log(green`Storyboard generated in ${this.path}/${this.filename}`)
 	}
 }

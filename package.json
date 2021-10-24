@@ -28,6 +28,7 @@
 		"docs": "typedoc --out docs"
 	},
 	"dependencies": {
+		"chalk": "^4.1.2",
 		"uuid": "^8.3.2"
 	},
 	"repository": {
