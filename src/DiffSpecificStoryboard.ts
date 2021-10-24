@@ -41,7 +41,7 @@ export class DiffSpecificStoryboard extends Storyboard {
 		let pattern =
 			/\/\/Storyboard Layer 0 \(Background\)\n(.*\n*)\/\/Storyboard Layer 1 \(Fail\)\n(.*\n*)\/\/Storyboard Layer 2 \(Pass\)\n(.*\n*)\/\/Storyboard Layer 3 \(Foreground\)\n(.*\n*)\/\/Storyboard Layer 4 \(Overlay\)\n(.*\n*)\/\/Storyboard Sound Samples\n(.*\n*)/g
 
-		beatmap.replace(pattern, this.getOsbString())
+		beatmap = beatmap.replace(pattern, this.getOsbString())
 
 		writeFileSync(`${this.path}/${this.filename}`, beatmap)
 	}
