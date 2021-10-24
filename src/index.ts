@@ -1,5 +1,6 @@
 import { Storyboard } from './Storyboard'
-export { Storyboard }
+import { DiffSpecificStoryboard } from './DiffSpecificStoryboard'
+export { Storyboard, DiffSpecificStoryboard }
 
 import { Easing, Parameter, Origin, Layer, LoopType } from './Enums'
 export { Easing, Parameter, Origin, Layer, LoopType }

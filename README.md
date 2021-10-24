@@ -67,7 +67,9 @@ https://discord.gg/t2sHY8TdMA
 
 ## Documentation
 
-1. [Storyboard](https://osbjs.vercel.app/classes/Storyboard.html)
+1. Storyboard
+   - [Storyboard](https://osbjs.vercel.app/classes/Storyboard.html)
+   - [DiffSpecificStoryboard](https://osbjs.vercel.app/classes/DiffSpecificStoryboard.html)
 2. Components
    - [Sprite](https://osbjs.vercel.app/classes/Sprite.html)
    - [Animation](https://osbjs.vercel.app/classes/Animation.html)

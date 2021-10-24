@@ -1,4 +1,4 @@
-import * as fs from 'fs'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { Layer } from '.'
 import { Animation, Component, Sample, Sprite } from './Components'
 import { ILayers } from './Interfaces/ILayers'
@@ -21,7 +21,7 @@ export class Storyboard {
 		this.components = []
 	}
 
-	getOsbString() {
+	getOsbString(): string {
 		let bg = '',
 			fg = '',
 			f = '',
@@ -92,7 +92,7 @@ export class Storyboard {
 
 	generate() {
 		this.sort()
-		fs.mkdirSync(this.path, { recursive: true })
-		fs.writeFileSync(`${this.path}/${this.filename}`, this.getOsbString())
+		if (!existsSync(this.path)) mkdirSync(this.path, { recursive: true })
+		writeFileSync(`${this.path}/${this.filename}`, this.getOsbString())
 	}
 }
