@@ -1,17 +1,17 @@
 import { Command, CommandGroup, Loop, Trigger } from '../Commands'
 import { Component } from './Component'
 import { Easing, Layer, Origin, Parameter } from '../Enums'
-import { Color, Vector2 } from '../Utils'
+import { OsbColor, OsbVector2 } from '../Utils'
 
 export class Sprite extends Component {
 	path: string
 	layer: Layer
 	commands: (Command | CommandGroup)[]
 	origin: Origin
-	startPosition: Vector2
+	startPosition: OsbVector2
 	name = 'Sprite'
 
-	constructor(path: string, layer: Layer, origin: Origin = Origin.Center, startPosition: Vector2 = new Vector2(320, 480)) {
+	constructor(path: string, layer: Layer, origin: Origin = Origin.Center, startPosition: OsbVector2 = new OsbVector2(320, 480)) {
 		super()
 		this.path = path
 		this.layer = layer
@@ -31,13 +31,13 @@ export class Sprite extends Component {
 		this.commands.push(new Command('F', Easing.Linear, time, time, opacity, opacity))
 	}
 
-	Move(startTime: number, endTime: number, startPosition: Vector2, endPosition: Vector2, easing: Easing = Easing.Linear) {
+	Move(startTime: number, endTime: number, startPosition: OsbVector2, endPosition: OsbVector2, easing: Easing = Easing.Linear) {
 		startTime = Math.round(startTime)
 		endTime = Math.round(endTime)
 		this.commands.push(new Command('M', easing, startTime, endTime, startPosition, endPosition))
 	}
 
-	MoveAtTime(time: number, position: Vector2) {
+	MoveAtTime(time: number, position: OsbVector2) {
 		time = Math.round(time)
 		this.commands.push(new Command('M', Easing.Linear, time, time, position, position))
 	}
@@ -77,13 +77,13 @@ export class Sprite extends Component {
 		this.commands.push(new Command('S', Easing.Linear, time, time, scale, scale))
 	}
 
-	ScaleVec(startTime: number, endTime: number, startScale: Vector2, endScale: Vector2, easing: Easing = Easing.Linear) {
+	ScaleVec(startTime: number, endTime: number, startScale: OsbVector2, endScale: OsbVector2, easing: Easing = Easing.Linear) {
 		startTime = Math.round(startTime)
 		endTime = Math.round(endTime)
 		this.commands.push(new Command('V', easing, startTime, endTime, startScale, endScale))
 	}
 
-	ScaleVecAtTime(time: number, scale: Vector2) {
+	ScaleVecAtTime(time: number, scale: OsbVector2) {
 		time = Math.round(time)
 		this.commands.push(new Command('V', Easing.Linear, time, time, scale, scale))
 	}
@@ -99,13 +99,13 @@ export class Sprite extends Component {
 		this.commands.push(new Command('R', Easing.Linear, time, time, angle, angle))
 	}
 
-	Color(startTime: number, endTime: number, startColor: Color, endColor: Color, easing: Easing = Easing.Linear) {
+	Color(startTime: number, endTime: number, startColor: OsbColor, endColor: OsbColor, easing: Easing = Easing.Linear) {
 		startTime = Math.round(startTime)
 		endTime = Math.round(endTime)
 		this.commands.push(new Command('C', easing, startTime, endTime, startColor, endColor))
 	}
 
-	ColorAtTime(time: number, color: Color) {
+	ColorAtTime(time: number, color: OsbColor) {
 		time = Math.round(time)
 		this.commands.push(new Command('C', Easing.Linear, time, time, color, color))
 	}

@@ -1,5 +1,6 @@
-import { Color } from './Color'
-import { Vector2 } from './Vector2'
+import { OsbColor } from './OsbColor'
+import { OsbVector2 } from './OsbVector2'
 import * as MathHelpers from './MathHelpers'
+import { TextureGenerator, Texture, FontProperties } from './TextureGenerator'
 
-export { Color, Vector2, MathHelpers }
+export { OsbColor, OsbVector2, MathHelpers, TextureGenerator, Texture, FontProperties }

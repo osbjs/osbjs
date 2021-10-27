@@ -1,4 +1,4 @@
-export class Color {
+export class OsbColor {
 	r: number
 	g: number
 	b: number

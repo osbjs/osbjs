@@ -8,8 +8,11 @@ export { Easing, Parameter, Origin, Layer, LoopType }
 import { Component, Sprite, Scene, Animation, Sample } from './Components'
 export { Component, Sprite, Scene, Animation, Sample }
 
-import { MathHelpers, Color, Vector2 } from './Utils'
-export { MathHelpers, Color, Vector2 }
+import { MathHelpers, OsbColor, OsbVector2, FontProperties, Texture, TextureGenerator } from './Utils'
+export { MathHelpers, OsbColor, OsbVector2, FontProperties, Texture, TextureGenerator }
 
 import { Command, CommandGroup, Loop, Trigger } from './Commands'
 export { Command, CommandGroup, Loop, Trigger }
+
+import { ILayers, IVector2 } from './Interfaces'
+export { ILayers, IVector2 }

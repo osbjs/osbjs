@@ -1,12 +1,12 @@
-import { Color, Easing, Vector2 } from '..'
+import { OsbColor, Easing, OsbVector2 } from '..'
 
 export class Command {
 	identifier: string
 	easing: Easing
 	startTime: number
 	endTime: number
-	startValue: string | number | Color | Vector2
-	endValue: string | number | Color | Vector2
+	startValue: string | number | OsbColor | OsbVector2
+	endValue: string | number | OsbColor | OsbVector2
 	duration: number
 
 	constructor(
@@ -14,8 +14,8 @@ export class Command {
 		easing: Easing,
 		startTime: number,
 		endTime: number,
-		startValue: string | number | Color | Vector2,
-		endValue: string | number | Color | Vector2
+		startValue: string | number | OsbColor | OsbVector2,
+		endValue: string | number | OsbColor | OsbVector2
 	) {
 		this.identifier = identifier
 		this.easing = easing
