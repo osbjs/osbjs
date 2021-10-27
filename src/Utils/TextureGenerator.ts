@@ -11,6 +11,7 @@ export class TextureGenerator {
 	}
 	folderPath: string
 	osbPath: string
+
 	constructor(folderPath: string, osbPath: string) {
 		this._cache = []
 		this.folderPath = folderPath
@@ -36,11 +37,12 @@ export class TextureGenerator {
 		ctx.fillText(text, 0, 0)
 
 		const texturePath = path.join(this.folderPath, this.osbPath, `_${this._cache.length}.png`)
+
+		this._saveTexture(canvas.toDataURL('image/png'), texturePath)
+
 		texture = new Texture(text, texturePath, this.osbPath)
 
 		this._cache.push(texture)
-
-		this._saveTexture(canvas.toDataURL('image/png'), texture.path)
 
 		return texture
 	}
@@ -50,8 +52,8 @@ export class TextureGenerator {
 	}
 
 	/** alias for fs-extra' `emptyDirSync` */
-	emptyDir(path: string) {
-		emptyDirSync(path)
+	emptyDir() {
+		emptyDirSync(path.join(this.folderPath, this.osbPath))
 	}
 
 	private _measureText(text: string): TextMetrics {
