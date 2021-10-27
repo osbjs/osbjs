@@ -40,7 +40,7 @@ export class TextureGenerator {
 
 		this._saveTexture(canvas.toDataURL('image/png'), texturePath)
 
-		texture = new Texture(text, texturePath, this.osbPath)
+		texture = new Texture(text, texturePath, `${this.osbPath}/_${this._cache.length}.png`)
 
 		this._cache.push(texture)
 
