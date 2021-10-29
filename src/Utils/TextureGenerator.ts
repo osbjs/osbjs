@@ -3,7 +3,7 @@ import { emptyDirSync, outputFileSync } from 'fs-extra'
 import path from 'path'
 import { FontProperties, IColor } from '../Interfaces'
 import { Texture } from './Texture'
-import rgbHex from 'rgb-hex'
+import { rgbToHex } from './'
 
 export class TextureGenerator {
 	private _cache: Texture[]
@@ -36,7 +36,7 @@ export class TextureGenerator {
 
 		ctx.font = `${this.fontProps.fontSize}px "${this.fontProps.fontName}"`
 		ctx.textBaseline = 'top'
-		if (color) ctx.fillStyle = rgbHex(color.r, color.g, color.b)
+		if (color) ctx.fillStyle = rgbToHex(color.r, color.g, color.b)
 		ctx.fillText(text, 0, 0)
 
 		const texturePath = path.join(this.folderPath, this.osbPath, `_${this._cache.length}.png`)
