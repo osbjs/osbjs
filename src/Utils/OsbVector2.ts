@@ -1,6 +1,4 @@
-import { IVector2 } from '..'
-
-export class OsbVector2 implements IVector2 {
+export class OsbVector2 {
 	x: number
 	y: number
 	constructor(x: number, y: number) {

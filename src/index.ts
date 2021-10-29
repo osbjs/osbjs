@@ -9,4 +9,4 @@ export * from './Utils'
 
 export * from './Commands'
 
-export * from './Interfaces'
+export * from './Types'

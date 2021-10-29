@@ -1,17 +1,16 @@
 import { parseSync } from 'subtitle'
 import { readFileSync } from 'fs-extra'
-import { Subtitle } from './Subtitle'
+import { ISubtitle } from '../Types/ISubtitle'
 
 export class SubtitleCollection {
-	subtitles: Subtitle[]
+	subtitles: ISubtitle[]
 	path: string
 	constructor(path: string) {
 		this.path = path
-
 		this.subtitles = this._getSubtitles()
 	}
 
-	private _getSubtitles(): Subtitle[] {
+	private _getSubtitles(): ISubtitle[] {
 		const input = readFileSync(this.path, 'utf8')
 
 		let data = parseSync(input)
@@ -19,7 +18,7 @@ export class SubtitleCollection {
 			.filter((s) => s.type == 'cue')
 			.map((s) => {
 				/** @ts-ignore */
-				return new Subtitle(s.data.start, s.data.end, s.data.text)
+				return { startTime: s.data.start, endTime: s.data.end, text: s.data.text }
 			})
 	}
 }

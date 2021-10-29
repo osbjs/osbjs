@@ -8,23 +8,29 @@ export class Animation extends Component {
 	layer: Layer
 	commands: (Command | CommandGroup)[]
 	origin: Origin
-	startPosition: OsbVector2
-	loopType: LoopType
+	initialPosition: OsbVector2
+	frameCount: number
+	frameDelay: number
+	loopType: LoopType | string
 	name = 'Animation'
 
 	constructor(
 		path: string,
 		layer: Layer,
 		origin: Origin = Origin.Center,
-		startPosition: OsbVector2 = new OsbVector2(320, 480),
-		loopType: LoopType = LoopType.LoopForever
+		frameCount: number,
+		frameDelay: number,
+		initialPosition: OsbVector2 = new OsbVector2(320, 480),
+		loopType: LoopType | string = LoopType.LoopForever
 	) {
 		super()
 		this.path = path
 		this.layer = layer
 		this.origin = origin
-		this.startPosition = startPosition
+		this.initialPosition = initialPosition
 		this.loopType = loopType
+		this.frameCount = frameCount
+		this.frameDelay = frameDelay
 		this.commands = []
 	}
 
@@ -138,7 +144,7 @@ export class Animation extends Component {
 	}
 
 	getOsbString(): string {
-		let str = `Animation,${this.layer},${this.origin},"${this.path}",${this.startPosition.x},${this.startPosition.y}\n`
+		let str = `Animation,${this.layer},${this.origin},"${this.path}",${this.initialPosition.x},${this.initialPosition.y}\n`
 		this.commands.forEach((command) => {
 			str += ` ${command.getOsbString()}\n`
 		})

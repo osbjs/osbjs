@@ -1,11 +1,16 @@
 export enum Origin {
 	TopLeft = 'TopLeft',
 	TopCenter = 'TopCentre',
+	TopCentre = 'TopCentre',
 	TopRight = 'TopRight',
 	CenterLeft = 'CentreLeft',
 	Center = 'Centre',
 	CenterRight = 'CentreRight',
+	CentreLeft = 'CentreLeft',
+	Centre = 'Centre',
+	CentreRight = 'CentreRight',
 	BottomLeft = 'BottomLeft',
 	BottomCenter = 'BottomCentre',
+	BottomCentre = 'BottomCentre',
 	BottomRight = 'BottomRight',
 }

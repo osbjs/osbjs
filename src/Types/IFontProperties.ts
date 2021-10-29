@@ -1,4 +1,4 @@
-export interface FontProperties {
+export interface IFontProperties {
 	fontSize: number
 	fontName: string
 }

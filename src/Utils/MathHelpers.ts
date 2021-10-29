@@ -1,18 +1,18 @@
-import { IVector2 } from '../Interfaces/IVector2'
+import { IVector2 } from '../Types/IVector2'
 
-export function randInt(low: number, high: number) {
+export function randInt(low: number, high: number): number {
 	return low + Math.floor(Math.random() * (high - low + 1))
 }
 
-export function randFloat(low: number, high: number) {
+export function randFloat(low: number, high: number): number {
 	return low + Math.random() * (high - low)
 }
 
-export function degToRad(degrees: number) {
+export function degToRad(degrees: number): number {
 	return (degrees * Math.PI) / 180
 }
 
-export function radToDeg(radians: number) {
+export function radToDeg(radians: number): number {
 	return (radians * 180) / Math.PI
 }
 
@@ -37,7 +37,7 @@ export function multiplyVec2(v1: IVector2, v2: IVector2): IVector2 {
 	}
 }
 
-export function devideVec2(v1: IVector2, v2: IVector2): IVector2 {
+export function divideVec2(v1: IVector2, v2: IVector2): IVector2 {
 	return {
 		x: v1.x / v2.x,
 		y: v1.y / v2.y,
@@ -51,7 +51,7 @@ export function multiplyScalarVec2(v: IVector2, s: number): IVector2 {
 	}
 }
 
-export function devideScalarVec2(v: IVector2, s: number): IVector2 {
+export function divideScalarVec2(v: IVector2, s: number): IVector2 {
 	return {
 		x: s == 0 ? 0 : v.x / s,
 		y: s == 0 ? 0 : v.y / s,
@@ -75,5 +75,9 @@ export function lengthSqVec2(v: IVector2): number {
 }
 
 export function normalizeVec2(v: IVector2): IVector2 {
-	return devideScalarVec2(v, lengthVec2(v) || 1)
+	return divideScalarVec2(v, lengthVec2(v) || 1)
+}
+
+export function equalsVec2(v1: IVector2, v2: IVector2): boolean {
+	return v1.x === v2.x && v1.y === v2.y
 }

@@ -1,13 +1,13 @@
 import { createCanvas, registerFont as canvasRegisterFont } from 'canvas'
 import { emptyDirSync, outputFileSync } from 'fs-extra'
 import path from 'path'
-import { FontProperties, IColor } from '../Interfaces'
+import { IFontProperties, IColor } from '../Types'
 import { Texture } from './Texture'
 import { rgbToHex } from './'
 
 export class TextureGenerator {
 	private _cache: Texture[]
-	fontProps: FontProperties = {
+	fontProps: IFontProperties = {
 		fontName: 'Arial',
 		fontSize: 72,
 	}

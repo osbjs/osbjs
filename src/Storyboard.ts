@@ -1,13 +1,13 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { Layer } from '.'
 import { Animation, Component, Sample, Sprite } from './Components'
-import { ILayers } from './Interfaces/ILayers'
+import { IStoryboardLayers } from './Types/IStoryboardLayers'
 
 export class Storyboard {
 	components: Component[]
 	path: string
 	filename: string
-	layers: ILayers = {
+	layers: IStoryboardLayers = {
 		background: [],
 		foreground: [],
 		fail: [],

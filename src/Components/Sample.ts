@@ -1,13 +1,14 @@
+import { SampleLayer } from '../Enums'
 import { Component } from './Component'
 
 export class Sample extends Component {
-	layer: number
+	layer: SampleLayer
 	path: string
 	volume: number
 	startTime: number
 	name = 'Sprite'
 
-	constructor(startTime: number, layer: number, path: string, volume: number) {
+	constructor(startTime: number, layer: SampleLayer, path: string, volume: number = 100) {
 		super()
 		this.startTime = startTime
 		this.layer = layer

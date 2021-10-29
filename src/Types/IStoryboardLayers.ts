@@ -1,6 +1,6 @@
 import { Sprite, Animation, Sample } from '..';
 
-export interface ILayers {
+export interface IStoryboardLayers {
 	background: (Sprite | Animation)[]
 	foreground: (Sprite | Animation)[]
 	fail: (Sprite | Animation)[]

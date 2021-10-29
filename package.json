@@ -19,13 +19,11 @@
 		"@types/uuid": "^8.3.1",
 		"eslint": "^8.0.1",
 		"prettier": "2.4.1",
-		"typedoc": "^0.22.6",
 		"typescript": "^4.4.4"
 	},
 	"scripts": {
 		"prepare": "npm run build",
-		"build": "tsc",
-		"docs": "typedoc --out docs"
+		"build": "tsc"
 	},
 	"dependencies": {
 		"@types/fs-extra": "^9.0.13",

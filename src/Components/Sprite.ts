@@ -8,15 +8,15 @@ export class Sprite extends Component {
 	layer: Layer
 	commands: (Command | CommandGroup)[]
 	origin: Origin
-	startPosition: OsbVector2
+	initialPosition: OsbVector2
 	name = 'Sprite'
 
-	constructor(path: string, layer: Layer, origin: Origin = Origin.Center, startPosition: OsbVector2 = new OsbVector2(320, 480)) {
+	constructor(path: string, layer: Layer, origin: Origin = Origin.Center, initialPosition: OsbVector2 = new OsbVector2(320, 480)) {
 		super()
 		this.path = path
 		this.layer = layer
 		this.origin = origin
-		this.startPosition = startPosition
+		this.initialPosition = initialPosition
 		this.commands = []
 	}
 
@@ -130,7 +130,7 @@ export class Sprite extends Component {
 	}
 
 	getOsbString(): string {
-		let str = `Sprite,${this.layer},${this.origin},"${this.path}",${this.startPosition.x},${this.startPosition.y}\n`
+		let str = `Sprite,${this.layer},${this.origin},"${this.path}",${this.initialPosition.x},${this.initialPosition.y}\n`
 		this.commands.forEach((command) => {
 			str += ` ${command.getOsbString()}\n`
 		})

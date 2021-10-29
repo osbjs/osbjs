@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid'
 import { Animation, Layer, Sample, Sprite } from '..'
-import { ILayers } from '../Interfaces/ILayers'
+import { IStoryboardLayers } from '../Types/IStoryboardLayers'
 
 export abstract class Component {
 	abstract readonly name: string
 	components: Component[] = []
 	uuid: string = uuidv4()
-	layers: ILayers = {
+	layers: IStoryboardLayers = {
 		background: [],
 		foreground: [],
 		fail: [],

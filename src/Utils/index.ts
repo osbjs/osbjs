@@ -3,7 +3,6 @@ export { OsbVector2 } from './OsbVector2'
 export * as MathHelpers from './MathHelpers'
 export { TextureGenerator } from './TextureGenerator'
 export { Texture } from './Texture'
-export { Subtitle } from './Subtitle'
 export { SubtitleCollection } from './SubtitleCollection'
 
 export function rgbToHex(r: number, g: number, b: number): string {
