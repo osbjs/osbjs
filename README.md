@@ -110,6 +110,8 @@ https://discord.gg/t2sHY8TdMA
 	- [SubtitleCollection](#subtitlecollection)
 	- [Texture](#texture)
 	- [TextureGenerator](#texturegenerator)
+	- [`rgbToHex`](#rgbtohex)
+    - [`parseOsuTimestamp`](#parseosutimestamp)
 	- MathHelpers
     	- [`randInt`](#mathhelpersrandint)
     	- [`randFloat`](#mathhelpersrandfloat)
@@ -144,11 +146,11 @@ https://discord.gg/t2sHY8TdMA
 
 ### Storyboard
 ```ts
-const sb = new Storyboard(filename, path)
+const sb = new Storyboard(filename: string, path: string = './storyboard')
 ```
 Create a new storyboard instance.
-* **filename**: osb filename
-* **path**: full path to beatmap folder
+* **filename**: osb filename.
+* **path**: full path to beatmap folder.
 
 ### Storyboard#`registerComponents`
 ```ts
@@ -164,9 +166,9 @@ Generate storyboard. Call this after every component is registered.
 
 ### DiffSpecificStoryboard
 ```ts
-const sb = new Storyboard(filename: string, path: string)
+const sb = new DiffSpecificStoryboard(filename: string, path: string)
 ```
-Create a new storyboard instance.
+Create a new storyboard instance for a specific difficulty.
 * **filename**: osu filename.
 * **path**: full path to beatmap folder.
 
@@ -451,6 +453,82 @@ const sample = new Sample(startTime: number, layer: SampleLayer, path: string, v
 
 ### Scene
 An "empty" `Component`. Its purpose is to make working with groups of components syntactically clearer.
+
+### SubtitleCollection
+```ts
+new SubtitleCollection(path: string)
+```
+
+* **path**: full path to lyrics file. File types supported: `srt`, `vtt`
+
+Property:
+* **subtitles**: [`ISubtitle`](#isubtitle)[]
+
+### Texture
+```ts
+new Texture(text: string, path: string, osbPath: string)
+```
+
+* **text**: text
+* **path**: full path to texture image.
+* **osbPath**: relative path to texture image.
+
+Properties:
+* **width**: `number`
+* **height**: `number`
+
+### TextureGenerator
+```ts
+const txtGen = new TextureGenerator(folderPath: string, osbPath: string)
+```
+* **folderPath**: full path to the folder that will be used to save generated text images.
+* **osbPath**: relative path to the folder that will be used to save generated text images.
+
+Properties:
+* **fontProps**: [`IFontProperties`](#ifontproperties) can be used to set font
+
+### TextureGenerator#`generateTexture`
+```ts
+txtGen.generateTexture(text: string) : Texture
+```
+Generate and save text image. Returns [Texture](#texture).
+
+### TextureGenerator#`getTexture`
+```ts
+txtGen.getTexture(text: string) : Texture | undefined
+```
+Get generated [Texture](#texture) from cache, and return undefined if not exists. Use [`generateTexture`](#texturegeneratorgeneratetexture) instead.
+
+### TextureGenerator#`emptyDir`
+```ts
+txtGen.emptyDir()
+```
+Clear folder that is used to save generated text image.
+
+### TextureGenerator#`registerFont`
+```ts
+txtGen.registerFont(fontPath: string, family: string, weight?: string, style?: string)
+```
+Register a new font. Must be called before [`generateTexture`](#texturegeneratorgeneratetexture) if you are using a font file that is not installed as a system font. `family`, `weight`, `style` must follow css `@font-face` rules.
+
+* **fontPath**: full path to font file.
+* **family**: font family.
+* **weight**: font weight.
+* **style**: font style.
+
+### `rgbToHex`
+```ts
+function rgbToHex(r: number, g: number, b: number): string
+```
+
+Converts rgb color to its corresponding hex string.
+
+### `parseOsuTimestamp`
+```ts
+function parseOsuTimestamp(timestamp: string): number
+```
+
+Converts osu timestamp to miliseconds.
 
 ### MathHelpers#`randInt`
 ```ts
