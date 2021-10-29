@@ -1,7 +1,5 @@
-import { Sprite } from './Sprite'
-import { Component } from './Component'
-import { Scene } from './Scene'
-import { Animation } from './Animation'
-import { Sample } from './Sample'
-
-export { Component, Sprite, Scene, Animation, Sample }
+export { Sprite } from './Sprite'
+export { Component } from './Component'
+export { Scene } from './Scene'
+export { Animation } from './Animation'
+export { Sample } from './Sample'

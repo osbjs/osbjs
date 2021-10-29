@@ -1,4 +1,3 @@
-import { ILayers } from './ILayers'
-import { IVector2 } from './IVector2'
-
-export { ILayers, IVector2 }
+export { ILayers } from './ILayers'
+export { IVector2 } from './IVector2'
+export { FontProperties } from './FontProperties'

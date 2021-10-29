@@ -1,6 +1,9 @@
-import { OsbColor } from './OsbColor'
-import { OsbVector2 } from './OsbVector2'
-import * as MathHelpers from './MathHelpers'
-import { TextureGenerator, Texture, FontProperties } from './TextureGenerator'
-
-export { OsbColor, OsbVector2, MathHelpers, TextureGenerator, Texture, FontProperties }
+export { OsbColor } from './OsbColor'
+export { OsbVector2 } from './OsbVector2'
+export * as MathHelpers from './MathHelpers'
+export { TextureGenerator } from './TextureGenerator'
+export { Texture } from './Texture'
+export { Subtitle } from './Subtitle'
+export { SubtitleCollection } from './SubtitleCollection'
+/** for convenient */
+export { parseTimestamp } from 'subtitle'

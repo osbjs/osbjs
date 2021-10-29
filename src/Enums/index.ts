@@ -1,7 +1,5 @@
-import { Easing } from './Easing'
-import { Origin } from './Origin'
-import { Parameter } from './Parameter'
-import { Layer } from './Layer'
-import { LoopType } from './LoopType'
-
-export { Easing, Parameter, Origin, Layer, LoopType }
+export { Easing } from './Easing'
+export { Origin } from './Origin'
+export { Parameter } from './Parameter'
+export { Layer } from './Layer'
+export { LoopType } from './LoopType'
