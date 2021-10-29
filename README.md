@@ -442,12 +442,12 @@ Animation has all of [Sprite](#sprite)'s methods.
 
 ### Sample
 ```ts
-const sample = new Sample(startTime: number, layer: SampleLayer, path: string, volume: number)
+const sample = new Sample(startTime: number, layer: SampleLayer, path: string, volume: number = 100)
 ```
 * **startTime**: time in milliseconds to start playing the sound effect
 * **layer**: [SampleLayer](#samplelayer)
 * **path**: relative path to the sound file.
-* **volume**: volume of the sound file. (1-100) Can be left off for 100.
+* **volume**: volume of the sound file. (1-100)
 
 ### Scene
 An "empty" `Component`. Its purpose is to make working with groups of components syntactically clearer.
