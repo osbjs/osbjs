@@ -1,8 +1,9 @@
 import { createCanvas, registerFont as canvasRegisterFont } from 'canvas'
 import { emptyDirSync, outputFileSync } from 'fs-extra'
 import path from 'path'
-import { FontProperties } from '../Interfaces'
+import { FontProperties, IColor } from '../Interfaces'
 import { Texture } from './Texture'
+import rgbHex from 'rgb-hex'
 
 export class TextureGenerator {
 	private _cache: Texture[]
@@ -24,7 +25,7 @@ export class TextureGenerator {
 		canvasRegisterFont(fontPath, { family, weight, style })
 	}
 
-	generateTexture(text: string): Texture {
+	generateTexture(text: string, color?: IColor): Texture {
 		let texture = this.getTexture(text)
 		if (texture) return texture
 
@@ -35,6 +36,7 @@ export class TextureGenerator {
 
 		ctx.font = `${this.fontProps.fontSize}px "${this.fontProps.fontName}"`
 		ctx.textBaseline = 'top'
+		if (color) ctx.fillStyle = rgbHex(color.r, color.g, color.b)
 		ctx.fillText(text, 0, 0)
 
 		const texturePath = path.join(this.folderPath, this.osbPath, `_${this._cache.length}.png`)
