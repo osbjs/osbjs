@@ -24,7 +24,7 @@ export class TextureGenerator {
 		canvasRegisterFont(fontPath, { family, weight, style })
 	}
 
-	generateTexture(text: string): Texture | null {
+	generateTexture(text: string): Texture {
 		let texture = this.getTexture(text)
 		if (texture) return texture
 
