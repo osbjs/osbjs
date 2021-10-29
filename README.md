@@ -126,7 +126,7 @@ https://discord.gg/t2sHY8TdMA
     	- [`lengthVec2`](#mathhelperslengthvec2)
     	- [`lengthSqVec2`](#mathhelperslengthsqvec2)
     	- [`normalizeVec2`](#mathhelpersnormalizevec2)
-    	- [`equalsVec2](#mathhelpersequalsvec2)
+    	- [`equalsVec2`](#mathhelpersequalsvec2)
 4. **Enums**
 	- [Easing](#easing)
     - [Layer](#layer)
