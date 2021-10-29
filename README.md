@@ -24,7 +24,7 @@ let sprite2 = new Sprite('sb/beam.png', Layer.Background)
 sprite2.Fade(1, 1, 1, 0)
 
 // Create a scene
-let scene = new Scene(123, 456)
+let scene = new Scene()
 
 // Add sprite to scene
 scene.registerComponents(sprite)
