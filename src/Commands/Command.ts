@@ -1,4 +1,4 @@
-import { OsbColor, Easing, OsbVector2 } from '..'
+import { OsbColor, Easing, OsbVector2, parseOsuTimestamp } from '..'
 
 export class Command {
 	identifier: string
@@ -12,15 +12,15 @@ export class Command {
 	constructor(
 		identifier: string,
 		easing: Easing,
-		startTime: number,
-		endTime: number,
+		startTime: number | string,
+		endTime: number | string,
 		startValue: string | number | OsbColor | OsbVector2,
 		endValue: string | number | OsbColor | OsbVector2
 	) {
 		this.identifier = identifier
 		this.easing = easing
-		this.startTime = startTime
-		this.endTime = endTime
+		this.startTime = typeof startTime == 'string' ? parseOsuTimestamp(startTime) : Math.round(startTime)
+		this.endTime = typeof endTime == 'string' ? parseOsuTimestamp(endTime) : Math.round(endTime)
 		this.startValue = startValue
 		this.endValue = endValue
 		this.duration = this.startTime - this.endTime

@@ -1,3 +1,4 @@
+import { parseOsuTimestamp } from '..'
 import { SampleLayer } from '../Enums'
 import { Component } from './Component'
 
@@ -8,9 +9,9 @@ export class Sample extends Component {
 	startTime: number
 	name = 'Sprite'
 
-	constructor(startTime: number, layer: SampleLayer, path: string, volume: number = 100) {
+	constructor(startTime: number | string, layer: SampleLayer, path: string, volume: number = 100) {
 		super()
-		this.startTime = startTime
+		this.startTime = typeof startTime == 'string' ? parseOsuTimestamp(startTime) : Math.round(startTime)
 		this.layer = layer
 		this.path = path
 		this.volume = volume

@@ -22,6 +22,10 @@ const sb = new Storyboard('Taishi feat. Hatsune Miku (Eng ver) - Scaler (Smug Na
 let sprite1 = new Sprite('sb/test.png', Layer.Background)
 sprite1.Move(1000, 3000, new Position(320, 345), new Position(240, 480))
 
+// You can also pass timestamp string to startTime/endTime/time argument.
+// timestamp must be in osu timestamp format `mm:ss:fff`
+sprite1.Move('00:04:000', '00:05:000', new Position(320, 345), new Position(240, 480)) // this works too
+
 let sprite2 = new Sprite('sb/beam.png', Layer.Background)
 sprite2.Fade(1, 1, 1, 0)
 
@@ -226,7 +230,7 @@ Create a new sprite. A sprite is also a component, therefore you can register it
 
 ### Sprite#`Fade`
 ```ts
-sprite.Fade(startTime: number, endTime: number, startOpacity: number, endOpacity: number, easing: Easing = Easing.Linear)
+sprite.Fade(startTime: number | string, endTime: number | string, startOpacity: number, endOpacity: number, easing: Easing = Easing.Linear)
 ```
 * **startTime**, **endTime**: times in milliseconds indicate when the event will occur
 * **startOpacity**, **endOpacity**: opacity at the start/end of the animation
@@ -234,15 +238,15 @@ sprite.Fade(startTime: number, endTime: number, startOpacity: number, endOpacity
 
 ### Sprite#`FadeAtTime`
 ```ts
-sprite.FadeAtTime(time: number, opacity: number)
+sprite.FadeAtTime(time: number | string, opacity: number)
 ```
 Shorthand command for [Fade](#spritefade) when `startTime` and `endTime` are equal.
-* **time**: time in millisecond indicates when the event will occur.
+* **time**: time in milliseconds/timestamp indicates when the event will occur.
 * **opacity**: opacity at the given time.
 
 ### Sprite#`Move`
 ```ts
-sprite.Move(startTime: number, endTime: number, startPosition: OsbVector2, endPosition: OsbVector2, easing: Easing = Easing.Linear)
+sprite.Move(startTime: number | string, endTime: number | string, startPosition: OsbVector2, endPosition: OsbVector2, easing: Easing = Easing.Linear)
 ```
 * **startTime**, **endTime**: times in milliseconds indicate when the event will occur.
 * **startPosition**, **endPosition**: position at the start/end of the animation.
@@ -250,15 +254,15 @@ sprite.Move(startTime: number, endTime: number, startPosition: OsbVector2, endPo
 
 ### Sprite#`MoveAtTime`
 ```ts
-sprite.MoveAtTime(time: number, position: OsbVector2)
+sprite.MoveAtTime(time: number | string, position: OsbVector2)
 ```
 Shorthand command for [Move](#spritemove) when `startTime` and `endTime` are equal.
-* **time**: time in millisecond indicates when the event will occur.
+* **time**: time in milliseconds/timestamp indicates when the event will occur.
 * **position**: position at the given time.
 
 ### Sprite#`MoveX`
 ```ts
-sprite.MoveX(startTime: number, endTime: number, startX: number, endX: number, easing: Easing = Easing.Linear)
+sprite.MoveX(startTime: number | string, endTime: number | string, startX: number, endX: number, easing: Easing = Easing.Linear)
 ```
 * **startTime**, **endTime**: times in milliseconds indicate when the event will occur.
 * **startX**, **endX**: x position at the start/end of the animation.
@@ -266,15 +270,15 @@ sprite.MoveX(startTime: number, endTime: number, startX: number, endX: number, e
 
 ### Sprite#`MoveXAtTime`
 ```ts
-sprite.MoveXAtTime(time: number, x: number)
+sprite.MoveXAtTime(time: number | string, x: number)
 ```
 Shorthand command for [MoveX](#spritemovex) when `startTime` and `endTime` are equal.
-* **time**: time in millisecond indicates when the event will occur.
+* **time**: time in milliseconds/timestamp indicates when the event will occur.
 * **x**: x position at the given time.
 
 ### Sprite#`MoveY`
 ```ts
-sprite.MoveY(startTime: number, endTime: number, startY: number, endY: number, easing: Easing = Easing.Linear)
+sprite.MoveY(startTime: number | string, endTime: number | string, startY: number, endY: number, easing: Easing = Easing.Linear)
 ```
 * **startTime**, **endTime**: times in milliseconds indicate when the event will occur.
 * **startY**, **endY**: y position at the start/end of the animation.
@@ -282,15 +286,15 @@ sprite.MoveY(startTime: number, endTime: number, startY: number, endY: number, e
 
 ### Sprite#`MoveYAtTime`
 ```ts
-sprite.MoveYAtTime(time: number, y: number)
+sprite.MoveYAtTime(time: number | string, y: number)
 ```
 Shorthand command for [MoveY](#spritemovey) when `startTime` and `endTime` are equal.
-* **time**: time in millisecond indicates when the event will occur.
+* **time**: time in milliseconds/timestamp indicates when the event will occur.
 * **y**: y position at the given time.
 
 ### Sprite#`Scale`
 ```ts
-sprite.Scale(startTime: number, endTime: number, startScale: number, endScale: number, easing: Easing = Easing.Linear)
+sprite.Scale(startTime: number | string, endTime: number | string, startScale: number, endScale: number, easing: Easing = Easing.Linear)
 ```
 * **startTime**, **endTime**: times in milliseconds indicate when the event will occur.
 * **startScale**, **endScale**: scale factor at the start/end of the animation.
@@ -298,15 +302,15 @@ sprite.Scale(startTime: number, endTime: number, startScale: number, endScale: n
 
 ### Sprite#`ScaleAtTime`
 ```ts
-sprite.ScaleAtTime(time: number, scale: number)
+sprite.ScaleAtTime(time: number | string, scale: number)
 ```
 Shorthand command for [`Scale`](#spritescale) when `startTime` and `endTime` are equal.
-* **time**: time in millisecond indicates when the event will occur.
+* **time**: time in milliseconds/timestamp indicates when the event will occur.
 * **scale**: scale factor at the given time.
 
 ### Sprite#`ScaleVec`
 ```ts
-sprite.Scale(startTime: number, endTime: number, startScale: OsbVector2, endScale: OsbVector2, easing: Easing = Easing.Linear)
+sprite.Scale(startTime: number | string, endTime: number | string, startScale: OsbVector2, endScale: OsbVector2, easing: Easing = Easing.Linear)
 ```
 * **startTime**, **endTime**: times in milliseconds indicate when the event will occur.
 * **startScale**, **endScale**: scale factor at the start/end of the animation.
@@ -314,15 +318,15 @@ sprite.Scale(startTime: number, endTime: number, startScale: OsbVector2, endScal
 
 ### Sprite#`ScaleVecAtTime`
 ```ts
-sprite.ScaleAtTime(time: number, scale: OsbVector2)
+sprite.ScaleAtTime(time: number | string, scale: OsbVector2)
 ```
 Shorthand command for [`ScaleVec`](#spritescalevec) when `startTime` and `endTime` are equal.
-* **time**: time in millisecond indicates when the event will occur.
+* **time**: time in milliseconds/timestamp indicates when the event will occur.
 * **scale**: scale factor at the given time.
 
 ### Sprite#`Rotate`
 ```ts
-sprite.Rotate(startTime: number, endTime: number, startAngle: number, endAngle: number, easing: Easing = Easing.Linear)
+sprite.Rotate(startTime: number | string, endTime: number | string, startAngle: number, endAngle: number, easing: Easing = Easing.Linear)
 ```
 * **startTime**, **endTime**: times in milliseconds indicate when the event will occur.
 * **startAngle**, **endAngle**: angle to rotate by in radians at the start/end of the animation.
@@ -330,15 +334,15 @@ sprite.Rotate(startTime: number, endTime: number, startAngle: number, endAngle: 
 
 ### Sprite#`RotateAtTime`
 ```ts
-sprite.RotateAtTime(time: number, angle: number)
+sprite.RotateAtTime(time: number | string, angle: number)
 ```
 Shorthand command for [Rotate](#spriterotate) when `startTime` and `endTime` are equal.
-* **time**: time in millisecond indicates when the event will occur.
+* **time**: time in milliseconds/timestamp indicates when the event will occur.
 * **angle**: angle to rotate by in radians at the given time.
 
 ### Sprite#`Color`
 ```ts
-sprite.Color(startTime: number, endTime: number, startColor: OsbColor, endColor: OsbColor, easing: Easing = Easing.Linear)
+sprite.Color(startTime: number | string, endTime: number | string, startColor: OsbColor, endColor: OsbColor, easing: Easing = Easing.Linear)
 ```
 * **startTime**, **endTime**: times in milliseconds indicate when the event will occur.
 * **startColor**, **endColor**: color at the start/end of the animation. Sprites with (255,255,255) will be their original colour and sprites with (0,0,0) will be totally black. Anywhere in between will result in subtractive colouring.
@@ -346,24 +350,24 @@ sprite.Color(startTime: number, endTime: number, startColor: OsbColor, endColor:
 
 ### Sprite#`ColorAtTime`
 ```ts
-sprite.ColorAtTime(time: number, scale: OsbColor)
+sprite.ColorAtTime(time: number | string, scale: OsbColor)
 ```
 Shorthand command for [Color](#spritecolor) when `startTime` and `endTime` are equal.
-* **time**: time in millisecond indicates when the event will occur.
+* **time**: time in milliseconds/timestamp indicates when the event will occur.
 * **color**: color at the given time. Sprites with (255,255,255) will be their original colour and sprites with (0,0,0) will be totally black. Anywhere in between will result in subtractive colouring.
 
 ### Sprite#`Parameter`
 ```ts
-sprite.Parameter(startTime: number, endTime: number, parameter: Parameter)
+sprite.Parameter(startTime: number | string, endTime: number | string, parameter: Parameter)
 ```
 * **startTime**, **endTime**: times in milliseconds indicate when the event will occur.
 * **parameter**: [Parameter](#parameter)
 
 ### Sprite#`ParameterAtTime`
 ```ts
-sprite.ParameterAtTime(time: number, parameter: Parameter)
+sprite.ParameterAtTime(time: number | string, parameter: Parameter)
 ```
-* **time**: time in millisecond indicates when the event will occur.
+* **time**: time in milliseconds/timestamp indicates when the event will occur.
 * **parameter**: effect [Parameter](#parameter) to apply.
 
 ### Sprite#`Loop`
@@ -375,7 +379,7 @@ Add a loop group to this sprite
 
 ### Loop group
 ```ts
-const loop = new Loop(startTime: number, count: number)
+const loop = new Loop(startTime: number | string, count: number)
 ```
 Loops can be defined to repeat a set of events constantly for a set number of iterations.
 
@@ -405,7 +409,7 @@ Add a trigger group to this sprite
 
 ### Trigger group
 ```ts
-const trigger = new Trigger(triggerName: TriggerName | string, startTime: number, endTime: number)
+const trigger = new Trigger(triggerName: TriggerName | string, startTime: number | string, endTime: number)
 ```
 
 Trigger loops can be used to trigger animations based on play-time events. Although called loops, trigger loops only execute once when triggered.
@@ -448,9 +452,9 @@ Animation has all of [Sprite](#sprite)'s methods.
 
 ### Sample
 ```ts
-const sample = new Sample(startTime: number, layer: SampleLayer, path: string, volume: number = 100)
+const sample = new Sample(startTime: number | string, layer: SampleLayer, path: string, volume: number = 100)
 ```
-* **startTime**: time in milliseconds to start playing the sound effect
+* **startTime**: time in milliseconds/timestamp to start playing the sound effect
 * **layer**: [SampleLayer](#samplelayer)
 * **path**: relative path to the sound file.
 * **volume**: volume of the sound file. (1-100)
@@ -532,7 +536,7 @@ Converts rgb color to its corresponding hex string.
 function parseOsuTimestamp(timestamp: string): number
 ```
 
-Converts osu timestamp to miliseconds.
+Converts osu timestamp to miliseconds. osbjs calls this function under the hood.
 
 ### MathHelpers#`randInt`
 ```ts
