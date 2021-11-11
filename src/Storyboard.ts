@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { Layer } from '.'
 import { Animation, Component, Sample, Sprite } from './Components'
 import { IStoryboardLayers } from './Types/IStoryboardLayers'
+import { green } from 'chalk'
 
 export class Storyboard {
 	components: Component[]
@@ -94,5 +95,6 @@ export class Storyboard {
 		this.sort()
 		if (!existsSync(this.path)) mkdirSync(this.path, { recursive: true })
 		writeFileSync(`${this.path}/${this.filename}`, this.getOsbString())
+		console.log(green`Storyboard generated in ${this.path}/${this.filename}`)
 	}
 }
