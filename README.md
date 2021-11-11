@@ -46,7 +46,9 @@ const { Sprite, Component, Layer, OsbVector2 } = require('@osbjs/osbjs')
 
 module.exports = class Flash extends Component {
 	constructor(startTime, endTime) {
-		super(startTime, endTime)
+		super()
+        this.startTime = startTime
+        this.endTime = endTime
 	}
 
 	generate() {
