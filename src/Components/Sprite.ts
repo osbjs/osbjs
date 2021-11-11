@@ -11,7 +11,7 @@ export class Sprite extends Component {
 	initialPosition: OsbVector2
 	name = 'Sprite'
 
-	constructor(path: string, layer: Layer, origin: Origin = Origin.Center, initialPosition: OsbVector2 = new OsbVector2(320, 480)) {
+	constructor(path: string, layer: Layer, origin: Origin = Origin.Center, initialPosition: OsbVector2 = new OsbVector2(320, 240)) {
 		super()
 		this.path = path
 		this.layer = layer

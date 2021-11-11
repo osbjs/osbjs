@@ -20,7 +20,7 @@ export class Animation extends Component {
 		origin: Origin = Origin.Center,
 		frameCount: number,
 		frameDelay: number,
-		initialPosition: OsbVector2 = new OsbVector2(320, 480),
+		initialPosition: OsbVector2 = new OsbVector2(320, 240),
 		loopType: LoopType | string = LoopType.LoopForever
 	) {
 		super()
