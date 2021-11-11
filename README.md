@@ -2,6 +2,8 @@
 
 A minimalist component-based osu! storboarding framework.
 
+> Note: osbjs uses `node-canvas` for generating text so make sure you have `node-gyp` installed. Read [this section](https://github.com/nodejs/node-gyp#installation) for more info on how to install `node-gyp` for your operating system.
+
 ## Install
 ```
 npm i @osbjs/osbjs
@@ -10,11 +12,11 @@ npm i @osbjs/osbjs
 ## Example
 
 ```js
-import { Storyboard, Sprite, Easing, Position, Origin, Layer } from '@osbjs/osbjs';
+const { Storyboard, Sprite, Easing, Position, Origin, Layer } = require('@osbjs/osbjs')
 
 // Create storyboard instance
 // If `path` is not specified, osbjs will create a new `storyboard` folder and save the storyboard there.
-const sb = new Storyboard('Taishi feat. Hatsune Miku (Eng ver) - Scaler (Smug Nanachi).osb');
+const sb = new Storyboard('Taishi feat. Hatsune Miku (Eng ver) - Scaler (Smug Nanachi).osb')
 
 // Create a sprite
 let sprite1 = new Sprite('sb/test.png', Layer.Background)
@@ -30,17 +32,17 @@ let scene = new Scene()
 scene.registerComponents(sprite)
 
 // Register scene
-sb.registerComponents(scene);
+sb.registerComponents(scene)
 
 // Generate
-sb.generate();
+sb.generate()
 ```
 
 Since osbjs is component-based, you can create your own `Component` and reuse it anywhere else. Add your logic in the `generate` function and you are good to go!
 
 ```js
 // components/Flash.js
-import { Sprite, Component, Layer, ScaleVector } from '@osbjs/osbjs';
+const { Sprite, Component, Layer, ScaleVector } = require('@osbjs/osbjs')
 
 export class Flash extends Component {
 	constructor(startTime, endTime) {
@@ -56,7 +58,7 @@ export class Flash extends Component {
 }
 
 // main.js
-import { Flash } from './components/Flash'
+const { Flash } = require('./components/Flash')
 
 let fl = new Flash(0, 3000)
 scene.registerComponents(fl)
