@@ -12,12 +12,12 @@ export class TextureGenerator {
 		fontSize: 72,
 	}
 	folderPath: string
-	osbPath: string
+	osbFolderPath: string
 
-	constructor(folderPath: string, osbPath: string) {
+	constructor(folderPath: string, osbFolderPath: string) {
 		this._cache = []
 		this.folderPath = folderPath
-		this.osbPath = osbPath
+		this.osbFolderPath = osbFolderPath
 	}
 
 	/** alias for node-canvas' `registerFont` */
@@ -39,11 +39,11 @@ export class TextureGenerator {
 		if (color) ctx.fillStyle = rgbToHex(color.r, color.g, color.b)
 		ctx.fillText(text, 0, 0)
 
-		const texturePath = path.join(this.folderPath, this.osbPath, `_${this._cache.length}.png`)
+		const texturePath = path.join(this.folderPath, this.osbFolderPath, `_${this._cache.length}.png`)
 
 		this._saveTexture(canvas.toDataURL('image/png'), texturePath)
 
-		texture = new Texture(text, texturePath, `${this.osbPath}/_${this._cache.length}.png`)
+		texture = new Texture(text, texturePath, `${this.osbFolderPath}/_${this._cache.length}.png`)
 
 		this._cache.push(texture)
 
@@ -56,7 +56,7 @@ export class TextureGenerator {
 
 	/** alias for fs-extra' `emptyDirSync` */
 	emptyDir() {
-		emptyDirSync(path.join(this.folderPath, this.osbPath))
+		emptyDirSync(path.join(this.folderPath, this.osbFolderPath))
 	}
 
 	private _measureText(text: string): TextMetrics {
