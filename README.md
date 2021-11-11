@@ -487,13 +487,11 @@ Properties:
 
 ### TextureGenerator
 ```ts
-const txtGen = new TextureGenerator(folderPath: string, osbFolderPath: string)
+const txtGen = new TextureGenerator(folderPath: string, osbFolderPath: string, fontProps?: IFontProperties)
 ```
 * **folderPath**: full path to the folder that will be used to save generated text images.
 * **osbFolderPath**: relative path to the folder that will be used to save generated text images. For example: `sb/lyrics`
-
-Properties:
-* **fontProps**: [`IFontProperties`](#ifontproperties) can be used to set font
+* **fontProps**: [`IFontProperties`](#ifontproperties)
 
 ### TextureGenerator#`generateTexture`
 ```ts

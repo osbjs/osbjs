@@ -14,10 +14,11 @@ export class TextureGenerator {
 	folderPath: string
 	osbFolderPath: string
 
-	constructor(folderPath: string, osbFolderPath: string) {
+	constructor(folderPath: string, osbFolderPath: string, fontProps?: IFontProperties) {
 		this._cache = []
 		this.folderPath = folderPath
 		this.osbFolderPath = osbFolderPath
+		this.fontProps = { ...this.fontProps, ...fontProps }
 	}
 
 	/** alias for node-canvas' `registerFont` */
