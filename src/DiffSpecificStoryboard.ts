@@ -1,6 +1,7 @@
 import { green } from 'chalk'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { Storyboard } from '.'
+import { join } from 'path'
 
 export class DiffSpecificStoryboard extends Storyboard {
 	constructor(filename: string, path: string) {
@@ -36,15 +37,15 @@ export class DiffSpecificStoryboard extends Storyboard {
 	}
 
 	override generate() {
-		if (!existsSync(this.path)) throw new Error("Beatmap doesn't exists")
-		let beatmap = readFileSync(this.path, 'utf-8')
+		if (!existsSync(this.path) || !existsSync(join(this.path, this.filename))) throw new Error("Beatmap doesn't exists")
+		let beatmap = readFileSync(join(this.path, this.filename), 'utf-8')
 		let pattern =
 			/\/\/Storyboard Layer 0 \(Background\)\n(.*\n*)\/\/Storyboard Layer 1 \(Fail\)\n(.*\n*)\/\/Storyboard Layer 2 \(Pass\)\n(.*\n*)\/\/Storyboard Layer 3 \(Foreground\)\n(.*\n*)\/\/Storyboard Layer 4 \(Overlay\)\n(.*\n*)\/\/Storyboard Sound Samples\n(.*\n*)/g
 
 		beatmap = beatmap.replace(pattern, this.getOsbString())
 
-		writeFileSync(`${this.path}/${this.filename}`, beatmap)
+		writeFileSync(join(this.path, this.filename), beatmap)
 
-		console.log(green`Storyboard generated in ${this.path}/${this.filename}`)
+		console.log(green`Storyboard generated in ${join(this.path, this.filename)}`)
 	}
 }

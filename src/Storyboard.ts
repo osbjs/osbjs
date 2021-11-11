@@ -3,6 +3,7 @@ import { Layer } from '.'
 import { Animation, Component, Sample, Sprite } from './Components'
 import { IStoryboardLayers } from './Types/IStoryboardLayers'
 import { green } from 'chalk'
+import { join } from 'path'
 
 export class Storyboard {
 	components: Component[]
@@ -92,7 +93,7 @@ export class Storyboard {
 
 	generate() {
 		if (!existsSync(this.path)) mkdirSync(this.path, { recursive: true })
-		writeFileSync(`${this.path}/${this.filename}`, this.getOsbString())
+		writeFileSync(join(this.path, this.filename), this.getOsbString())
 		console.log(green`Storyboard generated in ${this.path}/${this.filename}`)
 	}
 }
