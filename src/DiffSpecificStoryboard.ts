@@ -36,7 +36,7 @@ export class DiffSpecificStoryboard extends Storyboard {
 	}
 
 	override generate() {
-		this.sort()
+		this._sort()
 		if (!existsSync(this.path)) throw new Error("Beatmap doesn't exists")
 		let beatmap = readFileSync(this.path, 'utf-8')
 		let pattern =
