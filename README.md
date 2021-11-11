@@ -42,7 +42,7 @@ Since osbjs is component-based, you can create your own `Component` and reuse it
 
 ```js
 // components/Flash.js
-const { Sprite, Component, Layer, ScaleVector } = require('@osbjs/osbjs')
+const { Sprite, Component, Layer, OsbVector2 } = require('@osbjs/osbjs')
 
 module.exports = class Flash extends Component {
 	constructor(startTime, endTime) {
@@ -51,14 +51,14 @@ module.exports = class Flash extends Component {
 
 	generate() {
 		let fl = new Sprite('sb/dot.png', Layer.Background)
-		fl.ScaleVec(this.startTime, this.startTime, new ScaleVector(854, 480), new ScaleVector(854, 480))
+		fl.ScaleVec(this.startTime, this.startTime, new OsbVector2(854, 480), new OsbVector2(854, 480))
 		fl.Fade(this.startTime, this.endTime, 1, 0)
 		this.registerComponents(fl)
 	}
 }
 
 // main.js
-const { Flash } = require('./components/Flash')
+const Flash = require('./components/Flash')
 
 let fl = new Flash(0, 3000)
 scene.registerComponents(fl)
