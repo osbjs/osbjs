@@ -44,7 +44,7 @@ Since osbjs is component-based, you can create your own `Component` and reuse it
 // components/Flash.js
 const { Sprite, Component, Layer, ScaleVector } = require('@osbjs/osbjs')
 
-export class Flash extends Component {
+module.exports = class Flash extends Component {
 	constructor(startTime, endTime) {
 		super(startTime, endTime)
 	}
