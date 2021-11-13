@@ -1,6 +1,6 @@
 {
 	"name": "@osbjs/osbjs",
-	"version": "1.9.7",
+	"version": "1.10.0",
 	"description": "a minimalist osu! storyboarding framework",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
