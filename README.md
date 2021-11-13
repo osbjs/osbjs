@@ -2,8 +2,6 @@
 
 A minimalist component-based osu! storboarding framework.
 
-> Note: osbjs uses `node-canvas` for generating text so make sure you have `node-gyp` installed. Read [this section](https://github.com/nodejs/node-gyp#installation) for more info on how to install `node-gyp` for your operating system.
-
 ## Install
 ```
 npm i @osbjs/osbjs
@@ -116,8 +114,6 @@ https://discord.gg/t2sHY8TdMA
 	- [OsbColor](#osbcolor)
 	- [OsbVector2](#osbvector2)
 	- [SubtitleCollection](#subtitlecollection)
-	- [Texture](#texture)
-	- [TextureGenerator](#texturegenerator)
 	- [`rgbToHex`](#rgbtohex)
     - [`parseOsuTimestamp`](#parseosutimestamp)
 	- MathHelpers
@@ -147,8 +143,6 @@ https://discord.gg/t2sHY8TdMA
 	- [TriggerName](#triggername)
 5. **Types**
 	- [ISubtitle](#isubtitle)
-	- [IFontProperties](#ifontproperties)
-	- [IColor](#icolor)
 	- [IStoryboardLayers](#istoryboardlayers)
 	- [IVector2](#ivector2)
 
@@ -472,56 +466,6 @@ new SubtitleCollection(path: string)
 Property:
 * **subtitles**: [`ISubtitle`](#isubtitle)[]
 
-### Texture
-```ts
-new Texture(text: string, path: string, osbPath: string)
-```
-
-* **text**: text
-* **path**: full path to texture image.
-* **osbPath**: relative path to texture image.
-
-Properties:
-* **width**: `number`
-* **height**: `number`
-
-### TextureGenerator
-```ts
-const txtGen = new TextureGenerator(folderPath: string, osbFolderPath: string, fontProps?: IFontProperties)
-```
-* **folderPath**: full path to the folder that will be used to save generated text images.
-* **osbFolderPath**: relative path to the folder that will be used to save generated text images. For example: `sb/lyrics`
-* **fontProps**: [`IFontProperties`](#ifontproperties)
-
-### TextureGenerator#`generateTexture`
-```ts
-txtGen.generateTexture(text: string) : Texture
-```
-Generate and save text image. Returns [Texture](#texture).
-
-### TextureGenerator#`getTexture`
-```ts
-txtGen.getTexture(text: string) : Texture | undefined
-```
-Get generated [Texture](#texture) from cache, and return undefined if not exists. Use [`generateTexture`](#texturegeneratorgeneratetexture) instead.
-
-### TextureGenerator#`emptyDir`
-```ts
-txtGen.emptyDir()
-```
-Clear folder that is used to save generated text image.
-
-### TextureGenerator#`registerFont`
-```ts
-txtGen.registerFont(fontPath: string, family: string, weight?: string, style?: string)
-```
-Register a new font. Must be called before [`generateTexture`](#texturegeneratorgeneratetexture) if you are using a font file that is not installed as a system font. `family`, `weight`, `style` must follow css `@font-face` rules.
-
-* **fontPath**: full path to font file.
-* **family**: font family.
-* **weight**: font weight.
-* **style**: font style.
-
 ### `rgbToHex`
 ```ts
 function rgbToHex(r: number, g: number, b: number): string
@@ -736,11 +680,6 @@ Only use with sprite/animation.
 interface ISubtitle { startTime: number, endTime: number, text: string }
 ```
 
-### IColor
-```ts
-interface IColor { r: number, g: number, b: number }
-```
-
 ### IStoryboardLayers
 ```ts
 interface IStoryboardLayers{
@@ -749,14 +688,6 @@ interface IStoryboardLayers{
 	fail: (Sprite | Animation)[]
 	pass: (Sprite | Animation)[]
 	sample: Sample[]
-}
-```
-
-### IFontProperties
-```ts
-interface IFontProperties {
-	fontSize: number
-	fontName: string
 }
 ```
 
