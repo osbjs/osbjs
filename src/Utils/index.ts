@@ -1,6 +1,5 @@
 export { OsbColor } from './OsbColor'
 export { OsbVector2 } from './OsbVector2'
-export * as MathHelpers from './MathHelpers'
 export { SubtitleCollection } from './SubtitleCollection'
 
 export function rgbToHex(r: number, g: number, b: number): string {
