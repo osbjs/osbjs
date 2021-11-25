@@ -27,6 +27,7 @@
 		"build": "tsc"
 	},
 	"dependencies": {
+		"@osbjs/math": "^1.0.0-a",
 		"chalk": "^4.1.2",
 		"fs-extra": "^10.0.0",
 		"subtitle": "^4.1.1",
