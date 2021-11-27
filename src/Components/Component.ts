@@ -57,6 +57,7 @@ export abstract class Component {
 			this.layers.foreground = this.layers.foreground.concat(component.layers.foreground)
 			this.layers.fail = this.layers.fail.concat(component.layers.fail)
 			this.layers.pass = this.layers.pass.concat(component.layers.pass)
+			this.layers.overlay = this.layers.overlay.concat(component.layers.overlay)
 		}
 	}
 
