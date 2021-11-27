@@ -3,4 +3,5 @@ export enum Layer {
 	Foreground = 'Foreground',
 	Fail = 'Fail',
 	Pass = 'Pass',
+	Overlay = 'Overlay',
 }

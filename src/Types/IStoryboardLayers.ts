@@ -5,5 +5,6 @@ export interface IStoryboardLayers {
 	foreground: (Sprite | Animation)[]
 	fail: (Sprite | Animation)[]
 	pass: (Sprite | Animation)[]
+	overlay: (Sprite | Animation)[]
 	sample: Sample[]
 }

@@ -11,6 +11,7 @@ export abstract class Component {
 		foreground: [],
 		fail: [],
 		pass: [],
+		overlay: [],
 		sample: [],
 	}
 
@@ -42,6 +43,9 @@ export abstract class Component {
 				case Layer.Pass:
 					this.layers.pass.push(component)
 					break
+
+				case Layer.Overlay:
+					this.layers.overlay.push(component)
 
 				default:
 					break

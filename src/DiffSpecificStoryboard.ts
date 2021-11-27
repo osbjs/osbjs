@@ -13,7 +13,8 @@ export class DiffSpecificStoryboard extends Storyboard {
 			fg = '',
 			f = '',
 			p = '',
-			s = ''
+			s = '',
+			ov = ''
 
 		this.layers.background.forEach((component) => {
 			bg += component.getOsbString()
@@ -30,8 +31,11 @@ export class DiffSpecificStoryboard extends Storyboard {
 		this.layers.sample.forEach((component) => {
 			s += component.getOsbString()
 		})
+		this.layers.overlay.forEach((component) => {
+			ov += component.getOsbString()
+		})
 
-		let str = `//Storyboard Layer 0 (Background)\n${bg}//Storyboard Layer 1 (Fail)\n${f}//Storyboard Layer 2 (Pass)\n${p}//Storyboard Layer 3 (Foreground)\n${fg}//Storyboard Sound Samples\n${s}`
+		let str = `//Storyboard Layer 0 (Background)\n${bg}//Storyboard Layer 1 (Fail)\n${f}//Storyboard Layer 2 (Pass)\n${p}//Storyboard Layer 3 (Foreground)\n${fg}//Storyboard Layer 4 (Overlay)\n${ov}//Storyboard Sound Samples\n${s}`
 
 		return str
 	}
