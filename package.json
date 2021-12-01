@@ -16,9 +16,9 @@
 	"devDependencies": {
 		"@tsconfig/node14": "^1.0.1",
 		"@types/fs-extra": "^9.0.13",
-		"@types/node": "^16.11.7",
+		"@types/node": "^16.11.11",
 		"@types/uuid": "^8.3.3",
-		"eslint": "^8.2.0",
+		"eslint": "^8.3.0",
 		"prettier": "2.4.1",
 		"typescript": "^4.5.2"
 	},
@@ -27,7 +27,7 @@
 		"build": "tsc"
 	},
 	"dependencies": {
-		"@osbjs/math": "^1.0.0-a",
+		"@osbjs/math": "^1.0.0",
 		"chalk": "^4.1.2",
 		"fs-extra": "^10.0.0",
 		"subtitle": "^4.1.1",
