@@ -68,6 +68,9 @@ let fl = new Flash(0, 3000)
 scene.registerComponents(fl)
 ```
 
+>Note: osbjs does NOT support async/await/promise. Everything called underhood is synchronous.
+
+
 ## Join my discord for updates (WIP)
 https://discord.gg/t2sHY8TdMA
 
