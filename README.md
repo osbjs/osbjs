@@ -71,7 +71,7 @@ scene.registerComponents(fl)
 >Note: osbjs does NOT support async/await/promise. Everything called underhood is synchronous.
 
 
-## Join my discord for updates (WIP)
+## Join discord for updates & discussion
 https://discord.gg/t2sHY8TdMA
 
 ## Documentation
