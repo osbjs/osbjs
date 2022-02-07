@@ -10,7 +10,7 @@ npm i @osbjs/osbjs
 ## Example
 
 ```js
-const { Storyboard, Sprite, Easing, Position, Origin, Layer } = require('@osbjs/osbjs')
+const { Storyboard, Sprite, Easing, OsbVector2, Origin, Layer } = require('@osbjs/osbjs')
 
 // Create storyboard instance
 // If `path` is not specified, osbjs will create a new `storyboard` folder and save the storyboard there.
@@ -18,11 +18,11 @@ const sb = new Storyboard('Taishi feat. Hatsune Miku (Eng ver) - Scaler (Smug Na
 
 // Create a sprite
 let sprite1 = new Sprite('sb/test.png', Layer.Background)
-sprite1.Move(1000, 3000, new Position(320, 345), new Position(240, 480))
+sprite1.Move(1000, 3000, new OsbVector2(320, 345), new OsbVector2(240, 480))
 
 // You can also pass timestamp string to startTime/endTime/time argument.
 // timestamp must be in osu timestamp format `mm:ss:fff`
-sprite1.Move('00:04:000', '00:05:000', new Position(320, 345), new Position(240, 480)) // this works too
+sprite1.Move('00:04:000', '00:05:000', new OsbVector2(320, 345), new OsbVector2(240, 480)) // this works too
 
 let sprite2 = new Sprite('sb/beam.png', Layer.Background)
 sprite2.Fade(1, 1, 1, 0)
@@ -130,7 +130,7 @@ https://discord.gg/t2sHY8TdMA
 5. **Types**
 	- [ISubtitle](#isubtitle)
 	- [IStoryboardLayers](#istoryboardlayers)
-	- [IVector2](#ivector2)
+	- [IFontProperties](#ifontproperties)
 
 ### Storyboard
 ```ts
@@ -583,8 +583,8 @@ interface IStoryboardLayers{
 
 ### IVector2
 ```ts
-interface IVector2 {
-	x: number
-	y: number
+interface IFontProperties {
+	fontSize: number
+	fontName: string
 }
 ```
