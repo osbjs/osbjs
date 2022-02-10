@@ -183,7 +183,8 @@ If you create new sprites/animations inside `generate` function, make sure to re
 ```ts
 export class Flash extends Component {
 	constructor(startTime, endTime) {
-		super(startTime, endTime)
+		this.startTime = startTime
+		this.endTime = endTime
 	}
 
 	generate() {
