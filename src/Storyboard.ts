@@ -24,33 +24,19 @@ export class Storyboard {
 		this.components = []
 	}
 
+	protected _extractEachLayerOsbString() {
+		const bg = this.layers.background.map((component) => component.getOsbString()).join(''),
+			fg = this.layers.foreground.map((component) => component.getOsbString()).join(''),
+			f = this.layers.fail.map((component) => component.getOsbString()).join(''),
+			p = this.layers.pass.map((component) => component.getOsbString()).join(''),
+			s = this.layers.sample.map((component) => component.getOsbString()).join(''),
+			ov = this.layers.overlay.map((component) => component.getOsbString()).join('')
+
+		return { bg, fg, f, p, s, ov }
+	}
+
 	getOsbString(): string {
-		let bg = '',
-			fg = '',
-			f = '',
-			p = '',
-			s = '',
-			ov = ''
-
-		this.layers.background.forEach((component) => {
-			bg += component.getOsbString()
-		})
-		this.layers.foreground.forEach((component) => {
-			fg += component.getOsbString()
-		})
-		this.layers.fail.forEach((component) => {
-			f += component.getOsbString()
-		})
-		this.layers.pass.forEach((component) => {
-			p += component.getOsbString()
-		})
-		this.layers.sample.forEach((component) => {
-			s += component.getOsbString()
-		})
-		this.layers.overlay.forEach((component) => {
-			ov += component.getOsbString()
-		})
-
+		const { bg, fg, f, p, s, ov } = this._extractEachLayerOsbString()
 		let str = `[Events]\n//Background and Video events\n//Storyboard Layer 0 (Background)\n${bg}//Storyboard Layer 1 (Fail)\n${f}//Storyboard Layer 2 (Pass)\n${p}//Storyboard Layer 3 (Foreground)\n${fg}//Storyboard Layer 4 (Overlay)\n${ov}//Storyboard Sound Samples\n${s}`
 
 		return str

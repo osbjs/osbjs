@@ -3,7 +3,7 @@ import { Animation, Layer, Sample, Sprite } from '..'
 import { IStoryboardLayers } from '../Types/IStoryboardLayers'
 
 export abstract class Component {
-	abstract readonly name: string
+	readonly name: string = 'Component'
 	components: Component[] = []
 	uuid: string = uuidv4()
 	layers: IStoryboardLayers = {
@@ -15,7 +15,11 @@ export abstract class Component {
 		sample: [],
 	}
 
-	constructor() {}
+	constructor() {
+		if (this.constructor == Component) {
+			throw new Error('Component can not be instantiated. To create a new Component, extends this class.')
+		}
+	}
 
 	registerComponents(...components: Component[]) {
 		this.components = this.components.concat(components)
