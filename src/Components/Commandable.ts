@@ -1,4 +1,4 @@
-import { Component } from '.'
+import { Component } from './Component'
 import { Command, CommandGroup, Loop, Trigger } from '../Commands'
 import { Easing, Parameter } from '../Enums'
 import { OsbColor, OsbVector2 } from '../Utils'
