@@ -2,7 +2,7 @@
 	"extends": "@tsconfig/node14/tsconfig.json",
 	"include": ["./src/**/*"],
 	"compilerOptions": {
-		"sourceMap": true,
+		"sourceMap": false,
 		"outDir": "dist",
 		"declaration": true
 	},
