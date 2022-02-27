@@ -3,8 +3,7 @@ import { Animation, Layer, Sample, Sprite } from '..'
 import { IStoryboardLayers } from '../Types/IStoryboardLayers'
 
 export abstract class Component {
-	readonly name: string = 'Component'
-	components: Component[] = []
+	name?: string
 	uuid: string = uuidv4()
 	layers: IStoryboardLayers = {
 		background: [],
@@ -22,7 +21,6 @@ export abstract class Component {
 	}
 
 	registerComponents(...components: Component[]) {
-		this.components = this.components.concat(components)
 		components.forEach((component) => {
 			component.generate()
 			this._addToLayer(component)

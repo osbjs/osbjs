@@ -6,7 +6,6 @@ import { green } from 'chalk'
 import { join } from 'path'
 
 export class Storyboard {
-	components: Component[]
 	path: string
 	filename: string
 	layers: IStoryboardLayers = {
@@ -21,7 +20,6 @@ export class Storyboard {
 	constructor(filename: string, path: string = './storyboard') {
 		this.filename = filename
 		this.path = path
-		this.components = []
 	}
 
 	protected _extractEachLayerOsbString() {
@@ -79,7 +77,6 @@ export class Storyboard {
 	}
 
 	registerComponents(...components: Component[]) {
-		this.components = this.components.concat(components)
 		components.forEach((component) => {
 			component.generate()
 			this._addToLayer(component)
