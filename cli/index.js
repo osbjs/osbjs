@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { Command } = require('commander')
-const packageJson = require('./package.json')
+const packageJson = require('../package.json')
 const chalk = require('chalk')
 const fs = require('fs-extra')
 const path = require('path')
