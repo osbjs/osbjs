@@ -1,6 +1,6 @@
 import { Commandable } from '../Components'
-import { OsbColor, OsbVector2 } from './'
-import { Vector2, noise2D } from '@osbjs/math'
+import { OsbColor, OsbVector2 } from '.'
+import { Vector2, noise2D } from '../../Math'
 
 export function wiggleXY(
 	commandable: Commandable,

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import { Animation, Sample, Sprite } from './'
+import { Animation, Sample, Sprite } from '.'
 import { IStoryboardLayers } from '../Types/IStoryboardLayers'
 import { Layer } from '../Enums'
 

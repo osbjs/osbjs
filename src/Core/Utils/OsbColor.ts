@@ -1,4 +1,4 @@
-import { rgbToHex } from './'
+import { rgbToHex } from '.'
 
 export class OsbColor {
 	r: number

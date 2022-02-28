@@ -1,4 +1,4 @@
-import { Vector2 } from '@osbjs/math'
+import { Vector2 } from '../../Math'
 
 export class OsbVector2 {
 	x: number

@@ -27,9 +27,11 @@
 		"build": "tsc"
 	},
 	"dependencies": {
-		"@osbjs/math": "^2.4.0",
+		"canvas": "^2.9.0",
 		"chalk": "^4.1.2",
 		"fs-extra": "^10.0.0",
+		"image-size": "^1.0.1",
+		"simplex-noise": "^3.0.1",
 		"subtitle": "^4.1.1",
 		"uuid": "^8.3.2"
 	},
