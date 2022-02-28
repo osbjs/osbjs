@@ -107,7 +107,6 @@ export function wiggleColor(
 			newG = Math.round(_ampG * noise2D(g, t)) + originG,
 			newB = Math.round(_ampB * noise2D(b, t)) + originB
 
-		console.log(newR, newG, newB)
 		commandable.Color(t, t + timestep, new OsbColor(r, g, b), new OsbColor(newR, newG, newB))
 
 		r = newR
