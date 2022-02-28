@@ -5,6 +5,8 @@ export class OsbColor {
 	g: number
 	b: number
 	constructor(r: number, g: number, b: number) {
+		if (r < 0 || g < 0 || b < 0 || r > 255 || g > 255 || b > 255) throw new Error('Color values can only be between 0 and 255')
+
 		this.r = r
 		this.g = g
 		this.b = b
