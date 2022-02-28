@@ -9,10 +9,11 @@
 		"osb"
 	],
 	"files": [
-		"dist"
+		"dist",
+		"cli"
 	],
 	"bin": {
-		"osbjs": "./index.js"
+		"osbjs": "./cli/index.js"
 	},
 	"author": "Nanachi",
 	"license": "MIT",
