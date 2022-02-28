@@ -56,6 +56,7 @@ function createStoryboard(_projectName, options) {
 	spinner.start({ text: chalk.yellow(`Installing dependencies...`) })
 	try {
 		installDependencies(['@osbjs/osbjs@latest'], _projectName)
+		if (options.template == 'ts') installDependencies(['typescript @tsconfig/node14 -D'])
 		spinner.success({ text: chalk.green('Installed dependencies') })
 	} catch (e) {
 		spinner.error({ text: chalk.red('Could not install osbjs. Try again.') })
@@ -223,7 +224,7 @@ function ensurePackageJson(template = 'common', projectName = '', inSubfolder = 
 
 	if (fs.existsSync(pkgPath)) {
 		let packageJson = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
-		packageJson.scripts.build = 'node index'
+		packageJson.scripts.build = template == 'ts' ? 'tsc && node dist/.' : 'node .'
 		if (template == 'es') packageJson.type = 'module'
 		fs.writeFileSync(pkgPath, JSON.stringify(packageJson), 'utf8')
 		return true
@@ -233,7 +234,7 @@ function ensurePackageJson(template = 'common', projectName = '', inSubfolder = 
 			name: projectName,
 			version: '0.1.0',
 			scripts: {
-				build: 'node .',
+				build: template == 'ts' ? 'tsc && node dist/.' : 'node .',
 			},
 		}
 		if (template == 'es') packageJson.type = 'module'
