@@ -1,5 +1,5 @@
 import { Command } from '.'
-import { Easing, OsbVector2, OsbColor, Parameter, Commandable } from '..'
+import { Commandable } from '../Components'
 
 export abstract class CommandGroup extends Commandable {
 	header: string
