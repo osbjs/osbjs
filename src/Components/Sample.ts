@@ -1,4 +1,4 @@
-import { parseOsuTimestamp } from '..'
+import { parseOsuTimestamp } from '../Utils'
 import { SampleLayer } from '../Enums'
 import { Component } from './Component'
 

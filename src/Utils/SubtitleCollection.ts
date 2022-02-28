@@ -1,6 +1,6 @@
 import { parseSync } from 'subtitle'
 import { readFileSync } from 'fs-extra'
-import { ISubtitle } from '../Types/ISubtitle'
+import { ISubtitle } from '../Types'
 
 export class SubtitleCollection {
 	subtitles: ISubtitle[]

@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
-import { Layer } from '.'
+import { Layer } from './Enums'
 import { Animation, Component, Sample, Sprite } from './Components'
-import { IStoryboardLayers } from './Types/IStoryboardLayers'
+import { IStoryboardLayers } from './Types'
 import { green } from 'chalk'
 import { join } from 'path'
 

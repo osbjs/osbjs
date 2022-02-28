@@ -1,4 +1,4 @@
-import { Sprite, Animation, Sample } from '..';
+import { Sprite, Animation, Sample } from '../Components'
 
 export interface IStoryboardLayers {
 	background: (Sprite | Animation)[]

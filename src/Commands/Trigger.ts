@@ -1,4 +1,4 @@
-import { TriggerName } from '..'
+import { TriggerName } from '../Enums'
 import { CommandGroup } from './CommandGroup'
 
 export class Trigger extends CommandGroup {

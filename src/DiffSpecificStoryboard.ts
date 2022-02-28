@@ -1,6 +1,6 @@
 import { green } from 'chalk'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
-import { Storyboard } from '.'
+import { Storyboard } from './Storyboard'
 import { join } from 'path'
 
 export class DiffSpecificStoryboard extends Storyboard {

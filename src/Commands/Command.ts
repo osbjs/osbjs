@@ -1,4 +1,5 @@
-import { OsbColor, Easing, OsbVector2, parseOsuTimestamp } from '..'
+import { Easing } from '../Enums'
+import { OsbColor, OsbVector2, parseOsuTimestamp } from '../Utils'
 
 export class Command {
 	identifier: string
