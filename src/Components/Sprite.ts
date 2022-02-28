@@ -3,13 +3,18 @@ import { OsbVector2 } from '../Utils'
 import { Commandable } from './Commandable'
 
 export class Sprite extends Commandable {
+	name = 'Sprite'
 	path: string
 	layer: Layer
 	origin: Origin
 	initialPosition: OsbVector2
-	name = 'Sprite'
 
-	constructor(path: string, layer: Layer, origin: Origin = Origin.Center, initialPosition: OsbVector2 = new OsbVector2(320, 240)) {
+	constructor(
+		path: string,
+		layer: Layer = Layer.Background,
+		origin: Origin = Origin.Center,
+		initialPosition: OsbVector2 = new OsbVector2(320, 240)
+	) {
 		super()
 		this.path = path
 		this.layer = layer

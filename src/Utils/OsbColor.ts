@@ -1,3 +1,5 @@
+import { rgbToHex } from './'
+
 export class OsbColor {
 	r: number
 	g: number
@@ -10,5 +12,18 @@ export class OsbColor {
 
 	toString(): string {
 		return `${this.r},${this.g},${this.b}`
+	}
+
+	toHexString(): string {
+		return rgbToHex(this.r, this.g, this.b)
+	}
+
+	static fromHexString(hex: string): OsbColor {
+		const trimmed = hex.replace('#', '')
+		const r = parseInt('0x' + trimmed[0] + trimmed[1]) | 0,
+			g = parseInt('0x' + trimmed[2] + trimmed[3]) | 0,
+			b = parseInt('0x' + trimmed[4] + trimmed[5]) | 0
+
+		return new OsbColor(r, g, b)
 	}
 }

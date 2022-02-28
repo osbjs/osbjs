@@ -1,13 +1,12 @@
 import { Component } from './Component'
 import { Command, CommandGroup, Loop, Trigger } from '../Commands'
-import { Easing, Parameter } from '../Enums'
+import { Easing, Parameter, Origin, Layer } from '../Enums'
 import { OsbColor, OsbVector2 } from '../Utils'
 
-export class Commandable extends Component {
+export abstract class Commandable extends Component {
 	commands: (Command | CommandGroup)[]
 	constructor() {
 		super()
-
 		this.commands = []
 	}
 
@@ -91,4 +90,6 @@ export class Commandable extends Component {
 	Trigger(group: Trigger) {
 		this.commands.push(group)
 	}
+
+	abstract getOsbString(): string
 }

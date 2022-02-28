@@ -1,6 +1,7 @@
 export { OsbColor } from './OsbColor'
 export { OsbVector2 } from './OsbVector2'
 export { SubtitleCollection } from './SubtitleCollection'
+export * from './Expressions'
 
 export function rgbToHex(r: number, g: number, b: number): string {
 	if (typeof r !== 'number' || typeof g !== 'number' || typeof b !== 'number' || r > 255 || g > 255 || b > 255) {
