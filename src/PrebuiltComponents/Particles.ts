@@ -83,7 +83,6 @@ export class Particles extends Component {
 		//#endregion
 
 		const timestep = duration / amount
-		let counter = 0
 		for (let startTime = this.startTime; startTime <= this.endTime - duration; Math.round((startTime += timestep))) {
 			let endTime = startTime + duration
 
@@ -129,8 +128,6 @@ export class Particles extends Component {
 				else spr.Rotate(startTime, endTime, degToRad(startRotation), degToRad(endRotation), eas)
 
 			this.registerComponents(spr)
-			counter++
 		}
-		console.log(counter)
 	}
 }
