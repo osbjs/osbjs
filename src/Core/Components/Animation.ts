@@ -14,10 +14,10 @@ export class Animation extends Commandable {
 
 	constructor(
 		path: string,
-		layer: Layer = Layer.Background,
-		origin: Origin = Origin.Center,
 		frameCount: number,
 		frameDelay: number,
+		layer: Layer = Layer.Background,
+		origin: Origin = Origin.Center,
 		initialPosition: OsbVector2 = new OsbVector2(320, 240),
 		loopType: LoopType | string = LoopType.LoopForever
 	) {

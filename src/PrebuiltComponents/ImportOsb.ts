@@ -98,15 +98,17 @@ function parseSamples(raw: string): Sample[] {
 }
 
 function parseAnimations(raw: string): Animation[] {
-	let aArr = raw.match(/Animation,\w+,\w+,\".+\",-*\w+\.*\w*,-*\w+\.*\w*,\w+,\w+,\w+\r*\n((?:[ _]+\w+,\w+,-*\w+\.*\w*,-*\w*\.*\w*,.*\r*\n*)+)/g)?.map((str) => {
-		// @ts-ignore
-		const { layer, origin, path, x, y, frameCount, frameDelay, loopType } = extractProps(str)
-		const animation = new Animation(path, layer, origin, frameCount, frameDelay, new OsbVector2(x, y), loopType)
+	let aArr = raw
+		.match(/Animation,\w+,\w+,\".+\",-*\w+\.*\w*,-*\w+\.*\w*,\w+,\w+,\w+\r*\n((?:[ _]+\w+,\w+,-*\w+\.*\w*,-*\w*\.*\w*,.*\r*\n*)+)/g)
+		?.map((str) => {
+			// @ts-ignore
+			const { layer, origin, path, x, y, frameCount, frameDelay, loopType } = extractProps(str)
+			const animation = new Animation(path, frameCount, frameDelay, layer, origin, new OsbVector2(x, y), loopType)
 
-		registerCommands(str, animation)
+			registerCommands(str, animation)
 
-		return animation
-	})
+			return animation
+		})
 
 	function extractProps(str: string) {
 		const _init = str.match(/Animation,\w+,\w+,\".+\",-*\w+,-*\w+,\w+,\w+,\w+/g)?.toString()
