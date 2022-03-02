@@ -11,7 +11,13 @@ export class HitObjectHighlight extends Component {
 	circles: Circle[]
 	sliders: Slider[]
 	beat: number
-	options: HitObjectHighlightOptions = { startScale: 1, endScale: 1.2, fadeDuration: 200, beatDivisor: 8, followSliderPath: true }
+	options = {
+		startScale: 1,
+		endScale: 1.2,
+		fadeDuration: 200,
+		beatDivisor: 8,
+		followSliderPath: true,
+	}
 	constructor(osbPath: string, startTime: number | string, endTime: number | string, beatmap: Beatmap, options?: HitObjectHighlightOptions) {
 		super()
 		this.osbPath = osbPath
@@ -73,9 +79,9 @@ export class HitObjectHighlight extends Component {
 }
 
 export interface HitObjectHighlightOptions {
-	endScale: number
-	startScale: number
-	fadeDuration: number
-	beatDivisor: number
-	followSliderPath: boolean
+	endScale?: number
+	startScale?: number
+	fadeDuration?: number
+	beatDivisor?: number
+	followSliderPath?: boolean
 }

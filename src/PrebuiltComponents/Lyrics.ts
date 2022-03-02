@@ -6,7 +6,7 @@ export class Lyrics extends Component {
 	name = 'Lyrics'
 	folderPath: string
 	osbFolderPath: string
-	options: LyricsOptions = {
+	options = {
 		fadeDuration: 200,
 		opacity: 1,
 		fontName: 'Arial',
@@ -99,15 +99,15 @@ export class Lyrics extends Component {
 }
 
 export interface LyricsOptions {
-	fadeDuration: number
-	opacity: number
-	fontName: string
-	fontSize: number
-	fontScale: number
-	perCharacter: boolean
-	y: number
-	additive: boolean
-	color: IColor
+	fadeDuration?: number
+	opacity?: number
+	fontName?: string
+	fontSize?: number
+	fontScale?: number
+	perCharacter?: boolean
+	y?: number
+	additive?: boolean
+	color?: IColor
 }
 
 export interface FontOptions {
