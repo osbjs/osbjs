@@ -115,3 +115,25 @@ export function wiggleColor(
 		t += timestep
 	} while (t <= endTime)
 }
+
+export function wiggleOpacity(
+	commandable: Commandable,
+	frequency: number,
+	amplitude: number,
+	startTime: number,
+	endTime: number,
+	originOpacity: number
+) {
+	let opacity = originOpacity
+	let t = startTime
+	const timestep = 1000 / frequency
+
+	do {
+		const newAngle = amplitude * noise2D(opacity, t) + originOpacity
+
+		commandable.Fade(t, t + timestep, opacity, newAngle)
+
+		opacity = newAngle
+		t += timestep
+	} while (t <= endTime)
+}
