@@ -2,10 +2,13 @@ import { green } from 'chalk'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { Storyboard } from './Storyboard'
 import { join } from 'path'
+import { Beatmap } from '../../Beatmap'
 
 export class DiffSpecificStoryboard extends Storyboard {
+	beatmap: Beatmap
 	constructor(filename: string, path: string) {
 		super(filename, path)
+		this.beatmap = new Beatmap(join(path, filename))
 	}
 
 	override getOsbString(): string {
