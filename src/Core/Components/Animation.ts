@@ -16,10 +16,10 @@ export class Animation extends Commandable {
 		path: string,
 		frameCount: number,
 		frameDelay: number,
+		loopType: LoopType | string = LoopType.LoopForever,
 		layer: Layer = Layer.Background,
 		origin: Origin = Origin.Center,
-		initialPosition: OsbVector2 = new OsbVector2(320, 240),
-		loopType: LoopType | string = LoopType.LoopForever
+		initialPosition: OsbVector2 = new OsbVector2(320, 240)
 	) {
 		super()
 		this.path = path

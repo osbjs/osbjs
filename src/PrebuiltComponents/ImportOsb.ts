@@ -103,7 +103,7 @@ function parseAnimations(raw: string): Animation[] {
 		?.map((str) => {
 			// @ts-ignore
 			const { layer, origin, path, x, y, frameCount, frameDelay, loopType } = extractProps(str)
-			const animation = new Animation(path, frameCount, frameDelay, layer, origin, new OsbVector2(x, y), loopType)
+			const animation = new Animation(path, frameCount, frameDelay, loopType, layer, origin, new OsbVector2(x, y))
 
 			registerCommands(str, animation)
 
