@@ -3,3 +3,4 @@ export { HitObjectHighlight, HitObjectHighlightOptions } from './HitObjectHighli
 export { RemoveBackground } from './RemoveBackground'
 export { Lyrics } from './Lyrics'
 export { ImportOsb } from './ImportOsb'
+export { Particles } from './Particles'
