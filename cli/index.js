@@ -225,7 +225,7 @@ function ensurePackageJson(template = 'common', projectName = '', inSubfolder = 
 	if (fs.existsSync(pkgPath)) {
 		let packageJson = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
 		if (!packageJson.scripts) packageJson.scripts = {}
-		packageJson.scripts.build = template == 'ts' ? 'tsc && node dist/.' : 'node .'
+		if (!packageJson.scripts.build) packageJson.scripts.build = template == 'ts' ? 'tsc && node dist/.' : 'node .'
 		if (template == 'es') packageJson.type = 'module'
 		fs.writeFileSync(pkgPath, JSON.stringify(packageJson), 'utf8')
 		return true
