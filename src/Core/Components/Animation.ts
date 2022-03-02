@@ -32,7 +32,7 @@ export class Animation extends Commandable {
 	}
 
 	getOsbString(): string {
-		let str = `Animation,${this.layer},${this.origin},"${this.path}",${this.initialPosition.x},${this.initialPosition.y}\n`
+		let str = `Animation,${this.layer},${this.origin},"${this.path}",${this.initialPosition.x},${this.initialPosition.y},${this.frameCount},${this.frameDelay},${this.loopType}\n`
 		this.commands.forEach((command) => {
 			str += ` ${command.getOsbString()}\n`
 		})
