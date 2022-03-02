@@ -2,7 +2,7 @@ import { createCanvas, registerFont as canvasRegisterFont } from 'canvas'
 import { emptyDirSync, outputFileSync } from 'fs-extra'
 import path from 'path'
 import { Texture } from './Texture'
-import { rgbToHex } from './Utils'
+import { rgbToHex } from '../Core'
 
 export class TextureGenerator {
 	private _cache: Texture[]
