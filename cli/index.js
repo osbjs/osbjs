@@ -157,7 +157,7 @@ program.command('create-component <name>').description('create a new component')
 
 function createComponent(name) {
 	// check
-	const template = getTemplateName()
+	const template = getTemplateName(true)
 
 	// copy new component
 	copyComponent(name, template)
@@ -187,7 +187,7 @@ program.command('create-scene <name>').description('create a new scene').action(
 
 function createScene(name) {
 	// check
-	const template = getTemplateName()
+	const template = getTemplateName(true)
 
 	// copy new component
 	copyScene(name, template)
@@ -251,12 +251,12 @@ function installDependencies(dependenciesArr, subfolder = '') {
 	execSync(toBeExec, { stdio: 'pipe' })
 }
 
-function getTemplateName() {
+function getTemplateName(quiet = false) {
 	const spinner = createSpinner()
 	// check
-	spinner.start({ text: chalk.yellow(`Checking package.json...`) })
+	if (!quiet) spinner.start({ text: chalk.yellow(`Checking package.json...`) })
 	const exists = ensurePackageJson()
-	spinner.success({ text: exists ? chalk.green('Updated package.json') : chalk.green('Created package.json') })
+	if (!quiet) spinner.success({ text: exists ? chalk.green('Updated package.json') : chalk.green('Created package.json') })
 
 	let packageJson = JSON.parse(fs.readFileSync(PACKAGE_JSON_PATH, 'utf8'))
 	let template = packageJson.type == 'module' ? 'es' : 'common'
