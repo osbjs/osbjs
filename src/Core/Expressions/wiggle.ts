@@ -1,5 +1,5 @@
 import { Commandable } from '../Components'
-import { OsbColor, OsbVector2 } from '.'
+import { OsbColor, OsbVector2 } from '../Utils'
 import { Vector2, noise2D, lerp } from '../../Math'
 
 export function wiggleXY(
@@ -126,7 +126,7 @@ export function wiggleOpacity(
 	amplitude: number,
 	startTime: number,
 	endTime: number,
-	originOpacity: number
+	originOpacity: number = 0.5
 ) {
 	let opacity = originOpacity
 	let t = startTime

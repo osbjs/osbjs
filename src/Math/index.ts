@@ -22,3 +22,7 @@ export function clamp(value: number, min: number, max: number): number {
 export function lerp(x: number, xMin: number, xMax: number, yMin: number, yMax: number): number {
 	return yMin + (x - xMin) * ((yMax - yMin) / (xMax - xMin))
 }
+
+export function interpolate(x: number, xMin: number, xMax: number, yMin: number, yMax: number): number {
+	return lerp(x, xMin, xMax, yMin, yMax)
+}
