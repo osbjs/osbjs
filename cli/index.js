@@ -59,7 +59,7 @@ function createStoryboard(_projectName, options) {
 		if (options.template == 'ts') installDependencies(['typescript @tsconfig/node14 -D'])
 		spinner.success({ text: chalk.green('Installed dependencies') })
 	} catch (e) {
-		spinner.error({ text: chalk.red('Could not install osbjs. Try again.') })
+		spinner.error({ text: chalk.red('Could not install dependencies. Try again.') })
 		process.exit(1)
 	}
 
@@ -117,10 +117,10 @@ function customizeComponent(name) {
 	const template = getTemplateName()
 	const ext = template == 'ts' ? 'ts' : 'js'
 
-	const availableComponents = ['background', 'hitobjecthighlight', 'lyrics']
+	const availableComponents = ['background', 'hitobjecthighlight', 'lyrics', 'particles']
 
 	if (!availableComponents.includes(name)) {
-		console.log(`${chalk.red('Error:')} Invalid component name. Available components: background, hitobjecthighlight, lyrics`)
+		console.log(`${chalk.red('Error:')} Invalid component name. Available components: background, hitobjecthighlight, lyrics, particles`)
 		process.exit(1)
 	}
 
@@ -128,6 +128,7 @@ function customizeComponent(name) {
 		background: `MyBackground.${ext}`,
 		hitobjecthighlight: `MyHitObjectHighlight.${ext}`,
 		lyrics: `MyLyrics.${ext}`,
+		particles: `MyParticles.${ext}`,
 	}
 
 	// copy component files
@@ -244,6 +245,11 @@ function ensurePackageJson(template = 'common', projectName = '', inSubfolder = 
 	}
 }
 
+/**
+ * Install dependencies
+ * @param {string[]} dependenciesArr Dependencies
+ * @param {string} subfolder subfolder
+ */
 function installDependencies(dependenciesArr, subfolder = '') {
 	let dependencies = dependenciesArr.join(' ')
 	let toBeExec = `npm i ${dependencies}`
@@ -251,6 +257,11 @@ function installDependencies(dependenciesArr, subfolder = '') {
 	execSync(toBeExec, { stdio: 'pipe' })
 }
 
+/**
+ * Get template name
+ * @param {boolean} quiet don't print to console
+ * @returns {string} template name
+ */
 function getTemplateName(quiet = false) {
 	const spinner = createSpinner()
 	// check

@@ -1,6 +1,4 @@
-import { Vector2 } from '@osbjs/math'
-import { Component, Easing, Layer, Sprite, OsbVector2, parseOsuTimestamp } from '@osbjs/osbjs'
-import { PlayfieldToStoryboardOffset } from '@osbjs/osujs'
+import { Vector2, Component, Easing, Layer, Sprite, OsbVector2, parseOsuTimestamp, PlayfieldToStoryboardOffset } from '@osbjs/osbjs'
 
 export class MyHitObjectHighlight extends Component {
 	name = 'MyHitObjectHighlight'

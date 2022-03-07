@@ -1,7 +1,9 @@
-import { Component, Sprite, SubtitleCollection, Layer, Origin, Parameter, OsbVector2, TextureGenerator } from '@osbjs/osbjs'
+import { IColor, Component, Sprite, OsbVector2, SubtitleCollection, Layer, Origin, Parameter, TextureGenerator } from '@osbjs/osbjs'
 
 export class MyLyrics extends Component {
 	name = 'MyLyrics'
+	folderPath: string
+	osbFolderPath: string
 	options = {
 		fadeDuration: 200,
 		opacity: 1,
@@ -17,8 +19,10 @@ export class MyLyrics extends Component {
 			b: 255,
 		},
 	}
+	private _textureGenerator: TextureGenerator
+	private _subtitleCollection: SubtitleCollection
 
-	constructor(folderPath, osbFolderPath, subtitlePath, options, registerFontOptions) {
+	constructor(folderPath: string, osbFolderPath: string, subtitlePath: string, options?: LyricsOptions, registerFontOptions?: FontOptions) {
 		super()
 		this.folderPath = folderPath
 		this.osbFolderPath = osbFolderPath
@@ -29,7 +33,7 @@ export class MyLyrics extends Component {
 		this._subtitleCollection = new SubtitleCollection(subtitlePath)
 	}
 
-	generate() {
+	override generate() {
 		if (this.options.perCharacter) {
 			this._generatePerChar()
 		} else {
@@ -37,7 +41,7 @@ export class MyLyrics extends Component {
 		}
 	}
 
-	_generatePerChar() {
+	private _generatePerChar() {
 		this._subtitleCollection.subtitles.forEach((subtitle) => {
 			let letterY = this.options.y
 			subtitle.text.split('\n').forEach((line) => {
@@ -76,7 +80,7 @@ export class MyLyrics extends Component {
 		})
 	}
 
-	_generatePerLine() {
+	private _generatePerLine() {
 		this._subtitleCollection.subtitles.forEach((line) => {
 			let texture = this._textureGenerator.generateTexture(line.text, this.options.color)
 			let position = new OsbVector2(320, this.options.y)
@@ -90,4 +94,21 @@ export class MyLyrics extends Component {
 			this.registerComponents(sprite)
 		})
 	}
+}
+
+export interface LyricsOptions {
+	fadeDuration?: number
+	opacity?: number
+	fontName?: string
+	fontSize?: number
+	fontScale?: number
+	perCharacter?: boolean
+	y?: number
+	additive?: boolean
+	color?: IColor
+}
+
+export interface FontOptions {
+	fontPath: string
+	family: string
 }

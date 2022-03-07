@@ -1,6 +1,4 @@
-const { Vector2 } = require('@osbjs/math')
-const { Component, Easing, Layer, Sprite, OsbVector2, parseOsuTimestamp } = require('@osbjs/osbjs')
-const { PlayfieldToStoryboardOffset } = require('@osbjs/osujs')
+const { Component, Easing, Layer, Sprite, OsbVector2, parseOsuTimestamp, PlayfieldToStoryboardOffset, Vector2 } = require('@osbjs/osbjs')
 
 class MyHitObjectHighlight extends Component {
 	name = 'MyHitObjectHighlight'

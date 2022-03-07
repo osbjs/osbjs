@@ -1,5 +1,4 @@
-const { Component, Sprite, SubtitleCollection, Layer, Origin, Parameter, OsbVector2 } = require('@osbjs/osbjs')
-const { TextureGenerator } = require('@osbjs/txtgen')
+const { Component, Sprite, SubtitleCollection, Layer, Origin, Parameter, OsbVector2, TextureGenerator } = require('@osbjs/osbjs')
 
 class MyLyrics extends Component {
 	name = 'MyLyrics'
@@ -64,7 +63,8 @@ class MyLyrics extends Component {
 					sprite.ScaleAtTime(subtitle.startTime, this.options.fontScale)
 					sprite.Fade(subtitle.startTime - this.options.fadeDuration, subtitle.startTime, 0, this.options.opacity)
 					sprite.Fade(subtitle.endTime - this.options.fadeDuration, subtitle.endTime, this.options.opacity, 0)
-					if (this.options.additive) sprite.Parameter(subtitle.startTime - this.options.fadeDuration, subtitle.endTime, Parameter.AdditiveBlending)
+					if (this.options.additive)
+						sprite.Parameter(subtitle.startTime - this.options.fadeDuration, subtitle.endTime, Parameter.AdditiveBlending)
 
 					this.registerComponents(sprite)
 
