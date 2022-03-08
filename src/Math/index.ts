@@ -26,3 +26,7 @@ export function lerp(x: number, xMin: number, xMax: number, yMin: number, yMax: 
 export function interpolate(x: number, xMin: number, xMax: number, yMin: number, yMax: number): number {
 	return lerp(x, xMin, xMax, yMin, yMax)
 }
+
+export function normalize(x: number, max: number, min: number): number {
+	return (x - min) / (max - min)
+}

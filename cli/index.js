@@ -56,7 +56,9 @@ function createStoryboard(_projectName, options) {
 	spinner.start({ text: chalk.yellow(`Installing dependencies...`) })
 	try {
 		installDependencies(['@osbjs/osbjs@latest'], _projectName)
-		if (options.template == 'ts') installDependencies(['typescript @tsconfig/node14 -D'])
+		if (options.template == 'ts') installDependencies(['typescript @tsconfig/node14 ts-node -D'])
+		installDependencies(['nodemon -D'])
+
 		spinner.success({ text: chalk.green('Installed dependencies') })
 	} catch (e) {
 		spinner.error({ text: chalk.red('Could not install dependencies. Try again.') })
@@ -237,6 +239,7 @@ function ensurePackageJson(template = 'common', projectName = '', inSubfolder = 
 			version: '0.1.0',
 			scripts: {
 				build: template == 'ts' ? 'tsc && node dist/.' : 'node .',
+				dev: 'nodemon .',
 			},
 		}
 		if (template == 'es') packageJson.type = 'module'
