@@ -1,4 +1,4 @@
-import { IColor } from '..'
+import { IColor } from '../Core'
 import { Component, Sprite, OsbVector2, SubtitleCollection, Layer, Origin, Parameter } from '../Core'
 import { TextureGenerator } from '../TxtGen'
 

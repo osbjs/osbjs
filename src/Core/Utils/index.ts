@@ -1,4 +1,4 @@
-export { OsbColor } from './OsbColor'
+export { OsbColor, IColor } from './OsbColor'
 export { OsbVector2 } from './OsbVector2'
 export { SubtitleCollection } from './SubtitleCollection'
 
