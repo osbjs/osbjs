@@ -15,15 +15,15 @@ export function wiggleXY(
 	const timestep = 1000 / frequency
 
 	do {
-		const newX = amplitude * noise2D(origin.x, t) + origin.x - amplitude,
-			newY = amplitude * noise2D(origin.y, t) + origin.y - amplitude
+		const newX = amplitude * noise2D(origin.x, t) + origin.x,
+			newY = amplitude * noise2D(origin.y, t) + origin.y
 
 		commandable.Move(t, t + timestep, new OsbVector2(x, y), new OsbVector2(newX, newY))
 
 		x = newX
 		y = newY
 		t += timestep
-	} while (t <= endTime)
+	} while (t < endTime)
 }
 
 export function wiggleX(commandable: Commandable, frequency: number, amplitude: number, startTime: number, endTime: number, originX: number = 320) {
@@ -32,13 +32,13 @@ export function wiggleX(commandable: Commandable, frequency: number, amplitude: 
 	const timestep = 1000 / frequency
 
 	do {
-		const newX = amplitude * noise2D(originX, t) + originX - amplitude
+		const newX = amplitude * noise2D(originX, t) + originX
 
 		commandable.MoveX(t, t + timestep, x, newX)
 
 		x = newX
 		t += timestep
-	} while (t <= endTime)
+	} while (t < endTime)
 }
 
 export function wiggleY(commandable: Commandable, frequency: number, amplitude: number, startTime: number, endTime: number, originY: number = 240) {
@@ -47,13 +47,13 @@ export function wiggleY(commandable: Commandable, frequency: number, amplitude: 
 	const timestep = 1000 / frequency
 
 	do {
-		const newY = amplitude * noise2D(originY, t) + originY - amplitude
+		const newY = amplitude * noise2D(originY, t) + originY
 
 		commandable.MoveY(t, t + timestep, y, newY)
 
 		y = newY
 		t += timestep
-	} while (t <= endTime)
+	} while (t < endTime)
 }
 
 export function wiggleRotation(
@@ -69,13 +69,13 @@ export function wiggleRotation(
 	const timestep = 1000 / frequency
 
 	do {
-		const newAngle = amplitude * noise2D(originAngle, t) + originAngle - amplitude
+		const newAngle = amplitude * noise2D(originAngle, t) + originAngle
 
 		commandable.Rotate(t, t + timestep, angle, newAngle)
 
 		angle = newAngle
 		t += timestep
-	} while (t <= endTime)
+	} while (t < endTime)
 }
 
 export function wiggleColor(
@@ -117,7 +117,7 @@ export function wiggleColor(
 		g = newG
 		b = newB
 		t += timestep
-	} while (t <= endTime)
+	} while (t < endTime)
 }
 
 export function wiggleOpacity(
@@ -133,11 +133,105 @@ export function wiggleOpacity(
 	const timestep = 1000 / frequency
 
 	do {
-		const newAngle = amplitude * noise2D(originOpacity, t) + originOpacity - amplitude
+		const newAngle = amplitude * noise2D(originOpacity, t) + originOpacity
 
 		commandable.Fade(t, t + timestep, opacity, newAngle)
 
 		opacity = newAngle
 		t += timestep
-	} while (t <= endTime)
+	} while (t < endTime)
+}
+
+export function wiggleScale(
+	commandable: Commandable,
+	frequency: number,
+	amplitude: number,
+	startTime: number,
+	endTime: number,
+	originScale: number = 0.5
+) {
+	let scale = originScale
+	let t = startTime
+	const timestep = 1000 / frequency
+
+	do {
+		const newScale = amplitude * noise2D(originScale, t) + originScale
+
+		commandable.Scale(t, t + timestep, scale, newScale)
+
+		scale = newScale
+		t += timestep
+	} while (t < endTime)
+}
+
+export function wiggleScaleX(
+	commandable: Commandable,
+	frequency: number,
+	amplitude: number,
+	startTime: number,
+	endTime: number,
+	originScaleX: number = 0.5,
+	scaleY: number = 1
+) {
+	let scale = originScaleX
+	let t = startTime
+	const timestep = 1000 / frequency
+
+	do {
+		const newScale = amplitude * noise2D(originScaleX, t) + originScaleX
+
+		commandable.ScaleVec(t, t + timestep, new OsbVector2(scale, scaleY), new OsbVector2(newScale, scaleY))
+
+		scale = newScale
+		t += timestep
+	} while (t < endTime)
+}
+
+export function wiggleScaleY(
+	commandable: Commandable,
+	frequency: number,
+	amplitude: number,
+	startTime: number,
+	endTime: number,
+	originScaleY: number = 0.5,
+	scaleX: number = 1
+) {
+	let scale = originScaleY
+	let t = startTime
+	const timestep = 1000 / frequency
+
+	do {
+		const newScale = amplitude * noise2D(originScaleY, t) + originScaleY
+
+		commandable.ScaleVec(t, t + timestep, new OsbVector2(scaleX, scale), new OsbVector2(scaleX, newScale))
+
+		scale = newScale
+		t += timestep
+	} while (t < endTime)
+}
+
+export function wiggleScaleXY(
+	commandable: Commandable,
+	frequency: number,
+	amplitude: number,
+	startTime: number,
+	endTime: number,
+	originScaleX: number = 0.5,
+	originScaleY: number = 0.5
+) {
+	let scaleX = originScaleX,
+		scaleY = originScaleY
+	let t = startTime
+	const timestep = 1000 / frequency
+
+	do {
+		const newScaleX = amplitude * noise2D(originScaleX, t) + originScaleX,
+			newScaleY = amplitude * noise2D(originScaleY, t) + originScaleY
+
+		commandable.ScaleVec(t, t + timestep, new OsbVector2(scaleX, scaleY), new OsbVector2(newScaleX, newScaleY))
+
+		scaleX = newScaleX
+		scaleY = newScaleY
+		t += timestep
+	} while (t < endTime)
 }
