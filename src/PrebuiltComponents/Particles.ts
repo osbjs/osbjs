@@ -6,7 +6,7 @@ export interface ParticlesOptions {
 	amount?: number
 	startPosition?: OsbVector2
 	endPosition?: OsbVector2
-	axis: 'x' | 'y'
+	axis?: 'x' | 'y'
 	easing?: Easing
 	randomEasing?: boolean
 	fadeInDuration?: number
@@ -33,7 +33,7 @@ export class Particles extends Component {
 		startPosition: new OsbVector2(-107, 0),
 		endPosition: new OsbVector2(747, 480),
 		axis: 'x',
-		easing: Easing.In,
+		easing: Easing.Linear,
 		randomEasing: false,
 		fadeInDuration: 200,
 		fadeOutDuration: 200,
@@ -94,10 +94,10 @@ export class Particles extends Component {
 			if (additive) spr.ParameterAtTime(startTime, Parameter.AdditiveBlending)
 
 			const eas = randomEasing ? Easing[Easing[randInt(0, 34)] as keyof typeof Easing] : easing
-			const startX = axis == 'x' ? randInt(startPosition.x, endPosition.x) : startPosition.x
-			const startY = axis == 'y' ? randInt(startPosition.y, endPosition.y) : startPosition.y
-			const endX = axis == 'x' ? startX : endPosition.x
-			const endY = axis == 'y' ? startY : endPosition.y
+			const startX = axis == 'y' ? randInt(startPosition.x, endPosition.x) : startPosition.x
+			const startY = axis == 'x' ? randInt(startPosition.y, endPosition.y) : startPosition.y
+			const endX = axis == 'y' ? startX : endPosition.x
+			const endY = axis == 'x' ? startY : endPosition.y
 			spr.Move(startTime, endTime, new OsbVector2(startX, startY), new OsbVector2(endX, endY), eas)
 
 			if (fadeInDuration > 0 || fadeOutDuration > 0) {
