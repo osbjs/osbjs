@@ -49,7 +49,7 @@ export class TextureGenerator {
 			bottom: number
 		}
 	): Texture {
-		let texture = this.getTexture(text)
+		let texture = this._getTexture(text)
 		if (texture) return texture
 		const defaultOffset = {
 			top: 0,
@@ -82,7 +82,7 @@ export class TextureGenerator {
 		return texture
 	}
 
-	getTexture(text: string) {
+	private _getTexture(text: string) {
 		return this._cache.find((t) => t.text == text)
 	}
 
