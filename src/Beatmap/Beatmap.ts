@@ -1,16 +1,13 @@
-import { IBeatmapDifficulty } from './Interfaces/IBeatmapDifficulty'
-import { IBeatmapMetadata } from './Interfaces/IBeatmapMetadata'
-import { readFileSync, existsSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
+import { OsbColor } from '../Core'
+import { IBeatmapDifficulty, IBeatmapHitObjects, IBeatmapMetadata, ITimingPoint } from './Interfaces'
 import { getAudioFilename, parseColors, parseDifficulty, parseHitObjects, parseMetadata, parseTimingPoints } from './Utils/ParserHelpers'
-import { IColor } from './Interfaces/IColor'
-import { ITimingPoint } from './Interfaces/ITimingPoint'
-import { IBeatmapHitObjects } from './Interfaces/IBeatmapHitObjects'
 
 export class Beatmap {
 	path: string
 	difficulty: IBeatmapDifficulty
 	metadata: IBeatmapMetadata
-	colors: IColor[]
+	colors: OsbColor[]
 	hitObjects: IBeatmapHitObjects
 	timingPoints: ITimingPoint[]
 	audioFilename: string

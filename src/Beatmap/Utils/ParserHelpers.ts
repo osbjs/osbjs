@@ -1,15 +1,8 @@
-import { IBeatmapDifficulty } from '../Interfaces/IBeatmapDifficulty'
-import { IBeatmapMetadata } from '../Interfaces/IBeatmapMetadata'
-import { ITimingPoint } from '../Interfaces/ITimingPoint'
-import { IColor } from '../Interfaces/IColor'
-import { Spinner } from '../HitObjects/Spinner'
-import { Hitsound } from '../Enums/Hitsound'
-import { IHitSample } from '../Interfaces/IHitSample'
-import { Slider } from '../HitObjects/Slider'
-import { Circle } from '../HitObjects/Circle'
-import { ISliderParams } from '../Interfaces/ISliderParams'
-import { IBeatmapHitObjects } from '../Interfaces'
+import { OsbColor } from '../../Core'
 import { Vector2 } from '../../Math'
+import { Hitsound } from '../Enums'
+import { Circle, Slider, Spinner } from '../HitObjects'
+import { IBeatmapHitObjects, IBeatmapDifficulty, IBeatmapMetadata, IHitSample, ISliderParams, ITimingPoint } from '../Interfaces'
 
 export function parseMetadata(raw: string): IBeatmapMetadata {
 	const title = raw.match(/(?<=Title:)(.*)/)
@@ -25,9 +18,9 @@ export function parseMetadata(raw: string): IBeatmapMetadata {
 	}
 }
 
-export function parseColors(raw: string): IColor[] {
+export function parseColors(raw: string): OsbColor[] {
 	if (raw.match(/\[Colours\]/)) {
-		let colors: IColor[] = []
+		let colors: OsbColor[] = []
 
 		const matches = raw.match(/(?<=Combo[0-9]+ : )(.*)/g)
 
@@ -35,23 +28,14 @@ export function parseColors(raw: string): IColor[] {
 			for (let i = 0; i < matches.length; i++) {
 				const c = matches[i].split(',')
 
-				colors.push({
-					r: parseInt(c[0]),
-					g: parseInt(c[1]),
-					b: parseInt(c[2]),
-				})
+				colors.push(new OsbColor(parseInt(c[0]), parseInt(c[1]), parseInt(c[2])))
 			}
 
 			return colors
 		}
 	}
 
-	return [
-		{ r: 255, g: 192, b: 0 },
-		{ r: 0, g: 202, b: 0 },
-		{ r: 18, g: 124, b: 255 },
-		{ r: 242, g: 24, b: 57 },
-	]
+	return [new OsbColor(255, 192, 0), new OsbColor(0, 202, 0), new OsbColor(18, 124, 255), new OsbColor(242, 24, 57)]
 }
 
 export function parseHitObjects(raw: string): IBeatmapHitObjects {

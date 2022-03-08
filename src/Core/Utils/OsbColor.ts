@@ -20,6 +20,10 @@ export class OsbColor {
 		return rgbToHex(this.r, this.g, this.b)
 	}
 
+	static fromColor(color: IColor): OsbColor {
+		return new OsbColor(color.r, color.g, color.b)
+	}
+
 	static fromHexString(hex: string): OsbColor {
 		const trimmed = hex.replace('#', '')
 		const r = parseInt('0x' + trimmed[0] + trimmed[1]) | 0,
@@ -28,4 +32,10 @@ export class OsbColor {
 
 		return new OsbColor(r, g, b)
 	}
+}
+
+export interface IColor {
+	r: number
+	g: number
+	b: number
 }
