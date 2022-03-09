@@ -20,8 +20,8 @@ export class TextureGenerator {
 		folderPath: string,
 		osbFolderPath: string,
 		fontProps?: {
-			fontSize: number
-			fontName: string
+			fontSize?: number
+			fontName?: string
 		}
 	) {
 		this._cache = []
@@ -43,10 +43,10 @@ export class TextureGenerator {
 			b: number
 		},
 		offset?: {
-			left: number
-			right: number
-			top: number
-			bottom: number
+			left?: number
+			right?: number
+			top?: number
+			bottom?: number
 		}
 	): Texture {
 		let texture = this._getTexture(text)
@@ -57,19 +57,19 @@ export class TextureGenerator {
 			left: 0,
 			right: 0,
 		}
-		offset = { ...defaultOffset, ...offset }
+		const _offset = { ...defaultOffset, ...offset }
 
 		const measure = this._measureText(text)
 		const height =
-			Math.abs(measure.actualBoundingBoxAscent) + Math.abs(measure.actualBoundingBoxDescent) + Math.abs(offset.top) + Math.abs(offset.bottom)
-		const width = measure.width + Math.abs(offset.left) + Math.abs(offset.right)
+			Math.abs(measure.actualBoundingBoxAscent) + Math.abs(measure.actualBoundingBoxDescent) + Math.abs(_offset.top) + Math.abs(_offset.bottom)
+		const width = measure.width + Math.abs(_offset.left) + Math.abs(_offset.right)
 		const canvas = createCanvas(width, height)
 		const ctx = canvas.getContext('2d')
 
 		ctx.font = `${this.fontProps.fontSize}px "${this.fontProps.fontName}"`
 		ctx.textBaseline = 'top'
 		if (color) ctx.fillStyle = rgbToHex(color.r, color.g, color.b)
-		ctx.fillText(text, offset.right, offset.top)
+		ctx.fillText(text, _offset.right, _offset.top)
 
 		const texturePath = path.join(this.folderPath, this.osbFolderPath, `_${this._cache.length}.png`)
 
