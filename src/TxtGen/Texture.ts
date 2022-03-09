@@ -1,4 +1,5 @@
 import { imageSize } from 'image-size'
+import { Layer, Origin, OsbVector2, Sprite } from '../Core'
 
 export class Texture {
 	text: string
@@ -21,5 +22,9 @@ export class Texture {
 
 	private _getHeight(): number {
 		return imageSize(this.path).height ?? 0
+	}
+
+	toSprite(layer: Layer = Layer.Background, origin: Origin = Origin.Center, initialPosition: OsbVector2 = new OsbVector2(320, 240)): Sprite {
+		return new Sprite(this.osbPath, layer, origin, initialPosition)
 	}
 }
