@@ -76,5 +76,6 @@ scene.registerComponents(fl)
 ## Documentation
 Visit [documentation page](https://osbjs.vercel.app)
 
-## Join discord for updates & discussion
-https://discord.gg/t2sHY8TdMA
+## Contributing
+At the moment I cannot accept PRs but if you want to contribute or leave a suggestion then head over to our [discord](https://discord.gg/t2sHY8TdMA).
+
