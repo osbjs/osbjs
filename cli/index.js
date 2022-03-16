@@ -229,6 +229,7 @@ function ensurePackageJson(template = 'common', projectName = '', inSubfolder = 
 		let packageJson = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
 		if (!packageJson.scripts) packageJson.scripts = {}
 		if (!packageJson.scripts.build) packageJson.scripts.build = template == 'ts' ? 'tsc && node dist/.' : 'node .'
+		if (!packageJson.scripts.dev) packageJson.scripts.dev = template == 'ts' ? 'nodemon index.ts' : 'nodemon .'
 		if (template == 'es') packageJson.type = 'module'
 		fs.writeFileSync(pkgPath, JSON.stringify(packageJson), 'utf8')
 		return true
@@ -239,7 +240,7 @@ function ensurePackageJson(template = 'common', projectName = '', inSubfolder = 
 			version: '0.1.0',
 			scripts: {
 				build: template == 'ts' ? 'tsc && node dist/.' : 'node .',
-				dev: 'nodemon .',
+				dev: template == 'ts' ? 'nodemon index.ts' : 'nodemon .',
 			},
 		}
 		if (template == 'es') packageJson.type = 'module'
