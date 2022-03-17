@@ -7,13 +7,33 @@ export class Texture {
 	osbPath: string
 	width: number
 	height: number
+	color: { r: number; g: number; b: number }
+	offset: {
+		left: number
+		right: number
+		top: number
+		bottom: number
+	}
 
-	constructor(text: string, path: string, osbPath: string) {
+	constructor(
+		text: string,
+		path: string,
+		osbPath: string,
+		color: { r: number; g: number; b: number },
+		offset: {
+			left: number
+			right: number
+			top: number
+			bottom: number
+		}
+	) {
 		this.text = text
 		this.path = path
 		this.osbPath = osbPath
 		this.width = this._getWidth()
 		this.height = this._getHeight()
+		this.offset = offset
+		this.color = color
 	}
 
 	private _getWidth(): number {

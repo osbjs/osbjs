@@ -38,9 +38,9 @@ export class TextureGenerator {
 	generateTexture(
 		text: string,
 		color?: {
-			r: number
-			g: number
-			b: number
+			r?: number
+			g?: number
+			b?: number
 		},
 		offset?: {
 			left?: number
@@ -49,15 +49,24 @@ export class TextureGenerator {
 			bottom?: number
 		}
 	): Texture {
-		let texture = this._getTexture(text)
-		if (texture) return texture
 		const defaultOffset = {
-			top: 0,
-			bottom: 0,
-			left: 0,
-			right: 0,
-		}
-		const _offset = { ...defaultOffset, ...offset }
+				top: 0,
+				bottom: 0,
+				left: 0,
+				right: 0,
+			},
+			defaultColor = {
+				r: 0,
+				g: 0,
+				b: 0,
+			}
+		const _offset = { ...defaultOffset, ...offset },
+			_color = {
+				...defaultColor,
+				...color,
+			}
+		let texture = this._getTexture(text, _color, _offset)
+		if (texture) return texture
 
 		const measure = this._measureText(text)
 		const height = measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent + _offset.top + _offset.bottom
@@ -67,7 +76,7 @@ export class TextureGenerator {
 
 		ctx.font = `${this.fontProps.fontSize}px "${this.fontProps.fontName}"`
 		ctx.textBaseline = 'top'
-		if (color) ctx.fillStyle = rgbToHex(color.r, color.g, color.b)
+		ctx.fillStyle = rgbToHex(_color.r, _color.g, _color.b)
 		const x = _offset.left + measure.actualBoundingBoxLeft,
 			y = _offset.top + measure.actualBoundingBoxAscent
 		ctx.fillText(text, x, y)
@@ -76,15 +85,34 @@ export class TextureGenerator {
 
 		this._saveTexture(canvas.toDataURL('image/png'), texturePath)
 
-		texture = new Texture(text, texturePath, path.join(this.osbFolderPath, `_${this._cache.length}.png`))
+		texture = new Texture(text, texturePath, path.join(this.osbFolderPath, `_${this._cache.length}.png`), _color, _offset)
 
 		this._cache.push(texture)
 
 		return texture
 	}
 
-	private _getTexture(text: string) {
-		return this._cache.find((t) => t.text == text)
+	private _getTexture(
+		text: string,
+		color: { r: number; g: number; b: number },
+		offset: {
+			left: number
+			right: number
+			top: number
+			bottom: number
+		}
+	) {
+		return this._cache.find(
+			(t) =>
+				t.text == text &&
+				t.color.r == color.r &&
+				t.color.g == color.g &&
+				t.color.b == color.b &&
+				t.offset.top == offset.top &&
+				t.offset.bottom == offset.bottom &&
+				t.offset.left == offset.left &&
+				t.offset.right == offset.right
+		)
 	}
 
 	/** alias for fs-extra' `emptyDirSync` */
