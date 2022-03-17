@@ -37,18 +37,27 @@ export class TextureGenerator {
 
 	generateTexture(
 		text: string,
-		withBoundingBox: boolean = false,
-		color?: {
+		color: {
 			r?: number
 			g?: number
 			b?: number
+		} = {
+			r: 0,
+			g: 0,
+			b: 0,
 		},
-		offset?: {
+		offset: {
 			left?: number
 			right?: number
 			top?: number
 			bottom?: number
-		}
+		} = {
+			top: 0,
+			bottom: 0,
+			left: 0,
+			right: 0,
+		},
+		withBoundingBox: boolean = false
 	): Texture {
 		const defaultOffset = {
 				top: 0,
@@ -82,8 +91,8 @@ export class TextureGenerator {
 		ctx.font = `${this.fontProps.fontSize}px "${this.fontProps.fontName}"`
 		ctx.textBaseline = 'top'
 		ctx.fillStyle = rgbToHex(_color.r, _color.g, _color.b)
-		const x = _offset.left + measure.actualBoundingBoxLeft,
-			y = _offset.top + measure.actualBoundingBoxAscent
+		const x = !withBoundingBox ? _offset.left + measure.actualBoundingBoxLeft : _offset.left,
+			y = !withBoundingBox ? _offset.top + measure.actualBoundingBoxAscent : _offset.top
 		ctx.fillText(text, x, y)
 
 		const texturePath = path.join(this.folderPath, this.osbFolderPath, `_${this._cache.length}.png`)
@@ -127,13 +136,18 @@ export class TextureGenerator {
 
 	getTextDimensions(
 		text: string,
-		withBoundingBox: boolean = false,
-		offset?: {
+		offset: {
 			left?: number
 			right?: number
 			top?: number
 			bottom?: number
-		}
+		} = {
+			top: 0,
+			bottom: 0,
+			left: 0,
+			right: 0,
+		},
+		withBoundingBox: boolean = false
 	) {
 		const defaultOffset = {
 			top: 0,
