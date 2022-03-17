@@ -120,6 +120,29 @@ export class TextureGenerator {
 		emptyDirSync(path.join(this.folderPath, this.osbFolderPath))
 	}
 
+	getTextDimensions(
+		text: string,
+		offset?: {
+			left?: number
+			right?: number
+			top?: number
+			bottom?: number
+		}
+	) {
+		const defaultOffset = {
+			top: 0,
+			bottom: 0,
+			left: 0,
+			right: 0,
+		}
+		const _offset = { ...defaultOffset, ...offset }
+		const measure = this._measureText(text)
+		const height = measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent + _offset.top + _offset.bottom
+		const width = measure.actualBoundingBoxLeft + measure.actualBoundingBoxRight + _offset.left + _offset.right
+
+		return { width, height }
+	}
+
 	private _measureText(text: string): TextMetrics {
 		const canvas = createCanvas(5000, 5000)
 		const ctx = canvas.getContext('2d')
