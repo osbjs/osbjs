@@ -37,6 +37,7 @@ export class TextureGenerator {
 
 	generateTexture(
 		text: string,
+		withBoundingBox: boolean = false,
 		color?: {
 			r?: number
 			g?: number
@@ -69,8 +70,12 @@ export class TextureGenerator {
 		if (texture) return texture
 
 		const measure = this._measureText(text)
-		const height = measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent + _offset.top + _offset.bottom
-		const width = measure.actualBoundingBoxLeft + measure.actualBoundingBoxRight + _offset.left + _offset.right
+		const height = !withBoundingBox
+			? measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent + _offset.top + _offset.bottom
+			: Math.abs(measure.actualBoundingBoxAscent) + measure.actualBoundingBoxDescent + _offset.top + _offset.bottom
+		const width = !withBoundingBox
+			? measure.actualBoundingBoxLeft + measure.actualBoundingBoxRight + _offset.left + _offset.right
+			: Math.abs(measure.actualBoundingBoxLeft) + measure.actualBoundingBoxRight + _offset.left + _offset.right
 		const canvas = createCanvas(width, height)
 		const ctx = canvas.getContext('2d')
 
@@ -122,6 +127,7 @@ export class TextureGenerator {
 
 	getTextDimensions(
 		text: string,
+		withBoundingBox: boolean = false,
 		offset?: {
 			left?: number
 			right?: number
@@ -137,8 +143,12 @@ export class TextureGenerator {
 		}
 		const _offset = { ...defaultOffset, ...offset }
 		const measure = this._measureText(text)
-		const height = measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent + _offset.top + _offset.bottom
-		const width = measure.actualBoundingBoxLeft + measure.actualBoundingBoxRight + _offset.left + _offset.right
+		const height = !withBoundingBox
+			? measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent + _offset.top + _offset.bottom
+			: Math.abs(measure.actualBoundingBoxAscent) + measure.actualBoundingBoxDescent + _offset.top + _offset.bottom
+		const width = !withBoundingBox
+			? measure.actualBoundingBoxLeft + measure.actualBoundingBoxRight + _offset.left + _offset.right
+			: Math.abs(measure.actualBoundingBoxLeft) + measure.actualBoundingBoxRight + _offset.left + _offset.right
 
 		return { width, height }
 	}
