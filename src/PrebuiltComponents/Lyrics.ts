@@ -52,7 +52,7 @@ export class Lyrics extends Component {
 
 				for (let i = 0; i < line.length; i++) {
 					const letter = line[i]
-					let texture = this._textureGenerator.generateTexture(letter, this.options.color)
+					let texture = this._textureGenerator.generateTexture(letter, true, this.options.color)
 					lineWidth += texture.width * this.options.fontScale
 					lineHeight = Math.max(lineHeight, texture.height * this.options.fontScale)
 				}
@@ -61,7 +61,7 @@ export class Lyrics extends Component {
 
 				for (let i = 0; i < line.length; i++) {
 					const letter = line[i]
-					let texture = this._textureGenerator.generateTexture(letter, this.options.color)
+					let texture = this._textureGenerator.generateTexture(letter, true, this.options.color)
 
 					let position = new OsbVector2(letterX, letterY)
 
@@ -84,7 +84,7 @@ export class Lyrics extends Component {
 
 	private _generatePerLine() {
 		this._subtitleCollection.subtitles.forEach((line) => {
-			let texture = this._textureGenerator.generateTexture(line.text, this.options.color)
+			let texture = this._textureGenerator.generateTexture(line.text, true, this.options.color)
 			let position = new OsbVector2(320, this.options.y)
 
 			let sprite = new Sprite(texture.osbPath, Layer.Background, Origin.Center, position)
