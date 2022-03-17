@@ -46,9 +46,9 @@ export class MyLyrics extends Component {
 
 				for (let i = 0; i < line.length; i++) {
 					const letter = line[i]
-					let texture = this._textureGenerator.generateTexture(letter, this.options.color)
-					lineWidth += texture.width * this.options.fontScale
-					lineHeight = Math.max(lineHeight, texture.height * this.options.fontScale)
+					let { width, height } = this._textureGenerator.getTextDimensions(letter, {}, true)
+					lineWidth += width * this.options.fontScale
+					lineHeight = Math.max(lineHeight, height * this.options.fontScale)
 				}
 
 				let letterX = 320 - lineWidth * 0.5
