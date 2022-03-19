@@ -1,3 +1,5 @@
+import imageSize from 'image-size'
+
 export { OsbColor, IColor } from './OsbColor'
 export { OsbVector2 } from './OsbVector2'
 export { SubtitleCollection } from './SubtitleCollection'
@@ -22,4 +24,10 @@ export function parseOsuTimestamp(timestamp: string): number {
 	const milliseconds = parseInt(match[3], 10)
 
 	return minutes + seconds + milliseconds
+}
+
+/** alias for imageSize */
+export function getImageDimensions(path: string) {
+	const { width, height } = imageSize(path)
+	return { width, height }
 }
