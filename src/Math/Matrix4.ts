@@ -336,11 +336,14 @@ export class Matrix4 {
 		)
 	}
 
-	static decompose(m: Matrix4, scale: Vector3, rotation: Quaternion, translation: Vector3): boolean {
-		if (!(scale instanceof Vector3)) scale = new Vector3()
-		if (!(translation instanceof Vector3)) translation = new Vector3()
-
+	static decompose(m: Matrix4): {
+		scale: Vector3
+		rotation: Quaternion | undefined
+		translation: Vector3
+	} {
 		// extract scale
+		const scale = new Vector3()
+
 		const xAxis = new Vector3(m.m11, m.m12, m.m13),
 			yAxis = new Vector3(m.m21, m.m22, m.m23),
 			zAxis = new Vector3(m.m31, m.m31, m.m33)
@@ -350,6 +353,8 @@ export class Matrix4 {
 		scale.z = zAxis.length()
 
 		// extract translation
+		const translation = new Vector3()
+
 		translation.x = m.m41
 		translation.y = m.m42
 		translation.z = m.m43
@@ -369,13 +374,9 @@ export class Matrix4 {
 		mTemp.m32 /= scale.z
 		mTemp.m33 /= scale.z
 
-		if (Math.abs(mTemp.det()) < Number.EPSILON) {
-			rotation = Quaternion.Identity
-			return false
-		} else {
-			rotation = Quaternion.createFromRotationMatrix(mTemp)
-			return true
-		}
+		const rotation = Quaternion.createFromRotationMatrix(mTemp)
+
+		return { scale, translation, rotation }
 	}
 
 	static lerp(m1: Matrix4, m2: Matrix4, alpha: number): Matrix4 {
@@ -691,9 +692,9 @@ export class Matrix4 {
 		result.m33 = v.z
 
 		if (center) {
-			result.m41 = center.x * (1 - v.x);
-			result.m42 = center.y * (1 - v.y);
-			result.m43 = center.z * (1 - v.z);
+			result.m41 = center.x * (1 - v.x)
+			result.m42 = center.y * (1 - v.y)
+			result.m43 = center.z * (1 - v.z)
 		}
 
 		return result
@@ -707,9 +708,9 @@ export class Matrix4 {
 		result.m33 = s
 
 		if (center) {
-			result.m41 = center.x * (1 - s);
-			result.m42 = center.y * (1 - s);
-			result.m43 = center.z * (1 - s);
+			result.m41 = center.x * (1 - s)
+			result.m42 = center.y * (1 - s)
+			result.m43 = center.z * (1 - s)
 		}
 
 		return result
