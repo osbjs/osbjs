@@ -9,10 +9,10 @@ export class Vector3 {
 	z: number
 
 	static One: Vector3 = new Vector3(1, 1, 1)
-	static Unitx: Vector3 = new Vector3(1, 0, 0)
-	static Unity: Vector3 = new Vector3(0, 1, 0)
-	static Unitz: Vector3 = new Vector3(0, 0, 1)
-	static zero: Vector3 = new Vector3()
+	static UnitX: Vector3 = new Vector3(1, 0, 0)
+	static UnitY: Vector3 = new Vector3(0, 1, 0)
+	static UnitZ: Vector3 = new Vector3(0, 0, 1)
+	static Zero: Vector3 = new Vector3()
 
 	constructor(x: number = 0, y: number = 0, z: number = 0) {
 		this.x = x

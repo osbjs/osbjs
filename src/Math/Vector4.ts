@@ -8,11 +8,11 @@ export class Vector4 {
 	w: number
 
 	static One: Vector4 = new Vector4(1, 1, 1, 1)
-	static Unitx: Vector4 = new Vector4(1, 0, 0, 0)
-	static Unity: Vector4 = new Vector4(0, 1, 0, 0)
-	static Unitz: Vector4 = new Vector4(0, 0, 1, 0)
-	static Unitw: Vector4 = new Vector4(0, 0, 0, 1)
-	static zero: Vector4 = new Vector4()
+	static UnitX: Vector4 = new Vector4(1, 0, 0, 0)
+	static UnitY: Vector4 = new Vector4(0, 1, 0, 0)
+	static UnitZ: Vector4 = new Vector4(0, 0, 1, 0)
+	static UnitW: Vector4 = new Vector4(0, 0, 0, 1)
+	static Zero: Vector4 = new Vector4()
 
 	constructor(x: number = 0, y: number = 0, z: number = 0, w: number = 1) {
 		this.x = x

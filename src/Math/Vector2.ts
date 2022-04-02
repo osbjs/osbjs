@@ -6,9 +6,9 @@ export class Vector2 {
 	x: number
 	y: number
 	static One: Vector2 = new Vector2(1, 1)
-	static Unitx: Vector2 = new Vector2(1, 0)
-	static Unity: Vector2 = new Vector2(0, 1)
-	static zero: Vector2 = new Vector2()
+	static UnitX: Vector2 = new Vector2(1, 0)
+	static UnitY: Vector2 = new Vector2(0, 1)
+	static Zero: Vector2 = new Vector2()
 
 	constructor(x: number = 0, y: number = 0) {
 		this.x = x
