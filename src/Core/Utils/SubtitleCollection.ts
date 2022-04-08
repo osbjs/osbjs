@@ -13,12 +13,18 @@ export class SubtitleCollection {
 	private _getSubtitles(): ISubtitle[] {
 		const input = readFileSync(this.path, 'utf8')
 
-		let data = parseSync(input)
-		return data
-			.filter((s) => s.type == 'cue')
-			.map((s) => {
-				/** @ts-ignore */
-				return { startTime: s.data.start, endTime: s.data.end, text: s.data.text }
-			})
+		if (this.path.match(/.*\.(srt|vtt)$/)) {
+			let data = parseSync(input)
+			return data
+				.filter((s) => s.type == 'cue')
+				.map((s) => {
+					/** @ts-ignore */
+					return { startTime: s.data.start, endTime: s.data.end, text: s.data.text }
+				})
+		} else if (this.path.match(/.*\.json$/)) {
+			return JSON.parse(input)
+		} else {
+			throw new Error('Unsupported file type')
+		}
 	}
 }
