@@ -30,3 +30,7 @@ export function interpolate(x: number, xMin: number, xMax: number, yMin: number,
 export function normalize(x: number, max: number, min: number): number {
 	return (x - min) / (max - min)
 }
+
+export function precise(x: number, precision: number = 5) {
+	return Number(x.toPrecision(precision))
+}
