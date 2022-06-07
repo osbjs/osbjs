@@ -1,0 +1,5 @@
+export * from './IHitObjectHighlightOptions'
+export * from './IBackgroundOptions'
+export * from './IParticlesOptions'
+export * from './ILyricsOptions'
+export * from './IFontOptions'

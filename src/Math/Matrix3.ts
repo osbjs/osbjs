@@ -47,7 +47,10 @@ export class Matrix3 {
 		this.translation = new Vector2(m31, m32)
 	}
 
-	determinant(): number {
+	/**
+	 * Calculates the determinant for this matrix.
+	 */
+	determinant() {
 		return (
 			this.m11 * this.m22 * this.m33 +
 			this.m12 * this.m23 * this.m31 +
@@ -58,10 +61,16 @@ export class Matrix3 {
 		)
 	}
 
-	det(): number {
+	/**
+	 * Calculates the determinant for this matrix.
+	 */
+	det() {
 		return this.determinant()
 	}
 
+	/**
+	 * Returns a value that indicates whether this instance and another 3x3 matrix are equal.
+	 */
 	equals(m: Matrix3): boolean {
 		return (
 			this.m11 == m.m11 &&
@@ -76,10 +85,16 @@ export class Matrix3 {
 		)
 	}
 
+	/**
+	 * Returns a new Matrix3 and with identical elements to this one.
+	 */
 	clone(): Matrix3 {
 		return new Matrix3(this.m11, this.m12, this.m13, this.m21, this.m22, this.m23, this.m31, this.m32, this.m33)
 	}
 
+	/**
+	 * Adds each element in one matrix with its corresponding element in a second matrix.
+	 */
 	static add(m1: Matrix3, m2: Matrix3): Matrix3 {
 		const result = new Matrix3()
 
@@ -98,6 +113,9 @@ export class Matrix3 {
 		return result
 	}
 
+	/**
+	 * Subtracts each element in a second matrix from its corresponding element in a first matrix.
+	 */
 	static sub(m1: Matrix3, m2: Matrix3): Matrix3 {
 		const result = new Matrix3()
 
@@ -116,6 +134,9 @@ export class Matrix3 {
 		return result
 	}
 
+	/**
+	 * Returns the matrix that results from multiplying two matrices together.
+	 */
 	static multiply(m1: Matrix3, m2: Matrix3): Matrix3 {
 		const result = new Matrix3()
 
@@ -134,6 +155,9 @@ export class Matrix3 {
 		return result
 	}
 
+	/**
+	 * Returns the matrix that results from scaling all the elements of a specified matrix by a scalar factor.
+	 */
 	static multiplyScalar(m: Matrix3, s: number): Matrix3 {
 		// prettier-ignore
 		return new Matrix3(
@@ -143,6 +167,9 @@ export class Matrix3 {
 		)
 	}
 
+	/**
+	 * Transposes the rows and columns of a matrix.
+	 */
 	static transpose(m: Matrix3): Matrix3 {
 		// prettier-ignore
 		return new Matrix3(
@@ -152,6 +179,9 @@ export class Matrix3 {
 		)
 	}
 
+	/**
+	 * Inverts the specified matrix. The return value indicates whether the operation succeeded.
+	 */
 	static invert(m: Matrix3, result: Matrix3): boolean {
 		if (Math.abs(m.det()) < Number.EPSILON) {
 			result = new Matrix3(0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -173,6 +203,9 @@ export class Matrix3 {
 		return true
 	}
 
+	/**
+	 * Negates the specified matrix by multiplying all its values by -1.
+	 */
 	static negate(m: Matrix3): Matrix3 {
 		// prettier-ignore
 		return new Matrix3(
@@ -182,6 +215,9 @@ export class Matrix3 {
 		)
 	}
 
+	/**
+	 * Performs a linear interpolation from one matrix to a second matrix based on a value that specifies the weighting of the second matrix.
+	 */
 	static lerp(m1: Matrix3, m2: Matrix3, alpha: number): Matrix3 {
 		const result = new Matrix3()
 
@@ -200,6 +236,9 @@ export class Matrix3 {
 		return result
 	}
 
+	/**
+	 * Creates a translation matrix from the specified 2-dimensional vector.
+	 */
 	static createTranslation(v: Vector2): Matrix3 {
 		const result = new Matrix3()
 
@@ -209,6 +248,9 @@ export class Matrix3 {
 		return result
 	}
 
+	/**
+	 * Creates a rotation matrix using the given rotation in radians and a center point (if specified).
+	 */
 	static createRotation(angle: number, center?: Vector2): Matrix3 {
 		const c = Math.cos(angle),
 			s = Math.sin(angle)
@@ -229,6 +271,9 @@ export class Matrix3 {
 		return result
 	}
 
+	/**
+	 * Creates a scaling matrix from the specified vector scale and a center point (if specified).
+	 */
 	static createScaleVec(v: Vector2, center?: Vector2): Matrix3 {
 		const result = new Matrix3()
 
@@ -244,6 +289,9 @@ export class Matrix3 {
 		return result
 	}
 
+	/**
+	 * Creates a scaling matrix that scales uniformly with the given scale and a center point (if specified).
+	 */
 	static createScaleScalar(s: number, center?: Vector2): Matrix3 {
 		const result = new Matrix3()
 
@@ -259,6 +307,9 @@ export class Matrix3 {
 		return result
 	}
 
+	/**
+	 * Creates a skew matrix from the specified angles in radians and a center point (if specified).
+	 */
 	static createSkew(angleX: number, angleY: number, center?: Vector2): Matrix3 {
 		const result = new Matrix3()
 

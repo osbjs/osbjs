@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { Layer } from '../Enums'
 import { Animation, Component, Sample, Sprite } from '../Components'
-import { IStoryboardLayers } from '../Types'
+import { IStoryboardLayers } from '../Interfaces'
 import { green } from 'chalk'
 import { join } from 'path'
 
@@ -76,6 +76,11 @@ export class Storyboard {
 		}
 	}
 
+	/**
+	 * Register components to this storyboard. You can supply as many components as you want.
+	 * Note: later component will have higher z-index therefore it might appear on top of earlier components if their active time overlap.
+	 * @param components Component instances
+	 */
 	registerComponents(...components: Component[]) {
 		components.forEach((component) => {
 			component.generate()
@@ -83,6 +88,9 @@ export class Storyboard {
 		})
 	}
 
+	/**
+	 * Generate storyboard. Call this after every component is registered.
+	 */
 	generate() {
 		if (!existsSync(this.path)) mkdirSync(this.path, { recursive: true })
 		writeFileSync(join(this.path, this.filename), this.getOsbString())

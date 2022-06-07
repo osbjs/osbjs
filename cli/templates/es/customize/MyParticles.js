@@ -66,7 +66,7 @@ export class MyParticles extends Component {
 			if (color.r < 1 || color.b < 1 || color.g < 1) spr.ColorAtTime(startTime, color)
 			if (startScale == endScale && startScale != 1) spr.ScaleAtTime(startTime, startScale)
 			if (startRotation == endRotation && startRotation != 0) spr.RotateAtTime(startTime, degToRad(startRotation))
-			if (additive) spr.ParameterAtTime(startTime, Parameter.AdditiveBlending)
+			if (additive) spr.Parameter(startTime, Parameter.AdditiveBlending)
 
 			const eas = randomEasing ? Easing[Easing[randInt(0, 34)]] : easing
 			const startX = axis == 'x' ? randInt(startPosition.x, endPosition.x) : startPosition.x

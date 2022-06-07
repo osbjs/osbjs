@@ -16,6 +16,9 @@ export class DiffSpecificStoryboard extends Storyboard {
 		return str
 	}
 
+	/**
+	 * Generate storyboard. Call this after every component is registered.
+	 */
 	override generate() {
 		if (!existsSync(this.path) || !existsSync(join(this.path, this.filename))) throw new Error("Beatmap doesn't exists")
 		let beatmap = readFileSync(join(this.path, this.filename), 'utf-8')

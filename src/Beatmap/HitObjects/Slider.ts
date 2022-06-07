@@ -1,15 +1,8 @@
-import { BezierCurve } from '../Curves/BezierCurve'
-import { CatmullCurve } from '../Curves/CatmullCurve'
-import { BezierCurveGroup } from '../Curves/BezierCurveGroup'
-import { Curve } from '../Curves/Curve'
-import { CurveType } from '../Enums'
-import { Hitsound } from '../Enums/Hitsound'
-import { IHitSample } from '../Interfaces/IHitSample'
-import { ISliderParams } from '../Interfaces/ISliderParams'
-import { HitObject } from './HitObject'
-import { ITimingPoint } from '../Interfaces'
-import { CircleCurve } from '../Curves/CircleCurve'
 import { Vector2 } from '../../Math'
+import { Curve, CircleCurve, CatmullCurve, BezierCurveGroup, BezierCurve } from '../Curves'
+import { CurveType, Hitsound } from '../Enums'
+import { IHitSample, ISliderParams, ITimingPoint } from '../Interfaces'
+import { HitObject } from './HitObject'
 
 export class Slider extends HitObject {
 	params: ISliderParams

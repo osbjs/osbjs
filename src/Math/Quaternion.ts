@@ -18,47 +18,80 @@ export class Quaternion {
 		this.isIdentity = x === 0 && y === 0 && z === 0 && w === 1
 	}
 
+	/**
+	 * Compares the x, y, z and w properties of q to the equivalent properties of this quaternion to determine if they represent the same rotation.
+	 */
 	equals(q: Quaternion): boolean {
 		return this.x === q.x && this.y === q.y && this.z === q.z && this.w === q.w
 	}
 
+	/**
+	 * Returns a new Quaternion with identical x, y, z and w properties to this one.
+	 */
 	clone(): Quaternion {
 		return new Quaternion(this.x, this.y, this.z, this.w)
 	}
 
+	/**
+	 * Returns the angle between this quaternion and quaternion q in radians.
+	 */
 	angleTo(q: Quaternion): number {
 		return 2 * Math.acos(Math.abs(clamp(Quaternion.dot(this, q), -1, 1)))
 	}
 
+	/**
+	 * Computes the Euclidean length (straight-line length) of this quaternion, considered as a 4 dimensional vector.
+	 */
 	length(): number {
 		return Math.sqrt(this.lengthSqr())
 	}
 
+	/**
+	 * Computes the squared Euclidean length (straight-line length) of this quaternion, considered as a 4 dimensional vector.
+	 */
 	lengthSqr(): number {
 		return this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w
 	}
 
+	/**
+	 * Returns dot product of 2 quaternions.
+	 */
 	static dot(q1: Quaternion, q2: Quaternion): number {
 		return q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w
 	}
 
+	/**
+	 * Adds each element in one quaternion with its corresponding element in a second quaternion.
+	 */
 	static add(q1: Quaternion, q2: Quaternion): Quaternion {
 		return new Quaternion(q1.x + q2.x, q1.y + q2.y, q1.z + q2.z, q1.w + q2.w)
 	}
 
+	/**
+	 * Subtracts each element in a second quaternion from its corresponding element in a first quaternion.
+	 */
 	static sub(v1: Quaternion, v2: Quaternion): Quaternion {
 		return new Quaternion(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, v1.w - v2.w)
 	}
 
+	/**
+	 * Returns the conjugate of a specified quaternion.
+	 */
 	static conjugate(q: Quaternion): Quaternion {
 		return new Quaternion(q.x * -1, q.y * -1, q.z * -1, q.w)
 	}
 
+	/**
+	 * Returns the inverse of a quaternion.
+	 */
 	static invert(q: Quaternion): Quaternion {
 		// quaternion is assumed to have unit length
 		return Quaternion.conjugate(q)
 	}
 
+	/**
+	 * Divides each component of a specified Quaternion by its length.
+	 */
 	static normalize(q: Quaternion): Quaternion {
 		let l = q.length()
 
@@ -81,6 +114,9 @@ export class Quaternion {
 		return result
 	}
 
+	/**
+	 * Returns the quaternion that results from multiplying two quaternions together.
+	 */
 	static multiply(q1: Quaternion, q2: Quaternion): Quaternion {
 		const qax = q1.x,
 			qay = q1.y,
@@ -101,10 +137,16 @@ export class Quaternion {
 		return result
 	}
 
+	/**
+	 * Returns the quaternion that results from scaling all the components of a specified quaternion by a scalar factor.
+	 */
 	static multiplyScalar(q: Quaternion, s: number): Quaternion {
 		return new Quaternion(q.x * s, q.y * s, q.z * s, q.w * s)
 	}
 
+	/**
+	 * Divides one quaternion by a second quaternion.
+	 */
 	static divide(q1: Quaternion, q2: Quaternion): Quaternion {
 		let result = new Quaternion()
 
@@ -129,6 +171,9 @@ export class Quaternion {
 		return result
 	}
 
+	/**
+	 * Interpolates between two quaternions, using spherical linear interpolation.
+	 */
 	static slerp(q1: Quaternion, q2: Quaternion, t: number): Quaternion {
 		if (t === 0) return q1.clone()
 		if (t === 1) return q2.clone()
@@ -188,6 +233,11 @@ export class Quaternion {
 		return result
 	}
 
+	/**
+	 * Linearly interpolate between 2 quaternions,
+	 * where alpha is the percent distance along the line - alpha = 0 will be this vector,
+	 * and alpha = 1 will be v.
+	 */
 	static lerp(q1: Quaternion, q2: Quaternion, t: number): Quaternion {
 		const t1 = 1 - t
 
@@ -210,6 +260,9 @@ export class Quaternion {
 		return Quaternion.normalize(q)
 	}
 
+	/**
+	 * Concatenates two quaternions.
+	 */
 	static concat(q1: Quaternion, q2: Quaternion): Quaternion {
 		let result = new Quaternion()
 
@@ -235,10 +288,16 @@ export class Quaternion {
 		return result
 	}
 
+	/**
+	 * Reverses the sign of each component of the quaternion.
+	 */
 	static negate(q: Quaternion): Quaternion {
 		return new Quaternion(-q.x, -q.y, -q.z, -q.w)
 	}
 
+	/**
+	 * Creates a quaternion from a unit vector and an angle to rotate around the vector.
+	 */
 	static createFromAxisAngle(axis: Vector3, angle: number): Quaternion {
 		const halfAngle = angle / 2,
 			s = Math.sin(halfAngle),
@@ -254,6 +313,9 @@ export class Quaternion {
 		return result
 	}
 
+	/**
+	 * Creates a quaternion from the specified rotation matrix.
+	 */
 	static createFromRotationMatrix(m: Matrix4): Quaternion {
 		const result = new Quaternion()
 
@@ -298,6 +360,12 @@ export class Quaternion {
 		return result
 	}
 
+	/**
+	 * Creates a new quaternion from the given yaw, pitch, and roll.
+	 * @param yaw Angle of rotation, in radians, around the Y-axis.
+	 * @param pitch Angle of rotation, in radians, around the X-axis.
+	 * @param roll Angle of rotation, in radians, around the Z-axis.
+	 */
 	static createFromYawPitchRoll(yaw: number, pitch: number, roll: number): Quaternion {
 		let sr, cr, sp, cp, sy, cy
 

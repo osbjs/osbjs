@@ -1,4 +1,5 @@
 import { rgbToHex } from '.'
+import { IColor } from '../Interfaces'
 
 export class OsbColor {
 	r: number
@@ -32,10 +33,4 @@ export class OsbColor {
 
 		return new OsbColor(r, g, b)
 	}
-}
-
-export interface IColor {
-	r: number
-	g: number
-	b: number
 }

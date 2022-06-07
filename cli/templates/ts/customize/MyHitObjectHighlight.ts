@@ -10,6 +10,7 @@ import {
 	Sprite,
 	OsbVector2,
 	parseOsuTimestamp,
+	IHitObjectHighlight,
 } from '@osbjs/osbjs'
 
 export class MyHitObjectHighlight extends Component {
@@ -21,8 +22,8 @@ export class MyHitObjectHighlight extends Component {
 	circles: Circle[]
 	sliders: Slider[]
 	beat: number
-	options: HitObjectHighlightOptions = { startScale: 1, endScale: 1.2, fadeDuration: 200, beatDivisor: 8, followSliderPath: true }
-	constructor(osbPath: string, startTime: number | string, endTime: number | string, beatmap: Beatmap, options?: HitObjectHighlightOptions) {
+	options = { startScale: 1, endScale: 1.2, fadeDuration: 200, beatDivisor: 8, followSliderPath: true }
+	constructor(osbPath: string, startTime: number | string, endTime: number | string, beatmap: Beatmap, options?: IHitObjectHighlightOptions) {
 		super()
 		this.osbPath = osbPath
 		this.beatmap = beatmap
@@ -82,10 +83,6 @@ export class MyHitObjectHighlight extends Component {
 	}
 }
 
-export interface HitObjectHighlightOptions {
-	endScale: number
-	startScale: number
-	fadeDuration: number
-	beatDivisor: number
-	followSliderPath: boolean
+export interface MyHitObjectHighlightOptions extends IHitObjectHighlightOptions {
+	// your options here
 }

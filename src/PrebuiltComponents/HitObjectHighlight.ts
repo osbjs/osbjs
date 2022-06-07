@@ -1,6 +1,7 @@
 import { Vector2 } from '../Math'
 import { Component, Easing, Layer, Sprite, OsbVector2, parseOsuTimestamp } from '../Core'
 import { Beatmap, Circle, Slider, PlayfieldToStoryboardOffset } from '../Beatmap'
+import { IHitObjectHighlightOptions } from './Interfaces'
 
 export class HitObjectHighlight extends Component {
 	name = 'HitObjectHighlight'
@@ -18,7 +19,17 @@ export class HitObjectHighlight extends Component {
 		beatDivisor: 8,
 		followSliderPath: true,
 	}
-	constructor(osbPath: string, startTime: number | string, endTime: number | string, beatmap: Beatmap, options?: HitObjectHighlightOptions) {
+
+	/**
+	 * Highlight every objects inbetween start and end time.
+	 * @param osbPath relative path to image file.
+	 * For example, if you have a folder named `sb` inside your beatmap folder and your `hl.png` is in it, then it should be `sb/hl.png`
+	 * @param startTime times in milliseconds/timestamp indicate the start time of the section you want to highlight.
+	 * @param endTime times in milliseconds/timestamp indicate the end time of the section you want to highlight.
+	 * @param beatmap `Beatmap` instance of difficulty you want to use
+	 * @param options Additional options.
+	 */
+	constructor(osbPath: string, startTime: number | string, endTime: number | string, beatmap: Beatmap, options?: IHitObjectHighlightOptions) {
 		super()
 		this.osbPath = osbPath
 		this.beatmap = beatmap
@@ -76,12 +87,4 @@ export class HitObjectHighlight extends Component {
 			this.registerComponents(sprite)
 		})
 	}
-}
-
-export interface HitObjectHighlightOptions {
-	endScale?: number
-	startScale?: number
-	fadeDuration?: number
-	beatDivisor?: number
-	followSliderPath?: boolean
 }

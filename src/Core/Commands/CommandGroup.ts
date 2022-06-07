@@ -80,10 +80,6 @@ export abstract class CommandGroup {
 		this.commands.push(new Command('P', Easing.Linear, startTime, endTime, parameter, parameter))
 	}
 
-	ParameterAtTime(time: number | string, parameter: Parameter) {
-		this.commands.push(new Command('P', Easing.Linear, time, time, parameter, parameter))
-	}
-
 	getOsbString(): string {
 		let str: string = this.header
 		this.commands.forEach((command) => {

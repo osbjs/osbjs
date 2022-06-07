@@ -66,6 +66,9 @@ export class Matrix4 {
 		this.translation = new Vector3(m41, m42, m43)
 	}
 
+	/**
+	 * Calculates the determinant for this matrix.
+	 */
 	determinant(): number {
 		const a = this.m11,
 			b = this.m12,
@@ -99,10 +102,16 @@ export class Matrix4 {
 		)
 	}
 
+	/**
+	 * Calculates the determinant for this matrix.
+	 */
 	det(): number {
 		return this.determinant()
 	}
 
+	/**
+	 * Returns a value that indicates whether this instance and another 3x3 matrix are equal.
+	 */
 	equals(m: Matrix4): boolean {
 		return (
 			this.m11 == m.m11 &&
@@ -124,6 +133,9 @@ export class Matrix4 {
 		)
 	}
 
+	/**
+	 * Returns a new Matrix3 and with identical elements to this one.
+	 */
 	clone(): Matrix4 {
 		// prettier-ignore
 		return new Matrix4(
@@ -134,6 +146,9 @@ export class Matrix4 {
 		)
 	}
 
+	/**
+	 * Returns a new Matrix4 which its upper 3x3 elements is the values if the given Matrix3.
+	 */
 	static fromMat3(m: Matrix3): Matrix4 {
 		const result = new Matrix4()
 
@@ -152,6 +167,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Adds each element in one matrix with its corresponding element in a second matrix.
+	 */
 	static add(m1: Matrix4, m2: Matrix4): Matrix4 {
 		const result = new Matrix4()
 
@@ -178,6 +196,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Subtracts each element in a second matrix from its corresponding element in a first matrix.
+	 */
 	static sub(m1: Matrix4, m2: Matrix4): Matrix4 {
 		const result = new Matrix4()
 
@@ -204,6 +225,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Returns the matrix that results from multiplying two matrices together.
+	 */
 	static multiply(m1: Matrix4, m2: Matrix4): Matrix4 {
 		const result = new Matrix4()
 
@@ -230,6 +254,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Returns the matrix that results from scaling all the elements of a specified matrix by a scalar factor.
+	 */
 	static multiplyScalar(m: Matrix4, s: number): Matrix4 {
 		// prettier-ignore
 		return new Matrix4(
@@ -240,6 +267,9 @@ export class Matrix4 {
 		)
 	}
 
+	/**
+	 * Transposes the rows and columns of a matrix.
+	 */
 	static transpose(m: Matrix4): Matrix4 {
 		// prettier-ignore
 		return new Matrix4(
@@ -250,6 +280,9 @@ export class Matrix4 {
 		)
 	}
 
+	/**
+	 * Inverts the specified matrix. The return value indicates whether the operation succeeded.
+	 */
 	static invert(mat: Matrix4, result: Matrix4): boolean {
 		if (Math.abs(mat.det()) < Number.EPSILON) {
 			result = new Matrix4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -326,6 +359,9 @@ export class Matrix4 {
 		return true
 	}
 
+	/**
+	 * Negates the specified matrix by multiplying all its values by -1.
+	 */
 	static negate(m: Matrix4): Matrix4 {
 		// prettier-ignore
 		return new Matrix4(
@@ -336,9 +372,12 @@ export class Matrix4 {
 		)
 	}
 
+	/**
+	 * Decomposes this matrix into its position, quaternion and scale components.
+	 */
 	static decompose(m: Matrix4): {
 		scale: Vector3
-		rotation: Quaternion | undefined
+		rotation: Quaternion
 		translation: Vector3
 	} {
 		// extract scale
@@ -379,6 +418,9 @@ export class Matrix4 {
 		return { scale, translation, rotation }
 	}
 
+	/**
+	 * Performs a linear interpolation from one matrix to a second matrix based on a value that specifies the weighting of the second matrix.
+	 */
 	static lerp(m1: Matrix4, m2: Matrix4, alpha: number): Matrix4 {
 		const result = new Matrix4()
 
@@ -405,6 +447,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a matrix that rotates around an arbitrary vector.
+	 */
 	static createFromAxisAngle(axis: Vector3, angle: number): Matrix4 {
 		const x = axis.x,
 			y = axis.y,
@@ -435,6 +480,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a rotation matrix from the given Quaternion rotation value.
+	 */
 	static createFromQuaternion(q: Quaternion): Matrix4 {
 		const result = new Matrix4()
 
@@ -464,11 +512,23 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a rotation matrix from the specified yaw, pitch, and roll.
+	 * @param yaw Angle of rotation, in radians, around the Y-axis.
+	 * @param pitch Angle of rotation, in radians, around the X-axis.
+	 * @param roll Angle of rotation, in radians, around the Z-axis.
+	 */
 	static createFromYawPitchRoll(yaw: number, pitch: number, roll: number): Matrix4 {
 		const q = Quaternion.createFromYawPitchRoll(yaw, pitch, roll)
 		return Matrix4.createFromQuaternion(q)
 	}
 
+	/**
+	 * Creates a view matrix.
+	 * @param cameraPosition The position of the camera.
+	 * @param cameraTarget The target towards which the camera is pointing.
+	 * @param cameraUpVector The direction that is "up" from the camera's point of view.
+	 */
 	static createLookAt(cameraPosition: Vector3, cameraTarget: Vector3, cameraUpVector: Vector3): Matrix4 {
 		const zaxis = Vector3.normalize(Vector3.sub(cameraPosition, cameraTarget))
 		const xaxis = Vector3.normalize(Vector3.cross(cameraUpVector, zaxis))
@@ -495,6 +555,14 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates an orthographic perspective matrix from the given view volume dimensions.
+	 * @param width Width of the view volume at the near view plane.
+	 * @param height Height of the view volume at the near view plane.
+	 * @param zNearPlane Minimum Z-value of the view volume.
+	 * @param zFarPlane Maximum Z-value of the view volume.
+	 * @returns
+	 */
 	static createOrthographic(width: number, height: number, zNearPlane: number, zFarPlane: number): Matrix4 {
 		const result = new Matrix4()
 
@@ -509,6 +577,15 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Builds a customized, orthographic projection matrix.
+	 * @param left Minimum X-value of the view volume.
+	 * @param right Maximum X-value of the view volume.
+	 * @param bottom Minimum Y-value of the view volume.
+	 * @param top Maximum Y-value of the view volume.
+	 * @param zNearPlane Minimum Z-value of the view volume.
+	 * @param zFarPlane Maximum Z-value of the view volume.
+	 */
 	static createOrthographicOffCenter(left: number, right: number, bottom: number, top: number, zNearPlane: number, zFarPlane: number): Matrix4 {
 		const result = new Matrix4()
 
@@ -525,6 +602,13 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a perspective projection matrix from the given view volume dimensions.
+	 * @param width Width of the view volume at the near view plane.
+	 * @param height Height of the view volume at the near view plane.
+	 * @param nearPlaneDistance Distance to the near view plane.
+	 * @param farPlaneDistance Distance to of the far view plane.
+	 */
 	static createPerspective(width: number, height: number, nearPlaneDistance: number, farPlaneDistance: number): Matrix4 {
 		if (nearPlaneDistance <= 0) throw new Error('`nearPlaneDistance` must be greater than 0')
 		if (farPlaneDistance <= 0) throw new Error('`farPlaneDistance` must be greater than 0')
@@ -545,6 +629,13 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a perspective projection matrix based on a field of view, aspect ratio, and near and far view plane distances.
+	 * @param fieldOfView Field of view in the y direction, in radians.
+	 * @param aspectRatio Aspect ratio, defined as view space width divided by height.
+	 * @param nearPlaneDistance Distance to the near view plane.
+	 * @param farPlaneDistance Distance to of the far view plane.
+	 */
 	static createPerspectiveFieldOfView(fieldOfView: number, aspectRatio: number, nearPlaneDistance: number, farPlaneDistance: number): Matrix4 {
 		if (fieldOfView <= 0 || fieldOfView >= Math.PI) throw new Error('`fieldOfView` can only go from 0 to pi')
 		if (nearPlaneDistance <= 0) throw new Error('`nearPlaneDistance` must be greater than 0')
@@ -569,6 +660,15 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a customized perspective projection matrix.
+	 * @param left Minimum X-value of the view volume.
+	 * @param right Maximum X-value of the view volume.
+	 * @param bottom Minimum Y-value of the view volume.
+	 * @param top Maximum Y-value of the view volume.
+	 * @param nearPlaneDistance Distance to the near view plane.
+	 * @param farPlaneDistance Distance to of the far view plane.
+	 */
 	static createPerspectiveOffCenter(
 		left: number,
 		right: number,
@@ -598,6 +698,12 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a world matrix with the specified parameters
+	 * @param position The position of the object; used in translation operations.
+	 * @param forward Forward direction of the object.
+	 * @param up Upward direction of the object; usually [0, 1, 0].
+	 */
 	static createWorld(position: Vector3, forward: Vector3, up: Vector3): Matrix4 {
 		const zAxis = Vector3.normalize(Vector3.negate(forward))
 		const xAxis = Vector3.normalize(Vector3.cross(up, zAxis))
@@ -624,6 +730,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a rotation matrix around the X axis using the given rotation in radians and a center point (if specified).
+	 */
 	static createRotationX(angle: number, center?: Vector3): Matrix4 {
 		const c = Math.cos(angle),
 			s = Math.sin(angle)
@@ -644,6 +753,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a rotation matrix around the Y axis using the given rotation in radians and a center point (if specified).
+	 */
 	static createRotationY(angle: number, center?: Vector3): Matrix4 {
 		const c = Math.cos(angle),
 			s = Math.sin(angle)
@@ -664,6 +776,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a rotation matrix around the Z axis using the given rotation in radians and a center point (if specified).
+	 */
 	static createRotationZ(angle: number, center?: Vector3): Matrix4 {
 		const c = Math.cos(angle),
 			s = Math.sin(angle)
@@ -684,6 +799,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a scaling matrix from the specified vector scale and a center point (if specified).
+	 */
 	static createScaleVec(v: Vector3, center?: Vector3): Matrix4 {
 		const result = new Matrix4()
 
@@ -700,6 +818,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a scaling matrix that scales uniformly with the given scale and a center point (if specified).
+	 */
 	static createScaleScalar(s: number, center?: Vector3): Matrix4 {
 		const result = new Matrix4()
 
@@ -716,6 +837,9 @@ export class Matrix4 {
 		return result
 	}
 
+	/**
+	 * Creates a translation matrix from the specified 2-dimensional vector.
+	 */
 	static createTranslation(v: Vector3): Matrix4 {
 		const result = new Matrix4()
 

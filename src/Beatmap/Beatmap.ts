@@ -13,6 +13,10 @@ export class Beatmap {
 	audioFilename: string
 	private _raw: string
 
+	/**
+	 * Parse a beatmap and return the corresponding information.
+	 * @param path Path to .osu file
+	 */
 	constructor(path: string) {
 		this.path = path
 		if (!existsSync(path)) throw new Error("File doesn't exists")

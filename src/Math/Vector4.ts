@@ -21,26 +21,44 @@ export class Vector4 {
 		this.w = w
 	}
 
+	/**
+	 * Returns true if the components of this vector and v are strictly equal; false otherwise.
+	 */
 	equals(v: Vector4): boolean {
 		return this.x === v.x && this.y === v.y && this.z === v.z && this.w === v.w
 	}
 
+	/**
+	 * Returns a new Vector4 with the same x, y, z, w values as this one.
+	 */
 	clone(): Vector4 {
 		return new Vector4(this.x, this.y, this.z, this.w)
 	}
 
+	/**
+	 * Returns the length of the vector.
+	 */
 	length(): number {
 		return Math.sqrt(this.lengthSqr())
 	}
 
+	/**
+	 * Returns the length of the vector squared.
+	 */
 	lengthSqr(): number {
 		return this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w
 	}
 
+	/**
+	 * Computes the Euclidean distance between the two given points.
+	 */
 	distanceTo(v: Vector4): number {
 		return Math.sqrt(this.distanceToSqr(v))
 	}
 
+	/**
+	 * Computes the Euclidean distance squared between the two given points.
+	 */
 	distanceToSqr(v: Vector4): number {
 		const dx = this.x - v.x,
 			dy = this.y - v.y,
@@ -50,38 +68,67 @@ export class Vector4 {
 		return dx * dx + dy * dy + dz * dz + dw * dw
 	}
 
+	/**
+	 * Adds two vectors together.
+	 */
 	static add(v1: Vector4, v2: Vector4): Vector4 {
 		return new Vector4(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, v1.w + v2.w)
 	}
 
+	/**
+	 * Subtracts the second vector from the first.
+	 */
 	static sub(v1: Vector4, v2: Vector4): Vector4 {
 		return new Vector4(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, v1.w - v2.w)
 	}
 
+	/**
+	 * Returns a new vector whose values are the product of each pair of elements in two specified vectors.
+	 */
 	static multiply(v1: Vector4, v2: Vector4): Vector4 {
 		return new Vector4(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z, v1.w * v2.w)
 	}
 
+	/**
+	 * Divides the first vector by the second.
+	 */
 	static divide(v1: Vector4, v2: Vector4): Vector4 {
 		return new Vector4(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z, v1.w / v2.w)
 	}
 
+	/**
+	 * Adds the scalar value s to this vector's x, y values.
+	 */
 	static addScalar(v: Vector4, s: number): Vector4 {
 		return new Vector4(v.x + s, v.y + s, v.z + s, v.w + s)
 	}
 
+	/**
+	 * Subtracts the scalar value s to this vector's x, y values.
+	 */
 	static subScalar(v: Vector4, s: number): Vector4 {
 		return new Vector4(v.x - s, v.y - s, v.z - s, v.w - s)
 	}
 
+	/**
+	 * Multiplies a vector by a specified scalar.
+	 */
 	static multiplyScalar(v: Vector4, s: number): Vector4 {
 		return new Vector4(v.x * s, v.y * s, v.z * s, v.w * s)
 	}
 
+	/**
+	 * Divides the specified vector by a specified scalar value.
+	 */
 	static divideScalar(v: Vector4, s: number): Vector4 {
 		return Vector4.multiplyScalar(v, 1 / s)
 	}
 
+	/**
+	 * Linearly interpolate between v1 and v2,
+	 * where alpha is the percent distance along the line - alpha = 0 will be this vector,
+	 * and alpha = 1 will be v.
+	 */
 	static lerp(v1: Vector4, v2: Vector4, alpha: number) {
 		let result = new Vector4()
 		result.x = v1.x + (v2.x - v1.x) * alpha
@@ -92,10 +139,16 @@ export class Vector4 {
 		return result
 	}
 
+	/**
+	 * Returns a vector whose elements are the absolute values of each of the specified vector's elements.
+	 */
 	static abs(v: Vector4): Vector4 {
 		return new Vector4(Math.abs(v.x), Math.abs(v.y), Math.abs(v.z), Math.abs(v.w))
 	}
 
+	/**
+	 * Restricts a vector between a minimum and a maximum value.
+	 */
 	static clamp(v: Vector4, min: Vector4, max: Vector4): Vector4 {
 		let result = new Vector4()
 		// assumes min < max, componentwise
@@ -107,6 +160,9 @@ export class Vector4 {
 		return result
 	}
 
+	/**
+	 * Returns a vector whose elements are the maximum of each of the pairs of elements in two specified vectors.
+	 */
 	static max(v1: Vector4, v2: Vector4): Vector4 {
 		let result = new Vector4()
 
@@ -118,6 +174,9 @@ export class Vector4 {
 		return result
 	}
 
+	/**
+	 * Returns a vector whose elements are the minimum of each of the pairs of elements in two specified vectors.
+	 */
 	static min(v1: Vector4, v2: Vector4): Vector4 {
 		let result = new Vector4()
 
@@ -129,14 +188,23 @@ export class Vector4 {
 		return result
 	}
 
+	/**
+	 * Negates a specified vector.
+	 */
 	static negate(v: Vector4): Vector4 {
 		return Vector4.multiplyScalar(v, -1)
 	}
 
+	/**
+	 * Returns a vector with the same direction as the specified vector, but with a length of one.
+	 */
 	static normalize(v: Vector4): Vector4 {
 		return Vector4.divideScalar(v, v.length() || 1)
 	}
 
+	/**
+	 * Transforms a vector by the specified Quaternion rotation value.
+	 */
 	static applyQuat(v: Vector4, q: Quaternion): Vector4 {
 		const x2 = q.x + q.x
 		const y2 = q.y + q.y
@@ -162,6 +230,9 @@ export class Vector4 {
 		return result
 	}
 
+	/**
+	 * Transforms a vector by a specified 4x4 matrix.
+	 */
 	static applyMat4(v: Vector4, m: Matrix4): Vector4 {
 		return new Vector4(
 			v.x * m.m11 + v.y * m.m21 + v.z * m.m31 + v.w * m.m41,

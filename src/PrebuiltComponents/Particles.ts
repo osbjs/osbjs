@@ -1,27 +1,6 @@
 import { Component, Easing, Origin, OsbColor, OsbVector2, Parameter, Sprite, Layer } from '../Core'
 import { randFloat, randInt, degToRad } from '../Math'
-
-export interface ParticlesOptions {
-	duration?: number
-	amount?: number
-	startPosition?: OsbVector2
-	endPosition?: OsbVector2
-	axis?: 'x' | 'y'
-	easing?: Easing
-	randomEasing?: boolean
-	fadeInDuration?: number
-	fadeOutDuration?: number
-	color?: OsbColor
-	startScale?: number
-	endScale?: number
-	randomScale?: boolean
-	startRotation?: number
-	endRotation?: number
-	randomRotation?: boolean
-	origin?: Origin
-	additive?: boolean
-	opacity?: number
-}
+import { IParticlesOptions } from './Interfaces'
 
 export class Particles extends Component {
 	path: string
@@ -48,7 +27,14 @@ export class Particles extends Component {
 		additive: true,
 		opacity: 1,
 	}
-	constructor(path: string, startTime: number, endTime: number, options?: ParticlesOptions) {
+	/**
+	 *
+	 * @param path Path to the image
+	 * @param startTime times in milliseconds/timestamp indicate when the effect starts.
+	 * @param endTime times in milliseconds/timestamp indicate when the effect ends.
+	 * @param options Additional options.
+	 */
+	constructor(path: string, startTime: number, endTime: number, options?: IParticlesOptions) {
 		super()
 
 		this.path = path
@@ -91,7 +77,7 @@ export class Particles extends Component {
 			if (color.r < 1 || color.b < 1 || color.g < 1) spr.ColorAtTime(startTime, color)
 			if (startScale == endScale && startScale != 1) spr.ScaleAtTime(startTime, startScale)
 			if (startRotation == endRotation && startRotation != 0) spr.RotateAtTime(startTime, degToRad(startRotation))
-			if (additive) spr.ParameterAtTime(startTime, Parameter.AdditiveBlending)
+			if (additive) spr.Parameter(startTime, startTime, Parameter.AdditiveBlending)
 
 			const eas = randomEasing ? Easing[Easing[randInt(0, 34)] as keyof typeof Easing] : easing
 			const startX = axis == 'y' ? randInt(startPosition.x, endPosition.x) : startPosition.x

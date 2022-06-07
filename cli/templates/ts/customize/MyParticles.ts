@@ -1,6 +1,6 @@
-import { Component, Easing, Origin, OsbColor, OsbVector2, Parameter, Sprite, Layer, randFloat, randInt, degToRad } from '@osbjs/osbjs'
+import { Component, Easing, Origin, OsbColor, OsbVector2, Parameter, Sprite, Layer, randFloat, randInt, degToRad, IParticlesOptions } from '@osbjs/osbjs'
 
-export class Particles extends Component {
+export class MyParticles extends Component {
 	name = 'MyParticles'
 	path: string
 	startTime: number
@@ -26,7 +26,7 @@ export class Particles extends Component {
 		additive: true,
 		opacity: 1,
 	}
-	constructor(path: string, startTime: number, endTime: number, options?: ParticlesOptions) {
+	constructor(path: string, startTime: number, endTime: number, options?: MyParticlesOptions) {
 		super()
 
 		this.path = path
@@ -69,7 +69,7 @@ export class Particles extends Component {
 			if (color.r < 1 || color.b < 1 || color.g < 1) spr.ColorAtTime(startTime, color)
 			if (startScale == endScale && startScale != 1) spr.ScaleAtTime(startTime, startScale)
 			if (startRotation == endRotation && startRotation != 0) spr.RotateAtTime(startTime, degToRad(startRotation))
-			if (additive) spr.ParameterAtTime(startTime, Parameter.AdditiveBlending)
+			if (additive) spr.Parameter(startTime, Parameter.AdditiveBlending)
 
 			const eas = randomEasing ? Easing[Easing[randInt(0, 34)] as keyof typeof Easing] : easing
 			const startX = axis == 'x' ? randInt(startPosition.x, endPosition.x) : startPosition.x
@@ -110,24 +110,6 @@ export class Particles extends Component {
 	}
 }
 
-export interface ParticlesOptions {
-	duration?: number
-	amount?: number
-	startPosition?: OsbVector2
-	endPosition?: OsbVector2
-	axis: 'x' | 'y'
-	easing?: Easing
-	randomEasing?: boolean
-	fadeInDuration?: number
-	fadeOutDuration?: number
-	color?: OsbColor
-	startScale?: number
-	endScale?: number
-	randomScale?: boolean
-	startRotation?: number
-	endRotation?: number
-	randomRotation?: boolean
-	origin?: Origin
-	additive?: boolean
-	opacity?: number
+export interface MyParticlesOptions extends IParticlesOptions {
+	// your options here
 }

@@ -1,5 +1,6 @@
 import {
 	Animation,
+	AudioPath,
 	Component,
 	Easing,
 	Layer,
@@ -13,12 +14,18 @@ import {
 	SampleLayer,
 	Sprite,
 	Trigger,
+	TriggerName,
 } from '../Core'
 import { readFileSync, existsSync } from 'fs'
 
 export class ImportOsb extends Component {
 	name: string = 'importOsb'
 	private _osb: string
+
+	/**
+	 * Import existing osb file. Useful if you are doing collab with people using different develop platforms like storybrew, sgl etc.
+	 * @param osbPath Full path to .osb file.
+	 */
 	constructor(osbPath: string) {
 		super()
 		if (!existsSync(osbPath)) throw new Error("ImportOsb: osb file doesn't exists")
@@ -88,7 +95,7 @@ function parseSamples(raw: string): Sample[] {
 
 		const startTime = parseInt(props[1]),
 			layer = SampleLayer[SampleLayer[parseInt(props[2])] as keyof typeof SampleLayer],
-			path = props[3].replace(/\"/g, ''),
+			path = props[3].replace(/\"/g, '') as AudioPath,
 			volume = parseInt(props[4])
 
 		return { startTime, layer, path, volume }
@@ -148,7 +155,7 @@ function registerCommands(str: string, component: Sprite | Animation) {
 
 			tempLoop = new Loop(startTime, count)
 		} else if (commandName == 'T') {
-			const triggerName = params[1],
+			const triggerName = params[1] as TriggerName,
 				startTime = parseInt(params[2]),
 				endTime = params[3] ? parseInt(params[3]) : startTime
 

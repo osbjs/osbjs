@@ -1,4 +1,4 @@
-import { IColor, Component, Sprite, OsbVector2, SubtitleCollection, Layer, Origin, Parameter, TextureGenerator } from '@osbjs/osbjs'
+import { IColor, Component, Sprite, OsbVector2, SubtitleCollection, Layer, Origin, Parameter, TextureGenerator, ILyricsOptions, IFontOptions } from '@osbjs/osbjs'
 
 export class MyLyrics extends Component {
 	name = 'MyLyrics'
@@ -22,7 +22,7 @@ export class MyLyrics extends Component {
 	private _textureGenerator: TextureGenerator
 	private _subtitleCollection: SubtitleCollection
 
-	constructor(folderPath: string, osbFolderPath: string, subtitlePath: string, options?: LyricsOptions, registerFontOptions?: FontOptions) {
+	constructor(folderPath: string, osbFolderPath: string, subtitlePath: string, options?: MyLyricsOptions, registerFontOptions?: IFontOptions) {
 		super()
 		this.folderPath = folderPath
 		this.osbFolderPath = osbFolderPath
@@ -96,19 +96,6 @@ export class MyLyrics extends Component {
 	}
 }
 
-export interface LyricsOptions {
-	fadeDuration?: number
-	opacity?: number
-	fontName?: string
-	fontSize?: number
-	fontScale?: number
-	perCharacter?: boolean
-	y?: number
-	additive?: boolean
-	color?: IColor
-}
-
-export interface FontOptions {
-	fontPath: string
-	family: string
+export interface MyLyricsOptions extends ILyricsOptions {
+	// your options here
 }

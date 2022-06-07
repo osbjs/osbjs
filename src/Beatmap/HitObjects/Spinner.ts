@@ -1,5 +1,5 @@
-import { Hitsound } from '../Enums/Hitsound'
-import { IHitSample } from '../Interfaces/IHitSample'
+import { Hitsound } from '../Enums'
+import { IHitSample } from '../Interfaces'
 import { HitObject } from './HitObject'
 
 export class Spinner extends HitObject {

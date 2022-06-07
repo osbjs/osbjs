@@ -16,6 +16,12 @@ export class TextureGenerator {
 	folderPath: string
 	osbFolderPath: string
 
+	/**
+	 *
+	 * @param folderPath full path to the folder that will be used to save generated text images.
+	 * @param osbFolderPath relative path to the folder that will be used to save generated text images. For example: `sb/lyrics`
+	 * @param fontProps font properties for the generated text images.
+	 */
 	constructor(
 		folderPath: string,
 		osbFolderPath: string,
@@ -35,6 +41,19 @@ export class TextureGenerator {
 		canvasRegisterFont(fontPath, { family, weight, style })
 	}
 
+	/**
+	 * Generate and save text image.
+	 * Returns a Texture that contains info about the width, height and osb path of the generated image.
+	 * @param text Text to be rendered.
+	 * @param color Text color.
+	 * @param offset Offset will be 0 on each side if not set.
+	 * @param withBoundingBox Whether bounding box should be included in the calculation or not.
+	 * If you are creating any sorts of per character effect then this should be true
+	 * and the Origin should be set to TopLeft, TopCenter or TopRight depends on your need
+	 * so that the text can be aligned properly.
+	 * However if you just wanna generate a whole line of text then just leave it as false
+	 * so your texture doesn't have extra unncessary paddings.
+	 */
 	generateTexture(
 		text: string,
 		color: {
@@ -134,6 +153,15 @@ export class TextureGenerator {
 		emptyDirSync(path.join(this.folderPath, this.osbFolderPath))
 	}
 
+	/**
+	 * Return text dimensions without caching it.
+	 * @param text text to be measured
+	 * @param offset offset will be 0 on each side if not set.
+	 * @param withBoundingBox Whether bounding box should be included in the calculation or not.
+	 * If you are creating any sorts of per character effect then this should be true
+	 * and the Origin should be set to TopLeft, TopCenter or TopRight depends on your need
+	 * so that the text can be aligned properly.
+	 */
 	getTextDimensions(
 		text: string,
 		offset: {

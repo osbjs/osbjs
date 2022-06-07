@@ -15,22 +15,37 @@ export class Vector2 {
 		this.y = y
 	}
 
+	/**
+	 * Returns true if the components of this vector and v are strictly equal; false otherwise.
+	 */
 	equals(v: Vector2): boolean {
 		return this.x === v.x && this.y === v.y
 	}
 
+	/**
+	 * Returns a new Vector2 with the same x, y values as this one.
+	 */
 	clone(): Vector2 {
 		return new Vector2(this.x, this.y)
 	}
 
+	/**
+	 * Returns the length of the vector.
+	 */
 	length(): number {
 		return Math.sqrt(this.lengthSqr())
 	}
 
+	/**
+	 * Returns the length of the vector squared.
+	 */
 	lengthSqr(): number {
 		return this.x * this.x + this.y * this.y
 	}
 
+	/**
+	 * Computes the Euclidean distance squared between the two given points.
+	 */
 	distanceToSqr(v: Vector2): number {
 		const dx = this.x - v.x
 		const dy = this.y - v.y
@@ -38,61 +53,104 @@ export class Vector2 {
 		return dx * dx + dy * dy
 	}
 
+	/**
+	 * Computes the Euclidean distance between the two given points.
+	 */
 	distanceTo(v: Vector2): number {
 		return Math.sqrt(this.distanceToSqr(v))
 	}
 
+	/**
+	 * Computes the angle in radians with respect to the positive x-axis.
+	*/
 	angle(): number {
-		// computes the angle in radians with respect to the positive x-axis
 		const angle = Math.atan2(-this.y, -this.x) + Math.PI
 
 		return angle
 	}
 
+	/**
+	 * Adds two vectors together.
+	 */
 	static add(v1: Vector2, v2: Vector2): Vector2 {
 		return new Vector2(v1.x + v2.x, v1.y + v2.y)
 	}
 
+	/**
+	 * Subtracts the second vector from the first.
+	 */
 	static sub(v1: Vector2, v2: Vector2): Vector2 {
 		return new Vector2(v1.x - v2.x, v1.y - v2.y)
 	}
 
+	/**
+	 * Returns a new vector whose values are the product of each pair of elements in two specified vectors.
+	 */
 	static multiply(v1: Vector2, v2: Vector2): Vector2 {
 		return new Vector2(v1.x * v2.x, v1.y * v2.y)
 	}
 
+	/**
+	 * Divides the first vector by the second.
+	 */
 	static divide(v1: Vector2, v2: Vector2): Vector2 {
 		return new Vector2(v1.x / v2.x, v1.y / v2.y)
 	}
 
+	/**
+	 * Adds the scalar value s to this vector's x, y values.
+	 */
 	static addScalar(v: Vector2, s: number): Vector2 {
 		return new Vector2(v.x + s, v.y + s)
 	}
 
+	/**
+	 * Subtracts the scalar value s to this vector's x, y values.
+	 */
 	static subScalar(v: Vector2, s: number): Vector2 {
 		return new Vector2(v.x - s, v.y - s)
 	}
 
+	/**
+	 * Multiplies a vector by a specified scalar.
+	 */
 	static multiplyScalar(v: Vector2, s: number): Vector2 {
 		return new Vector2(v.x * s, v.y * s)
 	}
 
+	/**
+	 * Divides the specified vector by a specified scalar value.
+	 */
 	static divideScalar(v: Vector2, s: number): Vector2 {
 		return Vector2.multiplyScalar(v, 1 / s)
 	}
 
+	/**
+	 * Returns the dot product of two vectors.
+	 */
 	static dot(v1: Vector2, v2: Vector2): number {
 		return v1.x * v2.x + v1.y * v2.y
 	}
 
+	/**
+	 * Returns the cross product of two vectors.
+	 */
 	static cross(v1: Vector2, v2: Vector2): number {
 		return v1.x * v2.y - v1.y * v2.x
 	}
 
+	/**
+	 * Returns a vector with the same direction as the specified vector, but with a length of one.
+	 */
 	static normalize(v: Vector2): Vector2 {
 		return Vector2.divideScalar(v, v.length() || 1)
 	}
 
+	/**
+	 * Linearly interpolate between v1 and v2,
+	 * where alpha is the percent distance along the line - alpha = 0 will be this vector,
+	 * and alpha = 1 will be v.
+	 */
 	static lerp(v1: Vector2, v2: Vector2, alpha: number): Vector2 {
 		let result = new Vector2()
 		result.x = v1.x + (v2.x - v1.x) * alpha
@@ -101,6 +159,9 @@ export class Vector2 {
 		return result
 	}
 
+	/**
+	 * Returns a vector whose elements are the maximum of each of the pairs of elements in two specified vectors.
+	 */
 	static max(v1: Vector2, v2: Vector2): Vector2 {
 		let result = new Vector2()
 		result.x = Math.max(v1.x, v2.x)
@@ -109,6 +170,9 @@ export class Vector2 {
 		return result
 	}
 
+	/**
+	 * Returns a vector whose elements are the minimum of each of the pairs of elements in two specified vectors.
+	 */
 	static min(v1: Vector2, v2: Vector2): Vector2 {
 		let result = new Vector2()
 		result.x = Math.min(v1.x, v2.x)
@@ -117,6 +181,9 @@ export class Vector2 {
 		return result
 	}
 
+	/**
+	 * Restricts a vector between a minimum and a maximum value.
+	 */
 	static clamp(v: Vector2, min: Vector2, max: Vector2): Vector2 {
 		let result = new Vector2()
 		// assumes min < max, componentwise
@@ -126,14 +193,23 @@ export class Vector2 {
 		return result
 	}
 
+	/**
+	 * Negates a specified vector.
+	 */
 	static negate(v: Vector2) {
 		return new Vector2(-v.x, -v.y)
 	}
 
+	/**
+	 * Returns a vector whose elements are the absolute values of each of the specified vector's elements.
+	 */
 	static abs(v: Vector2): Vector2 {
 		return new Vector2(Math.abs(v.x), Math.abs(v.y))
 	}
 
+	/**
+	 * Transforms a vector by a specified 3x3 matrix.
+	 */
 	static applyMat3(v: Vector2, m: Matrix3): Vector2 {
 		// prettier-ignore
 		return new Vector2(
@@ -142,6 +218,9 @@ export class Vector2 {
 		)
 	}
 
+	/**
+	 * Transforms a vector by a specified 4x4 matrix.
+	 */
 	static applyMat4(v: Vector2, m: Matrix4): Vector2 {
 		// prettier-ignore
 		return new Vector2(
@@ -150,6 +229,9 @@ export class Vector2 {
 		)
 	}
 
+	/**
+	 * Transforms a vector by the specified Quaternion rotation value.
+	 */
 	static applyQuat(v: Vector2, q: Quaternion): Vector2 {
 		const x2 = q.x + q.x
 		const y2 = q.y + q.y

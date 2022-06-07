@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { Animation, Sample, Sprite } from '.'
-import { IStoryboardLayers } from '../Types/IStoryboardLayers'
+import { IStoryboardLayers } from '../Interfaces'
 import { Layer } from '../Enums'
 
 export abstract class Component {
@@ -21,6 +21,11 @@ export abstract class Component {
 		}
 	}
 
+	/**
+	 * Register components to this component. You can supply as many components as you want.
+	 * Note: later component will have higher z-index therefore it might appear on top of earlier components if their active time overlap.
+	 * @param components Component instances
+	 */
 	registerComponents(...components: Component[]) {
 		components.forEach((component) => {
 			component.generate()

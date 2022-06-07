@@ -1,8 +1,8 @@
 import imageSize from 'image-size'
 
-export { OsbColor, IColor } from './OsbColor'
-export { OsbVector2 } from './OsbVector2'
-export { SubtitleCollection } from './SubtitleCollection'
+export * from './OsbColor'
+export * from './OsbVector2'
+export * from './SubtitleCollection'
 
 export function rgbToHex(r: number, g: number, b: number): string {
 	if (typeof r !== 'number' || typeof g !== 'number' || typeof b !== 'number' || r > 255 || g > 255 || b > 255) {

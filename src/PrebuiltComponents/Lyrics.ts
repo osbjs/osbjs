@@ -1,6 +1,6 @@
-import { IColor } from '../Core'
 import { Component, Sprite, OsbVector2, SubtitleCollection, Layer, Origin, Parameter } from '../Core'
 import { TextureGenerator } from '../TxtGen'
+import { ILyricsOptions, IFontOptions } from './Interfaces'
 
 export class Lyrics extends Component {
 	name = 'Lyrics'
@@ -24,7 +24,15 @@ export class Lyrics extends Component {
 	private _textureGenerator: TextureGenerator
 	private _subtitleCollection: SubtitleCollection
 
-	constructor(folderPath: string, osbFolderPath: string, subtitlePath: string, options?: LyricsOptions, registerFontOptions?: FontOptions) {
+	/**
+	 * Generate lyrics from a .srt/.vtt/.json file.
+	 * @param folderPath full path to beatmap folder.
+	 * @param osbFolderPath relative path to the folder that will be used to save generated text images. For example: `sb/lyrics`.
+	 * @param subtitlePath full path to the subtitle file. For example, `./lyrics.srt` if your lyrics file is same folder with your script file.
+	 * @param options Additional options.
+	 * @param registerFontOptions In case you want to use a non-system font.
+	 */
+	constructor(folderPath: string, osbFolderPath: string, subtitlePath: string, options?: ILyricsOptions, registerFontOptions?: IFontOptions) {
 		super()
 		this.folderPath = folderPath
 		this.osbFolderPath = osbFolderPath
@@ -96,21 +104,4 @@ export class Lyrics extends Component {
 			this.registerComponents(sprite)
 		})
 	}
-}
-
-export interface LyricsOptions {
-	fadeDuration?: number
-	opacity?: number
-	fontName?: string
-	fontSize?: number
-	fontScale?: number
-	perCharacter?: boolean
-	y?: number
-	additive?: boolean
-	color?: IColor
-}
-
-export interface FontOptions {
-	fontPath: string
-	family: string
 }

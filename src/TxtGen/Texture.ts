@@ -44,6 +44,12 @@ export class Texture {
 		return imageSize(this.path).height ?? 0
 	}
 
+	/**
+	 * Returns a `Sprite` instance of this texture.
+	 * @param layer Layer to place the sprite on.
+	 * @param origin Origin of the sprite.
+	 * @param initialPosition Initial position of the sprite.
+	 */
 	toSprite(layer: Layer = Layer.Background, origin: Origin = Origin.Center, initialPosition: OsbVector2 = new OsbVector2(320, 240)): Sprite {
 		return new Sprite(this.osbPath, layer, origin, initialPosition)
 	}
