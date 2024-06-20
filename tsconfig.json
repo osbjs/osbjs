@@ -1,10 +1,16 @@
 {
-	"extends": "@tsconfig/node14/tsconfig.json",
-	"include": ["./src/**/*"],
-	"compilerOptions": {
-		"sourceMap": false,
-		"outDir": "dist",
-		"declaration": true
-	},
-	"exclude": ["./cli/*"]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "lib": ["ESNext"]
+  }
 }

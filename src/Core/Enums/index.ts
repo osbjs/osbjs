@@ -1,6 +1,0 @@
-export { Easing } from './Easing'
-export { Origin } from './Origin'
-export { Parameter } from './Parameter'
-export { Layer } from './Layer'
-export { LoopType } from './LoopType'
-export { SampleLayer } from './SampleLayer'
