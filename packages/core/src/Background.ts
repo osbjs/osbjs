@@ -1,7 +1,15 @@
 import { GraphicsStoryboardObject } from './GraphicsStoryboardObject'
 import { Vector2 } from './Vector2'
 
+/**
+ * Background image.
+ */
 export class Background extends GraphicsStoryboardObject {
+  /**
+   * @param options - The options for initializing the video.
+   * @param options.path - The path to the video's file relative to the beatmap folder.
+   * @param [options.position] - The position of the background image.
+   */
   constructor({ path, position }: { path: string; position?: Vector2 }) {
     super({ path, position })
   }
