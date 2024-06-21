@@ -1,26 +1,13 @@
 {
-  "name": "@osbjs/osbjs",
-  "version": "2.3.0",
-  "description": "a minimalist osu! storyboarding framework",
-  "keywords": [
-    "osu",
-    "osb",
-    "storyboard"
-  ],
-  "author": "Nanachi",
-  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "format": "npx prettier . --write"
+  },
   "workspaces": [
     "packages/core"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/osbjs/osbjs.git"
-  },
-  "bugs": {
-    "url": "https://github.com/osbjs/osbjs/issues"
-  },
-  "homepage": "https://github.com/osbjs/osbjs#readme",
   "devDependencies": {
+    "prettier": "^3.3.2",
     "typescript": "^5.4.5"
   }
 }

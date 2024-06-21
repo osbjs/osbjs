@@ -90,12 +90,16 @@ export type TriggerCommand = {
   commands: Command[]
 }
 
-export type Command =
-  | (NumberCommand | Vector2Command | Color3Command | ParameterCommand) & {
-      startTime: Timestamp
-      endTime?: Timestamp
-      easing?: number
-    }
+export type Command = (
+  | NumberCommand
+  | Vector2Command
+  | Color3Command
+  | ParameterCommand
+) & {
+  startTime: Timestamp
+  endTime?: Timestamp
+  easing?: number
+}
 
 export type SampleSet = 'All' | 'Normal' | 'Soft' | 'Drum' | ''
 export type Addition = 'Whistle' | 'Finish' | 'Clap' | ''

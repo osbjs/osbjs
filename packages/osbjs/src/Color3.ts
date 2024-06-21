@@ -11,7 +11,7 @@ export type Color3Tuple = [number, number, number]
 /**
  * Represents a color with red, green, and blue components.
  */
-export class Color3 implements IColor3{
+export class Color3 implements IColor3 {
   r: number
   g: number
   b: number
