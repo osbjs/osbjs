@@ -3,7 +3,7 @@ import {
   Layer,
   Origin,
 } from './GraphicsStoryboardObject'
-import { Vector2 } from './Vector2'
+import { IVector2, Vector2, Vector2Tuple } from './Vector2'
 
 /**
  * A moving image.
@@ -11,7 +11,7 @@ import { Vector2 } from './Vector2'
 export class Animation extends GraphicsStoryboardObject {
   frameCount: number
   frameDelay: number
-  loop: boolean
+  repeat: boolean
   /**
    * @param options - The options for initializing the animation.
    * @param options.path - The path to the image's file relative to the beatmap folder.
@@ -20,7 +20,7 @@ export class Animation extends GraphicsStoryboardObject {
    * @param options.position - The position of the animation.
    * @param options.frameCount - Indicates how many frames the animation has.
    * @param options.frameDelay - Indicates how many milliseconds should be in between each frame.
-   * @param options.forever - Indicates if the animation should loop or not.
+   * @param options.repeat - Indicates if the animation should loop or not.
    */
   constructor({
     path,
@@ -29,24 +29,24 @@ export class Animation extends GraphicsStoryboardObject {
     position,
     frameCount,
     frameDelay,
-    loop,
+    repeat,
   }: {
     path: string
     layer: Layer
     origin: Origin
-    position: Vector2
+    position: IVector2 | Vector2Tuple | Vector2
     frameCount: number
     frameDelay: number
-    loop: boolean
+    repeat: boolean
   }) {
     super({ path, layer, origin, position })
     this.frameCount = frameCount
     this.frameDelay = frameDelay
-    this.loop = loop
+    this.repeat = repeat
   }
 
   toString(): string {
-    const loopType = this.loop ? 'LoopForever' : 'LoopOnce'
+    const loopType = this.repeat ? 'LoopForever' : 'LoopOnce'
     let result = `Animation,${this.layer},${this.origin},"${this.path}",${this.position},${this.frameCount},${this.frameDelay},${loopType}\n`
     result += this.compiledCommands
     return result

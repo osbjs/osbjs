@@ -1,10 +1,33 @@
-export class Vector2 {
-  public x: number
-  public y: number
+export interface IVector2 {
+  x: number
+  y: number
+}
 
-  constructor(x: number = 0, y: number = 0) {
-    this.x = x
-    this.y = y
+export type Vector2Tuple = [number, number]
+
+/**
+ * Represents vector in 2 dimensional space.
+ */
+export class Vector2 implements IVector2 {
+  x: number
+  y: number
+
+  /**
+   * @param input - The x component as a number, a tuple of [x, y], or an object with x and y properties. Defaults to 0.
+   * @param y - The y component as a number if the input is a number. Defaults to 0.
+   */
+  constructor(input: number | Vector2Tuple | IVector2 = 0, y: number = 0) {
+    if (Array.isArray(input)) {
+      const [x, y] = input
+      this.x = x
+      this.y = y
+    } else if (typeof input === 'object') {
+      this.x = input.x
+      this.y = input.y
+    } else {
+      this.x = input
+      this.y = y
+    }
   }
 
   /**
@@ -77,7 +100,7 @@ export class Vector2 {
    */
   normalize(): Vector2 {
     const mag = this.length()
-    if (mag === 0) return new Vector2(0, 0)
+    if (mag === 0) return new Vector2()
     return this.divide(mag)
   }
 
