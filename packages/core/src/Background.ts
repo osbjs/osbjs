@@ -1,5 +1,5 @@
 import { GraphicsStoryboardObject } from './GraphicsStoryboardObject'
-import { IVector2, Vector2, Vector2Tuple } from './Vector2'
+import type { IVector2, Vector2Tuple, Vector2 } from './Vector2'
 
 /**
  * Background image.

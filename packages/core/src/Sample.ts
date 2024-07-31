@@ -1,6 +1,6 @@
 import { StoryboardObject } from './StoryboardObject'
 import { Timestamp } from './Timestamp'
-import { clamp } from './mathUtils'
+import { clamp } from './maths'
 
 /**
  * Enum-like object representing the possible layers for a sample.

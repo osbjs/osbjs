@@ -1,4 +1,4 @@
-import { clamp } from './mathUtils'
+import { clamp } from './maths'
 
 export interface IColor3 {
   r: number

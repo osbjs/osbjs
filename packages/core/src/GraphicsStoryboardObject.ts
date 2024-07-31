@@ -1,9 +1,17 @@
-import { Color3, Color3Tuple, IColor3 } from './Color3'
+import { Color3, type IColor3, type Color3Tuple } from './Color3'
 import { StoryboardObject } from './StoryboardObject'
 import { Timestamp } from './Timestamp'
-import { Vector2, IVector2, Vector2Tuple } from './Vector2'
+import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
 
+/**
+ * The layer the object appears on.
+ */
 export type Layer = 'Background' | 'Foreground' | 'Fail' | 'Pass' | 'Overlay'
+
+/**
+ * Origin is where on the image should osu! consider that image's origin (coordinate) to be.
+ * This affects the (x) and (y) values, as well as several other command-specific behaviours.
+ */
 export type Origin =
   | 'TopLeft'
   | 'TopCentre'
@@ -15,6 +23,9 @@ export type Origin =
   | 'BottomCentre'
   | 'BottomRight'
 
+/**
+ *  Easing indicates if the command should "accelerate".
+ */
 export const Easing = {
   Linear: 0,
   Out: 1,

@@ -1,9 +1,9 @@
 import {
   GraphicsStoryboardObject,
-  Layer,
-  Origin,
+  type Layer,
+  type Origin,
 } from './GraphicsStoryboardObject'
-import { Vector2 } from './Vector2'
+import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
 
 /**
  * A basic image.
@@ -12,9 +12,9 @@ export class Sprite extends GraphicsStoryboardObject {
   /**
    * @param options - The options for initializing the Sprite.
    * @param options.path - The path to the image's file relative to the beatmap folder.
-   * @param options.layer - The layer on which the sprite resides.
-   * @param options.origin - The origin point of the sprite.
-   * @param options.position - The position of the sprite.
+   * @param [options.layer] - The layer on which the sprite resides.
+   * @param [options.origin] - The origin point of the sprite.
+   * @param [options.position] - The position of the sprite.
    */
   constructor({
     path,
@@ -23,9 +23,9 @@ export class Sprite extends GraphicsStoryboardObject {
     position,
   }: {
     path: string
-    layer: Layer
-    origin: Origin
-    position: Vector2
+    layer?: Layer
+    origin?: Origin
+    position?: IVector2 | Vector2Tuple | Vector2
   }) {
     super({ path, layer, origin, position })
   }

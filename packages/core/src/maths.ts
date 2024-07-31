@@ -26,3 +26,14 @@ export function radToDeg(radians: number): number {
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max)
 }
+
+/**
+ * Formats a number to a specified precision.
+ *
+ * @param x - The number to be formatted.
+ * @param precision - The number of significant digits. Defaults to 5.
+ * @returns The formatted number.
+ */
+export function precise(x: number, precision = 5): number {
+  return Number(x.toPrecision(precision))
+}

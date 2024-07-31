@@ -1,4 +1,4 @@
-import { clamp } from './mathUtils'
+import { clamp } from './maths'
 
 /**
  * Represents a timestamp in the format mm:ss:msmsms.
@@ -21,9 +21,9 @@ export class Timestamp {
         throw new Error('Invalid input type for Timestamp')
 
       const [mm, ss, ms] = splitted.map(Number)
-      this.minutes = clamp(mm, 0, 60)
-      this.seconds = clamp(ss, 0, 60)
-      this.milliseconds = clamp(ms, 0, 999)
+      this.minutes = clamp(mm!, 0, 60)
+      this.seconds = clamp(ss!, 0, 60)
+      this.milliseconds = clamp(ms!, 0, 999)
     } else if (typeof input === 'number') {
       this.minutes = Math.floor(input / 60000)
       input %= 60000
