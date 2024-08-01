@@ -1,4 +1,10 @@
 {
   "extends": "@total-typescript/tsconfig/bundler/no-dom",
-  "include": ["src/", "rollup.config.ts", "src/Background.ts"]
+  "compilerOptions": {
+    "declaration": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "dist/types"
+  },
+  "include": ["src"]
 }
