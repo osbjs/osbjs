@@ -1,14 +1,14 @@
-import {
-  GraphicsStoryboardObject,
-  type Layer,
-  type Origin,
-} from './GraphicsStoryboardObject'
+import { Graphic, GraphicType } from './Graphic'
+import type { Layer } from './Layer'
+import type { Origin } from './Origin'
 import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
 
-/**
- * A basic image.
- */
-export class Sprite extends GraphicsStoryboardObject {
+/** A basic image. */
+export class Sprite extends Graphic {
+  /** The layer on which the element resides. */
+  readonly layer: Layer
+  /** The origin point of the element. */
+  readonly origin: Origin
   /**
    * @param options - The options for initializing the Sprite.
    * @param options.path - The path to the image's file relative to the beatmap folder.
@@ -23,16 +23,12 @@ export class Sprite extends GraphicsStoryboardObject {
     position,
   }: {
     path: string
-    layer?: Layer
-    origin?: Origin
-    position?: IVector2 | Vector2Tuple | Vector2
+    layer: Layer
+    origin: Origin
+    position: IVector2 | Vector2Tuple | Vector2
   }) {
-    super({ path, layer, origin, position })
-  }
-
-  toString(): string {
-    let result = `Sprite,${this.layer},${this.origin},"${this.path}",${this.position}\n`
-    result += this.compiledCommands
-    return result
+    super({ path, position, graphicType: GraphicType.Sprite })
+    this.layer = layer
+    this.origin = origin
   }
 }

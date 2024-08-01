@@ -1,10 +1,10 @@
-import { GraphicsStoryboardObject } from './GraphicsStoryboardObject'
-import type { IVector2, Vector2Tuple, Vector2 } from './Vector2'
+import { Graphic, GraphicType } from './Graphic'
+import { type IVector2, type Vector2Tuple } from './Vector2'
 
 /**
  * Background image.
  */
-export class Background extends GraphicsStoryboardObject {
+export class Background extends Graphic {
   /**
    * @param options - The options for initializing the video.
    * @param options.path - The path to the video's file relative to the beatmap folder.
@@ -15,18 +15,8 @@ export class Background extends GraphicsStoryboardObject {
     position,
   }: {
     path: string
-    position?: IVector2 | Vector2Tuple | Vector2
+    position: IVector2 | Vector2Tuple
   }) {
-    super({ path, position })
-  }
-
-  toString(): string {
-    let result = `0,0,${this.path},"${this.path}"`
-    if (this.position) {
-      result += `,${this.position}`
-    }
-    result += '\n'
-    result += this.compiledCommands
-    return result
+    super({ path, position, graphicType: GraphicType.Background })
   }
 }

@@ -1,6 +1,7 @@
-import { StoryboardObject } from './StoryboardObject'
-import { Timestamp } from './Timestamp'
+import { ElementType, type Element } from './Element'
 import { clamp } from './maths'
+import { NodeType } from './Node'
+import { Timestamp } from './Timestamp'
 
 /**
  * Enum-like object representing the possible layers for a sample.
@@ -15,7 +16,10 @@ export const SampleLayer = {
 /**
  * Represents an audio sample in the storyboard.
  */
-export class Sample extends StoryboardObject {
+export class Sample implements Element {
+  readonly nodeType = NodeType.Element
+  readonly elementType = ElementType.Sample
+
   /** The time at which the sample is played. */
   readonly time: Timestamp
   /** The layer on which the sample is placed. */
@@ -42,14 +46,9 @@ export class Sample extends StoryboardObject {
     path: string
     volume?: number
   }) {
-    super()
     this.time = new Timestamp(time)
     this.layer = layer
     this.path = path
     this.volume = clamp(volume, 0, 100)
-  }
-
-  toString(): string {
-    return `Sample,${this.time},${this.layer},"${this.path}",${this.volume}\n`
   }
 }

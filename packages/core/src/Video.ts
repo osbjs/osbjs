@@ -1,8 +1,8 @@
-import { GraphicsStoryboardObject } from './GraphicsStoryboardObject'
+import { Graphic, GraphicType } from './Graphic'
 import { Timestamp } from './Timestamp'
 import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
 
-export class Video extends GraphicsStoryboardObject {
+export class Video extends Graphic {
   /**
    * The start time of the video.
    */
@@ -20,18 +20,9 @@ export class Video extends GraphicsStoryboardObject {
   }: {
     path: string
     startTime: number | string
-    position?: IVector2 | Vector2Tuple | Vector2
+    position: IVector2 | Vector2Tuple | Vector2
   }) {
-    super({
-      path,
-      position,
-    })
+    super({ path, position, graphicType: GraphicType.Video })
     this.startTime = new Timestamp(startTime)
-  }
-
-  toString(): string {
-    let result = `Video,${this.startTime},"${this.path}",${this.position}\n`
-    result += this.compiledCommands
-    return result
   }
 }

@@ -1,25 +1,32 @@
-import { StoryboardObject } from './StoryboardObject'
+import { ElementType, type Element } from './Element'
+import type { Layer } from './Layer'
+import { NodeType, type Node } from './Node'
 
 /**
  * A group/container of storyboard objects.
  */
-export class Group extends StoryboardObject {
-  readonly children: StoryboardObject[]
+export class Group implements Node {
+  nodeType = NodeType.Group
+  layers: Record<Layer | 'Sample', Element[]>
 
   constructor() {
-    super()
-    this.children = []
+    this.layers = {
+      Background: [],
+      Foreground: [],
+      Fail: [],
+      Pass: [],
+      Overlay: [],
+      Sample: [],
+    }
   }
 
-  /**
-   * Add storyboard objects to this group
-   * @param children - Storyboard objects to be added
-   */
-  add(...children: StoryboardObject[]) {
-    this.children.push(...children)
-  }
+  add(element: Element) {
+    switch (element.elementType) {
+      case ElementType.Graphics:
+        break
 
-  toString(): string {
-    return this.children.map(c => c.toString()).join('')
+      default:
+        break
+    }
   }
 }
