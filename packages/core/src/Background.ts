@@ -20,7 +20,7 @@ export class Background extends Graphic {
     super({ path, position })
   }
 
-  toOsbString(): string {
+  toString(): string {
     let result = `0,0,"${this.path},${this.position}\n${this.compileCommands()}"`
     return result
   }

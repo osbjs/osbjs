@@ -26,7 +26,7 @@ export class Video extends Graphic {
     this.startTime = new Timestamp(startTime)
   }
 
-  toOsbString(): string {
+  toString(): string {
     let result = `Video,${this.startTime},"${this.path}",${this.position}\n${this.compileCommands()}`
     return result
   }

@@ -606,5 +606,5 @@ export abstract class Graphic {
     return result
   }
 
-  abstract toOsbString(): string
+  abstract toString(): string
 }

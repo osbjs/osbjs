@@ -50,7 +50,7 @@ export class Animation extends Graphic {
     this.repeat = repeat
   }
 
-  toOsbString(): string {
+  toString(): string {
     const loopType = this.repeat ? 'LoopForever' : 'LoopOnce'
     let result = `Animation,${this.layer},${this.origin},"${this.path}",${this.position},${this.frameCount},${this.frameDelay},${loopType}\n${this.compileCommands()}`
     return result

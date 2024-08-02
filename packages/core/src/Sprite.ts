@@ -32,7 +32,7 @@ export class Sprite extends Graphic {
     this.origin = origin
   }
 
-  toOsbString(): string {
+  toString(): string {
     let result = `Sprite,${this.layer},${this.origin},"${this.path}",${this.position}\n${this.compileCommands()}`
     return result
   }

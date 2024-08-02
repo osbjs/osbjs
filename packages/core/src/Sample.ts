@@ -52,7 +52,7 @@ export class Sample {
     this.volume = clamp(volume, 0, 100)
   }
 
-  toOsbString() {
+  toString() {
     return `Sample,${this.time},${this.layer},"${this.path}",${this.volume}\n`
   }
 }

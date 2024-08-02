@@ -11,10 +11,10 @@ export class Group {
     this.children = []
   }
 
-  toOsbString() {
+  toString() {
     let result = ''
     for (const child of this.children) {
-      result += child.toOsbString()
+      result += child.toString()
     }
 
     return result

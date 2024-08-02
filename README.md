@@ -1,6 +1,6 @@
 # osbjs
 
-A minimalist component-based osu! storyboarding library.
+A minimalist osu! storyboarding library.
 
 ## Getting started
 
@@ -61,5 +61,19 @@ starImage.move({
 })
 sb.children.push(starImage)
 
-const osb = `[Events]\n${sb.toString()()}`
+const osb = `[Events]\n${sb.toString()}`
+
+fs.writeFileSync(
+  'path/to/your/beatmap/folder/your-storyboard.osb',
+  osb,
+  'utf-8',
+)
 ```
+
+## Documentation
+
+Visit the [documentation page](https://osbjs.vercel.app).
+
+## License
+
+osbjs is MIT licensed.
