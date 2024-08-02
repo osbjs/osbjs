@@ -8,13 +8,6 @@ import { TriggerCommand, type TriggerType } from './TriggerCommand'
 import { TypedCommand } from './TypedCommand'
 import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
 
-export enum GraphicType {
-  Sprite,
-  Animation,
-  Video,
-  Background,
-}
-
 export abstract class Graphic {
   /** The path to the element's resource. */
   readonly path: string

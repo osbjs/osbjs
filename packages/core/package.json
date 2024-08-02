@@ -1,7 +1,7 @@
 {
   "name": "@osbjs/core",
   "version": "3.0.0-alpha",
-  "description": "Render storyboard in js",
+  "description": "A minimalist osu! storyboarding library.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "browser": "dist/index.umd.js",
@@ -20,5 +20,14 @@
     "rollup-plugin-dts": "^6.1.1",
     "tslib": "^2.6.3",
     "typescript": "^5.5.4"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Nanachi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osbjs/osbjs.git",
+    "directory": "packages/core"
   }
 }
