@@ -1,23 +1,10 @@
-import { Command, CommandType } from './Command'
+import { Command } from './Command'
 import type { TypedCommand } from './TypedCommand'
 
-export enum CompoundCommandType {
-  TriggerCommand,
-  LoopCommand,
-}
-
 export class CompoundCommand extends Command {
-  readonly compoundCommandType: CompoundCommandType
-  commands: TypedCommand[] = []
+  readonly commands: TypedCommand[] = []
 
-  constructor({
-    event,
-    compoundCommandType,
-  }: {
-    event: string
-    compoundCommandType: CompoundCommandType
-  }) {
-    super({ event, commandType: CommandType.CompoundCommand })
-    this.compoundCommandType = compoundCommandType
+  constructor({ event }: { event: string }) {
+    super({ event })
   }
 }

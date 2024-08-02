@@ -1,32 +1,22 @@
-import { ElementType, type Element } from './Element'
-import type { Layer } from './Layer'
-import { NodeType, type Node } from './Node'
+import type { Graphic } from './Graphic'
+import type { Sample } from './Sample'
 
 /**
  * A group/container of storyboard objects.
  */
-export class Group implements Node {
-  nodeType = NodeType.Group
-  layers: Record<Layer | 'Sample', Element[]>
+export class Group {
+  children: (Group | Graphic | Sample)[]
 
   constructor() {
-    this.layers = {
-      Background: [],
-      Foreground: [],
-      Fail: [],
-      Pass: [],
-      Overlay: [],
-      Sample: [],
-    }
+    this.children = []
   }
 
-  add(element: Element) {
-    switch (element.elementType) {
-      case ElementType.Graphics:
-        break
-
-      default:
-        break
+  toOsbString() {
+    let result = ''
+    for (const child of this.children) {
+      result += child.toOsbString()
     }
+
+    return result
   }
 }

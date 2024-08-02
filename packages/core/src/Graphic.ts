@@ -1,9 +1,8 @@
 import { Color3, type Color3Tuple, type IColor3 } from './Color3'
 import { Command } from './Command'
 import type { CompoundCommand } from './CompoundCommand'
-import { ElementType, type Element } from './Element'
+import type { Easing } from './Easing'
 import { LoopCommand } from './LoopCommand'
-import { NodeType } from './Node'
 import { Timestamp } from './Timestamp'
 import { TriggerCommand, type TriggerType } from './TriggerCommand'
 import { TypedCommand } from './TypedCommand'
@@ -16,30 +15,25 @@ export enum GraphicType {
   Background,
 }
 
-export abstract class Graphic implements Element {
-  readonly nodeType = NodeType.Element
-  readonly elementType = ElementType.Graphics
-  readonly graphicType: GraphicType
+export abstract class Graphic {
   /** The path to the element's resource. */
   readonly path: string
   /** The position of the element. */
   readonly position: Vector2
   /** Array of commands for animations and transformations. */
-  commands: Command[] = []
+  readonly commands: Command[] = []
+
   private _currentCompoundCommand: CompoundCommand | null
 
   constructor({
     path,
     position,
-    graphicType,
   }: {
     path: string
     position: IVector2 | Vector2Tuple
-    graphicType: GraphicType
   }) {
     this.path = path
     this.position = new Vector2(position)
-    this.graphicType = graphicType
     this._currentCompoundCommand = null
   }
 
@@ -63,7 +57,7 @@ export abstract class Graphic implements Element {
     endTime?: number | string
     startValue: number
     endValue?: number
-    easing?: number
+    easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
@@ -111,7 +105,7 @@ export abstract class Graphic implements Element {
     endTime?: number | string
     startValue: IVector2 | Vector2Tuple
     endValue?: IVector2 | Vector2Tuple
-    easing?: number
+    easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
@@ -159,7 +153,7 @@ export abstract class Graphic implements Element {
     endTime?: number | string
     startValue: number
     endValue?: number
-    easing?: number
+    easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
@@ -207,7 +201,7 @@ export abstract class Graphic implements Element {
     endTime?: number | string
     startValue: number
     endValue?: number
-    easing?: number
+    easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
@@ -255,7 +249,7 @@ export abstract class Graphic implements Element {
     endTime?: number | string
     startValue: number
     endValue?: number
-    easing?: number
+    easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
@@ -302,7 +296,7 @@ export abstract class Graphic implements Element {
     endTime?: number | string
     startValue: IVector2 | Vector2Tuple
     endValue?: IVector2 | Vector2Tuple
-    easing?: number
+    easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
@@ -349,7 +343,7 @@ export abstract class Graphic implements Element {
     endTime?: number | string
     startValue: number
     endValue?: number
-    easing?: number
+    easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
@@ -397,7 +391,7 @@ export abstract class Graphic implements Element {
     endTime?: number | string
     startValue: IColor3 | Color3Tuple
     endValue?: IColor3 | Color3Tuple
-    easing?: number
+    easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
@@ -579,4 +573,38 @@ export abstract class Graphic implements Element {
     this._currentCompoundCommand = null
     return this
   }
+
+  compileCommands(): string {
+    let result = ''
+    for (const command of this.commands) {
+      if (command instanceof TriggerCommand) {
+        result += ` T,${command.triggerType},${command.startTime},${command.endTime}\n`
+        for (const childCommand of command.commands) {
+          result += `  ${childCommand.event},${childCommand.easing},${childCommand.startTime},${childCommand.startValue}`
+          if (childCommand.event !== 'P' && childCommand.endValue)
+            result += `,${childCommand.endValue}`
+          result += '\n'
+        }
+      }
+      if (command instanceof LoopCommand) {
+        result += ` L,${command.loopCount}\n`
+        for (const childCommand of command.commands) {
+          result += `  ${childCommand.event},${childCommand.easing},${childCommand.startTime},${childCommand.startValue}`
+          if (childCommand.event !== 'P' && childCommand.endValue)
+            result += `,${childCommand.endValue}`
+          result += '\n'
+        }
+      }
+      if (command instanceof TypedCommand) {
+        result += ` ${command.event},${command.easing},${command.startTime},${command.endTime},${command.startValue}`
+        if (command.event !== 'P' && command.endValue)
+          result += `,${command.endValue}`
+        result += '\n'
+      }
+    }
+
+    return result
+  }
+
+  abstract toOsbString(): string
 }

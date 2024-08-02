@@ -1,4 +1,4 @@
-import { CompoundCommand, CompoundCommandType } from './CompoundCommand'
+import { CompoundCommand } from './CompoundCommand'
 import type { Timestamp } from './Timestamp'
 
 export type SampleSet = 'All' | 'Normal' | 'Soft' | 'Drum' | ''
@@ -23,7 +23,6 @@ export class TriggerCommand extends CompoundCommand {
   }) {
     super({
       event: 'T',
-      compoundCommandType: CompoundCommandType.TriggerCommand,
     })
     this.triggerType = triggerType
     this.startTime = startTime

@@ -1,4 +1,4 @@
-import { CompoundCommand, CompoundCommandType } from './CompoundCommand'
+import { CompoundCommand } from './CompoundCommand'
 import type { Timestamp } from './Timestamp'
 
 export class LoopCommand extends CompoundCommand {
@@ -16,7 +16,6 @@ export class LoopCommand extends CompoundCommand {
   }) {
     super({
       event: 'L',
-      compoundCommandType: CompoundCommandType.LoopCommand,
     })
     this.loopCount = loopCount
     this.startTime = startTime

@@ -1,4 +1,4 @@
-import { Graphic, GraphicType } from './Graphic'
+import { Graphic } from './Graphic'
 import type { Layer } from './Layer'
 import type { Origin } from './Origin'
 import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
@@ -42,11 +42,17 @@ export class Animation extends Graphic {
     frameDelay: number
     repeat: boolean
   }) {
-    super({ path, position, graphicType: GraphicType.Animation })
+    super({ path, position })
     this.layer = layer
     this.origin = origin
     this.frameCount = frameCount
     this.frameDelay = frameDelay
     this.repeat = repeat
+  }
+
+  toOsbString(): string {
+    const loopType = this.repeat ? 'LoopForever' : 'LoopOnce'
+    let result = `Animation,${this.layer},${this.origin},"${this.path}",${this.position},${this.frameCount},${this.frameDelay},${loopType}\n${this.compileCommands()}`
+    return result
   }
 }

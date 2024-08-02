@@ -1,6 +1,6 @@
 # osbjs
 
-A minimalist component-based osu! storboarding framework.
+A minimalist component-based osu! storyboarding library.
 
 ## Getting started
 

@@ -1,4 +1,4 @@
-import { Graphic, GraphicType } from './Graphic'
+import { Graphic } from './Graphic'
 import { Timestamp } from './Timestamp'
 import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
 
@@ -22,7 +22,12 @@ export class Video extends Graphic {
     startTime: number | string
     position: IVector2 | Vector2Tuple | Vector2
   }) {
-    super({ path, position, graphicType: GraphicType.Video })
+    super({ path, position })
     this.startTime = new Timestamp(startTime)
+  }
+
+  toOsbString(): string {
+    let result = `Video,${this.startTime},"${this.path}",${this.position}\n${this.compileCommands()}`
+    return result
   }
 }

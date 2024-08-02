@@ -1,10 +1,8 @@
-import { ElementType, type Element } from './Element'
 import { clamp } from './maths'
-import { NodeType } from './Node'
 import { Timestamp } from './Timestamp'
 
 /**
- * Enum-like object representing the possible layers for a sample.
+ * Possible layers for a sample.
  */
 export const SampleLayer = {
   Background: 0,
@@ -14,16 +12,18 @@ export const SampleLayer = {
 } as const
 
 /**
+ * Possible layers for a sample.
+ */
+export type SampleLayer = (typeof SampleLayer)[keyof typeof SampleLayer]
+
+/**
  * Represents an audio sample in the storyboard.
  */
-export class Sample implements Element {
-  readonly nodeType = NodeType.Element
-  readonly elementType = ElementType.Sample
-
+export class Sample {
   /** The time at which the sample is played. */
   readonly time: Timestamp
   /** The layer on which the sample is placed. */
-  readonly layer: number
+  readonly layer: SampleLayer
   /** The file path of the sample. */
   readonly path: string
   /** The volume of the sample. */
@@ -42,7 +42,7 @@ export class Sample implements Element {
     volume = 100,
   }: {
     time: number | string
-    layer: number
+    layer: SampleLayer
     path: string
     volume?: number
   }) {
@@ -50,5 +50,9 @@ export class Sample implements Element {
     this.layer = layer
     this.path = path
     this.volume = clamp(volume, 0, 100)
+  }
+
+  toOsbString() {
+    return `Sample,${this.time},${this.layer},"${this.path}",${this.volume}\n`
   }
 }

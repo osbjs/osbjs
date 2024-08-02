@@ -1,4 +1,4 @@
-import { Graphic, GraphicType } from './Graphic'
+import { Graphic } from './Graphic'
 import { type IVector2, type Vector2Tuple } from './Vector2'
 
 /**
@@ -17,6 +17,11 @@ export class Background extends Graphic {
     path: string
     position: IVector2 | Vector2Tuple
   }) {
-    super({ path, position, graphicType: GraphicType.Background })
+    super({ path, position })
+  }
+
+  toOsbString(): string {
+    let result = `0,0,"${this.path},${this.position}\n${this.compileCommands()}"`
+    return result
   }
 }

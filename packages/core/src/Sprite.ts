@@ -1,4 +1,4 @@
-import { Graphic, GraphicType } from './Graphic'
+import { Graphic } from './Graphic'
 import type { Layer } from './Layer'
 import type { Origin } from './Origin'
 import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
@@ -27,8 +27,13 @@ export class Sprite extends Graphic {
     origin: Origin
     position: IVector2 | Vector2Tuple | Vector2
   }) {
-    super({ path, position, graphicType: GraphicType.Sprite })
+    super({ path, position })
     this.layer = layer
     this.origin = origin
+  }
+
+  toOsbString(): string {
+    let result = `Sprite,${this.layer},${this.origin},"${this.path}",${this.position}\n${this.compileCommands()}`
+    return result
   }
 }

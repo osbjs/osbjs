@@ -1,5 +1,5 @@
 import type { Color3 } from './Color3'
-import { Command, CommandType } from './Command'
+import { Command } from './Command'
 import type { Easing } from './Easing'
 import type { Timestamp } from './Timestamp'
 import type { Vector2 } from './Vector2'
@@ -30,7 +30,6 @@ export class TypedCommand<
   }) {
     super({
       event,
-      commandType: CommandType.TypedCommand,
     })
     this.startTime = startTime
     this.endTime = endTime
