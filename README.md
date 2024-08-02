@@ -37,7 +37,7 @@ starImage.move({
   startValue: [0, 0],
   endValue: [100, 100],
 })
-sb.add(starImage)
+sb.children.push(starImage)
 ```
 
 Note that you need to add your star image to the storyboard for it to work.
@@ -59,5 +59,7 @@ starImage.move({
   startValue: [0, 0],
   endValue: [100, 100],
 })
-sb.add(starImage)
+sb.children.push(starImage)
+
+const osb = `[Events]\n${sb.toString()()}`
 ```

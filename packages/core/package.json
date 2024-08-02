@@ -5,6 +5,7 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "browser": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build-all": "rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
     "build-dts": "rollup --config rollup.config.dts.ts --configPlugin @rollup/plugin-typescript",
