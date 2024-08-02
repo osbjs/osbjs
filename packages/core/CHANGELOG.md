@@ -5,10 +5,10 @@
 ### Breaking changes
 
 - All of the apis changed.
-- Cli moved to `@osbjs/cli`.
+- Cli were removed.
 - TextureGenerator moved to `@osbjs/text-gen`.
-- BeatmapParser moved to `@osbjs/beatmap`.
-- Pre-built components were removed, use cli to generate templates instead.
+- BeatmapParser moved to `@osbjs/parser`.
+- Pre-built components were removed.
 
 ### Features
 
