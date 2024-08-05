@@ -4,6 +4,7 @@ import type { Easing } from './Easing'
 import type { Timestamp } from './Timestamp'
 import type { Vector2 } from './Vector2'
 
+/** Tells the object to do something. */
 export class TypedCommand<
   T = string | number | Vector2 | Color3,
 > extends Command {

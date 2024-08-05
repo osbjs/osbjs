@@ -1,5 +1,5 @@
 /**
- *  Easing indicates if the command should "accelerate".
+ * Easing indicates if the command should "accelerate".
  */
 export const Easing = {
   Linear: 0,
@@ -39,5 +39,7 @@ export const Easing = {
   InOutBounce: 34,
 } as const
 
-// If you want to create a type from this constant
+/**
+ * Easing indicates if the command should "accelerate".
+ */
 export type Easing = (typeof Easing)[keyof typeof Easing]

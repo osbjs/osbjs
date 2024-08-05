@@ -18,7 +18,7 @@ import { Group } from '@osbjs/core'
 const sb = new Group()
 ```
 
-A group is a container that will holds your storyboard objects (`Sprite` and `Animation`).
+A `Group` is a container that will holds your storyboard objects (`Sprite` and `Animation`) or another `Group`s.
 You can have multiple nested `Group`.
 
 Now let's add a star image to our storyboard and move it around:

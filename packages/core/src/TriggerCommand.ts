@@ -7,6 +7,9 @@ export type CustomSampleSet = number | ''
 export type TriggerType =
   `HitSound${SampleSet}${SampleSet}${Addition}${CustomSampleSet}`
 
+/**
+ * Causes a series of events to happen whenever that condition is fulfilled within a certain time period
+ */
 export class TriggerCommand extends CompoundCommand {
   readonly triggerType: TriggerType
   readonly startTime: Timestamp

@@ -1,6 +1,7 @@
 import { CompoundCommand } from './CompoundCommand'
 import type { Timestamp } from './Timestamp'
 
+/** Repeats some actions a fixed number of times. */
 export class LoopCommand extends CompoundCommand {
   /** The number of times the loop executes before stopping */
   loopCount: number

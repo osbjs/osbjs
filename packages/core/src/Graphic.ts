@@ -567,7 +567,7 @@ export abstract class Graphic {
     return this
   }
 
-  compileCommands(): string {
+  protected compileCommands(): string {
     let result = ''
     for (const command of this.commands) {
       if (command instanceof TriggerCommand) {
