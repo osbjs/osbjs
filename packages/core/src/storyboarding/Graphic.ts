@@ -1,12 +1,12 @@
-import { Color3, type Color3Tuple, type IColor3 } from './Color3'
+import { Color3, type Color3Tuple, type IColor3 } from '../types/Color3'
 import { Command } from './Command'
 import type { CompoundCommand } from './CompoundCommand'
 import type { Easing } from './Easing'
 import { LoopCommand } from './LoopCommand'
-import { Timestamp } from './Timestamp'
+import { Timestamp } from '../types/Timestamp'
 import { TriggerCommand, type TriggerType } from './TriggerCommand'
 import { TypedCommand } from './TypedCommand'
-import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
+import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 
 export abstract class Graphic {
   /** The path to the element's resource. */

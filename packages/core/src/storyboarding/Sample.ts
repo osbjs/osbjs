@@ -1,5 +1,5 @@
-import { clamp } from './maths'
-import { Timestamp } from './Timestamp'
+import { clamp } from '../maths'
+import { Timestamp } from '../types/Timestamp'
 
 /**
  * Possible layers for a sample.

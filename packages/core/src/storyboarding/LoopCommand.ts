@@ -1,5 +1,5 @@
 import { CompoundCommand } from './CompoundCommand'
-import type { Timestamp } from './Timestamp'
+import type { Timestamp } from '../types/Timestamp'
 
 export class LoopCommand extends CompoundCommand {
   loopCount: number

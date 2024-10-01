@@ -1,4 +1,4 @@
-import { clamp } from './maths'
+import { clamp } from '../maths'
 
 /**
  * Represents a timestamp in the format mm:ss:msmsms.

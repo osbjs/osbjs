@@ -1,9 +1,9 @@
+import type { Timestamp } from '../types/Timestamp'
 import { CompoundCommand } from './CompoundCommand'
-import type { Timestamp } from './Timestamp'
 
-export type SampleSet = 'All' | 'Normal' | 'Soft' | 'Drum' | ''
-export type Addition = 'Whistle' | 'Finish' | 'Clap' | ''
-export type CustomSampleSet = number | ''
+type SampleSet = 'All' | 'Normal' | 'Soft' | 'Drum' | ''
+type Addition = 'Whistle' | 'Finish' | 'Clap' | ''
+type CustomSampleSet = number | ''
 export type TriggerType =
   `HitSound${SampleSet}${SampleSet}${Addition}${CustomSampleSet}`
 

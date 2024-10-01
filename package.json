@@ -4,8 +4,7 @@
     "format": "npx prettier . --write"
   },
   "workspaces": [
-    "packages/core",
-    "packages/parser"
+    "packages/core"
   ],
   "devDependencies": {
     "prettier": "^3.3.2",

@@ -1,7 +1,7 @@
 import { Graphic } from './Graphic'
 import type { Layer } from './Layer'
 import type { Origin } from './Origin'
-import { Vector2, type IVector2, type Vector2Tuple } from './Vector2'
+import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 
 /** A basic image. */
 export class Sprite extends Graphic {

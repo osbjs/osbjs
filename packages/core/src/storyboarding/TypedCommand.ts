@@ -1,8 +1,8 @@
-import type { Color3 } from './Color3'
+import type { Color3 } from '../types/Color3'
 import { Command } from './Command'
 import type { Easing } from './Easing'
-import type { Timestamp } from './Timestamp'
-import type { Vector2 } from './Vector2'
+import type { Timestamp } from '../types/Timestamp'
+import type { Vector2 } from '../types/Vector2'
 
 export class TypedCommand<
   T = string | number | Vector2 | Color3,
