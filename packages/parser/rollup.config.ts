@@ -6,7 +6,7 @@ export default {
   output: [
     { file: pkg.main, format: 'cjs' },
     { file: pkg.module, format: 'es' },
-    { file: pkg.browser, format: 'umd', name: '@osbjs/core' },
+    { file: pkg.browser, format: 'umd', name: '@osbjs/parser' },
   ],
   plugins: [typescript()],
 }

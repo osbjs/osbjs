@@ -12,7 +12,7 @@
     "build": "npm run build-all && npm run build-dts && rimraf dist/types",
     "tsc": "tsc"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@osbjs/core": "^3.0.0-alpha"
   },
   "devDependencies": {

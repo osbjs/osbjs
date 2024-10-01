@@ -11,7 +11,8 @@ export class Timestamp {
   constructor(input: string | number) {
     if (typeof input === 'string') {
       const splitted = input.split(':')
-      if (splitted.length !== 3) throw new Error('Invalid input type for Timestamp')
+      if (splitted.length !== 3)
+        throw new TypeError('Invalid input type for Timestamp')
 
       const [mm, ss, ms] = splitted.map(Number)
       this.minutes = clamp(mm!, 0, 60)
@@ -23,14 +24,14 @@ export class Timestamp {
       this.seconds = Math.floor(input / 1000)
       this.milliseconds = input % 1000
     } else {
-      throw new Error('Invalid input type for Timestamp')
+      throw new TypeError('Invalid input type for Timestamp')
     }
   }
 
   toString(): string {
     return this.toMilliseconds().toString()
   }
-  
+
   toMilliseconds(): number {
     return this.minutes * 60000 + this.seconds * 1000 + this.milliseconds
   }

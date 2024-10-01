@@ -1,9 +1,16 @@
-import type { Color3, Graphic, Sample, Timestamp } from '@osbjs/core'
-import type { Background } from './Background'
-import type { Break } from './Break'
+import type {
+  Animation,
+  Color3,
+  Container,
+  Sample,
+  Sprite,
+  Timestamp,
+} from '@osbjs/core'
+import { Background } from './Background'
+import { Break } from './Break'
 import type { HitObject } from './HitObject'
 import type { TimingPoint } from './TimingPoint'
-import type { Video } from './Video'
+import { Video } from './Video'
 
 export class Beatmap {
   version: number
@@ -52,7 +59,7 @@ export class Beatmap {
     sliderMultiplier?: number
     sliderTickRate?: number
   }
-  events: (Graphic | Sample | Break | Video | Background)[]
+  events: (Sprite | Animation | Sample | Break | Video | Background)[]
   timingPoints: TimingPoint[]
   colours: Record<number, Color3> & {
     sliderTrackOverride?: Color3
@@ -86,6 +93,13 @@ export class Beatmap {
     const beatmap = new Beatmap(version)
 
     return beatmap
+  }
+
+  replaceEvents(sb: Container) {
+    const breaks = this.events.filter(e => e instanceof Break)
+    const videos = this.events.filter(e => e instanceof Video)
+    const bgs = this.events.filter(e => e instanceof Background)
+    this.events = [...breaks, ...videos, ...bgs, ...sb.flatten()]
   }
 
   toString() {

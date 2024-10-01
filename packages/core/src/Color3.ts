@@ -29,12 +29,17 @@ export class Color3 implements IColor3 {
       this.r = clamp(r, 0, 255)
       this.g = clamp(g, 0, 255)
       this.b = clamp(b, 0, 255)
-    } else if (typeof input === 'object') {
+    } else if (
+      typeof input === 'object' &&
+      typeof input.r === 'number' &&
+      typeof input.g === 'number' &&
+      typeof input.b === 'number'
+    ) {
       this.r = clamp(input.r, 0, 255)
       this.g = clamp(input.g, 0, 255)
       this.b = clamp(input.b, 0, 255)
     } else {
-      throw new Error('Invalid input type for Color3')
+      throw new TypeError('Invalid input type for Color3')
     }
   }
 

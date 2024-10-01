@@ -19,14 +19,20 @@ export class Vector2 implements IVector2 {
   constructor(input: number | Vector2Tuple | IVector2 = 0, y: number = 0) {
     if (Array.isArray(input)) {
       const [x, y] = input
+      if (typeof x !== 'number' || typeof y !== 'number') {
+        throw new TypeError('Invalid input type for Vector2')
+      }
       this.x = x
       this.y = y
-    } else if (typeof input === 'object') {
+    } else if (
+      typeof input === 'object' &&
+      typeof input.x === 'number' &&
+      typeof input.y === 'number'
+    ) {
       this.x = input.x
       this.y = input.y
     } else {
-      this.x = input
-      this.y = y
+      throw new TypeError('Invalid input type for Vector2')
     }
   }
 
@@ -42,7 +48,6 @@ export class Vector2 implements IVector2 {
   /**
    * Adds another vector to this vector.
    * @param v The vector to add.
-   * @returns The resulting vector.
    */
   add(v: Vector2): Vector2 {
     return new Vector2(this.x + v.x, this.y + v.y)
@@ -51,7 +56,6 @@ export class Vector2 implements IVector2 {
   /**
    * Subtracts another vector from this vector.
    * @param v The vector to subtract.
-   * @returns The resulting vector.
    */
   subtract(v: Vector2): Vector2 {
     return new Vector2(this.x - v.x, this.y - v.y)
@@ -60,7 +64,6 @@ export class Vector2 implements IVector2 {
   /**
    * Multiplies this vector by a scalar.
    * @param scalar - The scalar to multiply by.
-   * @returns The resulting vector.
    */
   multiply(scalar: number): Vector2 {
     return new Vector2(this.x * scalar, this.y * scalar)
@@ -69,8 +72,6 @@ export class Vector2 implements IVector2 {
   /**
    * Divides this vector by a scalar.
    * @param scalar - The scalar to divide by.
-   * @returns The resulting vector.
-   * @throws Will throw an error if the scalar is zero.
    */
   divide(scalar: number): Vector2 {
     if (scalar === 0) throw new Error('Cannot divide by zero')
@@ -79,7 +80,6 @@ export class Vector2 implements IVector2 {
 
   /**
    * Calculates the dot product with another vector.
-   * @param v The vector to calculate the dot product with.
    * @returns The dot product.
    */
   dot(v: Vector2): number {
@@ -96,7 +96,6 @@ export class Vector2 implements IVector2 {
 
   /**
    * Normalizes the vector (makes it unit length).
-   * @returns The normalized vector.
    */
   normalize(): Vector2 {
     const mag = this.length()
@@ -107,7 +106,6 @@ export class Vector2 implements IVector2 {
   /**
    * Calculates the distance between this vector and another vector.
    * @param v The vector to calculate the distance to.
-   * @returns The distance between the vectors.
    */
   distance(v: Vector2): number {
     return Math.sqrt((this.x - v.x) ** 2 + (this.y - v.y) ** 2)
@@ -116,14 +114,12 @@ export class Vector2 implements IVector2 {
   /**
    * Calculates the angle between this vector and another vector in radians.
    * @param v The vector to calculate the angle with.
-   * @returns The angle between the vectors in radians.
-   * @throws Will throw an error if the magnitude of either vector is zero.
    */
   angle(v: Vector2): number {
     const dotProduct = this.dot(v)
     const magnitudes = this.length() * v.length()
     if (magnitudes === 0)
-      throw new Error('Cannot calculate angle with zero-length vector')
+      throw new RangeError('Cannot calculate angle with zero-length vector')
     return Math.acos(dotProduct / magnitudes)
   }
 

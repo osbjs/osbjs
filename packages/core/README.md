@@ -5,10 +5,10 @@ This package contains only the functionality necessary to define osu! storyboard
 ## Usage
 
 ```ts
-import { Group, Sprite } from '@osbjs/core'
+import { Container, Sprite } from '@osbjs/core'
 import fs from 'fs'
 
-const sb = new Group()
+const sb = new Container()
 
 const starImage = new Sprite({
   path: 'star.png',

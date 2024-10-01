@@ -32,7 +32,7 @@ export class Animation extends Graphic {
     position,
     frameCount,
     frameDelay,
-    repeat
+    repeat,
   }: {
     path: string
     layer: Layer
