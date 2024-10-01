@@ -4,12 +4,8 @@ import type { Timestamp } from './Timestamp'
 export type SampleSet = 'All' | 'Normal' | 'Soft' | 'Drum' | ''
 export type Addition = 'Whistle' | 'Finish' | 'Clap' | ''
 export type CustomSampleSet = number | ''
-export type TriggerType =
-  `HitSound${SampleSet}${SampleSet}${Addition}${CustomSampleSet}`
+export type TriggerType = `HitSound${SampleSet}${SampleSet}${Addition}${CustomSampleSet}`
 
-/**
- * Causes a series of events to happen whenever that condition is fulfilled within a certain time period
- */
 export class TriggerCommand extends CompoundCommand {
   readonly triggerType: TriggerType
   readonly startTime: Timestamp
@@ -18,14 +14,14 @@ export class TriggerCommand extends CompoundCommand {
   constructor({
     triggerType,
     startTime,
-    endTime,
+    endTime
   }: {
     triggerType: TriggerType
     startTime: Timestamp
     endTime: Timestamp
   }) {
     super({
-      event: 'T',
+      event: 'T'
     })
     this.triggerType = triggerType
     this.startTime = startTime

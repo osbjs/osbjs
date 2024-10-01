@@ -18,13 +18,7 @@ export abstract class Graphic {
 
   private _currentCompoundCommand: CompoundCommand | null
 
-  constructor({
-    path,
-    position,
-  }: {
-    path: string
-    position: IVector2 | Vector2Tuple
-  }) {
+  constructor({ path, position }: { path: string; position: IVector2 | Vector2Tuple }) {
     this.path = path
     this.position = new Vector2(position)
     this._currentCompoundCommand = null
@@ -44,7 +38,7 @@ export abstract class Graphic {
     endTime,
     startValue,
     endValue,
-    easing,
+    easing
   }: {
     startTime: number | string
     endTime?: number | string
@@ -60,8 +54,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'F',
-        }),
+          event: 'F'
+        })
       )
     } else {
       this.commands.push(
@@ -71,8 +65,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'F',
-        }),
+          event: 'F'
+        })
       )
     }
     return this
@@ -92,7 +86,7 @@ export abstract class Graphic {
     endTime,
     startValue,
     endValue,
-    easing,
+    easing
   }: {
     startTime: number | string
     endTime?: number | string
@@ -108,8 +102,8 @@ export abstract class Graphic {
           startValue: new Vector2(startValue),
           endValue: endValue ? new Vector2(endValue) : undefined,
           easing,
-          event: 'M',
-        }),
+          event: 'M'
+        })
       )
     } else {
       this.commands.push(
@@ -119,8 +113,8 @@ export abstract class Graphic {
           startValue: new Vector2(startValue),
           endValue: endValue ? new Vector2(endValue) : undefined,
           easing,
-          event: 'M',
-        }),
+          event: 'M'
+        })
       )
     }
     return this
@@ -140,7 +134,7 @@ export abstract class Graphic {
     endTime,
     startValue,
     endValue,
-    easing,
+    easing
   }: {
     startTime: number | string
     endTime?: number | string
@@ -156,8 +150,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'MX',
-        }),
+          event: 'MX'
+        })
       )
     } else {
       this.commands.push(
@@ -167,8 +161,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'MX',
-        }),
+          event: 'MX'
+        })
       )
     }
     return this
@@ -188,7 +182,7 @@ export abstract class Graphic {
     endTime,
     startValue,
     endValue,
-    easing,
+    easing
   }: {
     startTime: number | string
     endTime?: number | string
@@ -204,8 +198,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'MY',
-        }),
+          event: 'MY'
+        })
       )
     } else {
       this.commands.push(
@@ -215,8 +209,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'MY',
-        }),
+          event: 'MY'
+        })
       )
     }
     return this
@@ -236,7 +230,7 @@ export abstract class Graphic {
     endTime,
     startValue,
     endValue,
-    easing,
+    easing
   }: {
     startTime: number | string
     endTime?: number | string
@@ -252,8 +246,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'S',
-        }),
+          event: 'S'
+        })
       )
     } else {
       this.commands.push(
@@ -263,8 +257,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'S',
-        }),
+          event: 'S'
+        })
       )
     }
   }
@@ -283,7 +277,7 @@ export abstract class Graphic {
     endTime,
     startValue,
     endValue,
-    easing,
+    easing
   }: {
     startTime: number | string
     endTime?: number | string
@@ -299,8 +293,8 @@ export abstract class Graphic {
           startValue: new Vector2(startValue),
           endValue: endValue ? new Vector2(endValue) : undefined,
           easing,
-          event: 'V',
-        }),
+          event: 'V'
+        })
       )
     } else {
       this.commands.push(
@@ -310,8 +304,8 @@ export abstract class Graphic {
           startValue: new Vector2(startValue),
           endValue: endValue ? new Vector2(endValue) : undefined,
           easing,
-          event: 'V',
-        }),
+          event: 'V'
+        })
       )
     }
   }
@@ -330,7 +324,7 @@ export abstract class Graphic {
     endTime,
     startValue,
     endValue,
-    easing,
+    easing
   }: {
     startTime: number | string
     endTime?: number | string
@@ -346,8 +340,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'R',
-        }),
+          event: 'R'
+        })
       )
     } else {
       this.commands.push(
@@ -357,8 +351,8 @@ export abstract class Graphic {
           startValue,
           endValue,
           easing,
-          event: 'R',
-        }),
+          event: 'R'
+        })
       )
     }
     return this
@@ -378,7 +372,7 @@ export abstract class Graphic {
     endTime,
     startValue,
     endValue,
-    easing,
+    easing
   }: {
     startTime: number | string
     endTime?: number | string
@@ -394,8 +388,8 @@ export abstract class Graphic {
           startValue: new Color3(startValue),
           endValue: endValue ? new Color3(endValue) : undefined,
           easing,
-          event: 'C',
-        }),
+          event: 'C'
+        })
       )
     } else {
       this.commands.push(
@@ -405,8 +399,8 @@ export abstract class Graphic {
           startValue: new Color3(startValue),
           endValue: endValue ? new Color3(endValue) : undefined,
           easing,
-          event: 'C',
-        }),
+          event: 'C'
+        })
       )
     }
     return this
@@ -418,21 +412,15 @@ export abstract class Graphic {
    * @param params.startTime - The start time of the effect.
    * @param [params.endTime] - The end time of the effect.
    */
-  flipH({
-    startTime,
-    endTime,
-  }: {
-    startTime: number | string
-    endTime?: number | string
-  }) {
+  flipH({ startTime, endTime }: { startTime: number | string; endTime?: number | string }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
         new TypedCommand({
           startTime: new Timestamp(startTime),
           endTime: endTime ? new Timestamp(endTime) : undefined,
           startValue: 'H',
-          event: 'P',
-        }),
+          event: 'P'
+        })
       )
     } else {
       this.commands.push(
@@ -440,8 +428,8 @@ export abstract class Graphic {
           startTime: new Timestamp(startTime),
           endTime: endTime ? new Timestamp(endTime) : undefined,
           startValue: 'H',
-          event: 'P',
-        }),
+          event: 'P'
+        })
       )
     }
     return this
@@ -453,21 +441,15 @@ export abstract class Graphic {
    * @param params.startTime - The start time of the effect.
    * @param [params.endTime] - The end time of the effect.
    */
-  flipV({
-    startTime,
-    endTime,
-  }: {
-    startTime: number | string
-    endTime?: number | string
-  }) {
+  flipV({ startTime, endTime }: { startTime: number | string; endTime?: number | string }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
         new TypedCommand({
           startTime: new Timestamp(startTime),
           endTime: endTime ? new Timestamp(endTime) : undefined,
           startValue: 'V',
-          event: 'P',
-        }),
+          event: 'P'
+        })
       )
     } else {
       this.commands.push(
@@ -475,8 +457,8 @@ export abstract class Graphic {
           startTime: new Timestamp(startTime),
           endTime: endTime ? new Timestamp(endTime) : undefined,
           startValue: 'V',
-          event: 'P',
-        }),
+          event: 'P'
+        })
       )
     }
     return this
@@ -488,21 +470,15 @@ export abstract class Graphic {
    * @param params.startTime - The start time of the effect.
    * @param [params.endTime] - The end time of the effect.
    */
-  additive({
-    startTime,
-    endTime,
-  }: {
-    startTime: number | string
-    endTime?: number | string
-  }) {
+  additive({ startTime, endTime }: { startTime: number | string; endTime?: number | string }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
         new TypedCommand({
           startTime: new Timestamp(startTime),
           endTime: endTime ? new Timestamp(endTime) : undefined,
           startValue: 'A',
-          event: 'P',
-        }),
+          event: 'P'
+        })
       )
     } else {
       this.commands.push(
@@ -510,8 +486,8 @@ export abstract class Graphic {
           startTime: new Timestamp(startTime),
           endTime: endTime ? new Timestamp(endTime) : undefined,
           startValue: 'A',
-          event: 'P',
-        }),
+          event: 'P'
+        })
       )
     }
     return this
@@ -522,16 +498,10 @@ export abstract class Graphic {
    * @param params - Parameters for the loop group.
    * @param params.loopCount -
    */
-  startLoopGroup({
-    loopCount,
-    startTime,
-  }: {
-    loopCount: number
-    startTime: number | string
-  }) {
+  startLoopGroup({ loopCount, startTime }: { loopCount: number; startTime: number | string }) {
     this._currentCompoundCommand = new LoopCommand({
       loopCount,
-      startTime: new Timestamp(startTime),
+      startTime: new Timestamp(startTime)
     })
     this.commands.push(this._currentCompoundCommand)
     return this
@@ -544,7 +514,7 @@ export abstract class Graphic {
   startTriggerGroup({
     triggerType,
     startTime,
-    endTime,
+    endTime
   }: {
     triggerType: TriggerType
     startTime: number | string
@@ -553,7 +523,7 @@ export abstract class Graphic {
     this._currentCompoundCommand = new TriggerCommand({
       triggerType,
       startTime: new Timestamp(startTime),
-      endTime: new Timestamp(endTime),
+      endTime: new Timestamp(endTime)
     })
     this.commands.push(this._currentCompoundCommand)
     return this
@@ -590,8 +560,7 @@ export abstract class Graphic {
       }
       if (command instanceof TypedCommand) {
         result += ` ${command.event},${command.easing},${command.startTime},${command.endTime},${command.startValue}`
-        if (command.event !== 'P' && command.endValue)
-          result += `,${command.endValue}`
+        if (command.event !== 'P' && command.endValue) result += `,${command.endValue}`
         result += '\n'
       }
     }

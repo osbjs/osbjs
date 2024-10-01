@@ -16,9 +16,6 @@ export class Color3 implements IColor3 {
   g: number
   b: number
 
-  /**
-   * @param input - The color components as a number tuple, object literal, or hex string.
-   */
   constructor(input: Color3Tuple | IColor3 | string) {
     if (typeof input === 'string') {
       input = input.replace(/^#/, '') // Remove the leading '#' if present
@@ -41,10 +38,6 @@ export class Color3 implements IColor3 {
     }
   }
 
-  /**
-   * Returns the string representation of the color in the format "r,g,b".
-   * @returns The formatted color string.
-   */
   toString(): string {
     return `${this.r},${this.g},${this.b}`
   }

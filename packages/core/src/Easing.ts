@@ -36,7 +36,7 @@ export const Easing = {
   InOutBack: 31,
   InBounce: 32,
   OutBounce: 33,
-  InOutBounce: 34,
+  InOutBounce: 34
 } as const
 
 /**

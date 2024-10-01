@@ -4,10 +4,7 @@ import type { Easing } from './Easing'
 import type { Timestamp } from './Timestamp'
 import type { Vector2 } from './Vector2'
 
-/** Tells the object to do something. */
-export class TypedCommand<
-  T = string | number | Vector2 | Color3,
-> extends Command {
+export class TypedCommand<T = string | number | Vector2 | Color3> extends Command {
   readonly startTime: Timestamp
   readonly endTime?: Timestamp
   readonly startValue: T
@@ -20,7 +17,7 @@ export class TypedCommand<
     endTime,
     startValue,
     endValue,
-    easing,
+    easing
   }: {
     event: string
     startTime: Timestamp
@@ -30,7 +27,7 @@ export class TypedCommand<
     easing?: Easing
   }) {
     super({
-      event,
+      event
     })
     this.startTime = startTime
     this.endTime = endTime

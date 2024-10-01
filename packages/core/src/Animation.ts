@@ -32,7 +32,7 @@ export class Animation extends Graphic {
     position,
     frameCount,
     frameDelay,
-    repeat,
+    repeat
   }: {
     path: string
     layer: Layer
@@ -52,7 +52,9 @@ export class Animation extends Graphic {
 
   toString(): string {
     const loopType = this.repeat ? 'LoopForever' : 'LoopOnce'
-    let result = `Animation,${this.layer},${this.origin},"${this.path}",${this.position},${this.frameCount},${this.frameDelay},${loopType}\n${this.compileCommands()}`
+    let result = `Animation,${this.layer},${this.origin},"${this.path}",${this.position},${
+      this.frameCount
+    },${this.frameDelay},${loopType}\n${this.compileCommands()}`
     return result
   }
 }
