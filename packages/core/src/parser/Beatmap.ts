@@ -14,92 +14,76 @@ import { Video } from './Video'
 
 export class Beatmap {
   version: number
-  general: {
-    audioFilename?: string
-    audioLeadIn?: number
-    previewTime?: number
-    countdown?: 0 | 1 | 2 | 3
-    sampleSet?: 'Normal' | 'Soft' | 'Drum'
-    stackLeniency?: number
-    mode?: 0 | 1 | 2 | 3
-    letterboxInBreaks?: boolean
-    useSkinSprites?: boolean
-    overlayPosition?: 'NoChange' | 'Below' | 'Above'
-    skinPreference?: string
-    epilepsyWarning?: boolean
-    countdownOffset?: number
-    specialStyle?: boolean
-    widescreenStoryboard?: boolean
-    samplesMatchPlaybackRate?: boolean
+  General: {
+    AudioFilename?: string
+    AudioLeadIn?: number
+    PreviewTime?: number
+    Countdown?: 0 | 1 | 2 | 3
+    SampleSet?: 'Normal' | 'Soft' | 'Drum'
+    StackLeniency?: number
+    Mode?: 0 | 1 | 2 | 3
+    LetterboxInBreaks?: 0 | 1
+    UseSkinSprites?: 0 | 1
+    OverlayPosition?: 'NoChange' | 'Below' | 'Above'
+    SkinPreference?: string
+    EpilepsyWarning?: 0 | 1
+    CountdownOffset?: number
+    SpecialStyle?: 0 | 1
+    WidescreenStoryboard?: 0 | 1
+    SamplesMatchPlaybackRate?: 0 | 1
   }
-  editor: {
-    bookmarks?: Timestamp[]
-    distanceSpacing?: number
-    beatDivisor?: number
-    gridSize?: number
-    timelineZoom?: number
+  Editor: {
+    Bookmarks?: Timestamp[]
+    DistanceSpacing?: number
+    BeatDivisor?: number
+    GridSize?: number
+    TimelineZoom?: number
   }
-  metadata: {
-    title?: string
-    titleUnicode?: string
-    artist?: string
-    artistUnicode?: string
-    creator?: string
-    version?: string
-    source?: string
-    tags?: string
-    beatmapID?: number
-    beatmapSetID?: number
+  Metadata: {
+    Title?: string
+    TitleUnicode?: string
+    Artist?: string
+    ArtistUnicode?: string
+    Creator?: string
+    Version?: string
+    Source?: string
+    Tags?: string
+    BeatmapID?: number
+    BeatmapSetID?: number
   }
-  difficulty: {
-    hpDrainRate?: number
-    circleSize?: number
-    overallDifficulty?: number
-    approachRate?: number
-    sliderMultiplier?: number
-    sliderTickRate?: number
+  Difficulty: {
+    HpDrainRate?: number
+    CircleSize?: number
+    OverallDifficulty?: number
+    ApproachRate?: number
+    SliderMultiplier?: number
+    SliderTickRate?: number
   }
-  events: (Sprite | Animation | Sample | Break | Video | Background)[]
-  timingPoints: TimingPoint[]
-  colours: Record<number, Color3> & {
-    sliderTrackOverride?: Color3
-    sliderBorder?: Color3
+  Events: (Sprite | Animation | Sample | Break | Video | Background)[]
+  TimingPoints: TimingPoint[]
+  Colours: Record<number, Color3> & {
+    SliderTrackOverride?: Color3
+    SliderBorder?: Color3
   }
-  hitObjects: HitObject[]
+  HitObjects: HitObject[]
 
-  constructor(version = 14) {
+  constructor(version: number) {
     this.version = version
-    this.general = {}
-    this.timingPoints = []
-    this.hitObjects = []
-    this.colours = {}
-    this.events = []
-    this.difficulty = {}
-    this.metadata = {}
-    this.editor = {}
-  }
-
-  static parse(input: string): Beatmap | null {
-    const lines = input.split('\n')
-    if (lines.length === 0) return null
-
-    // first line must specify the version
-    const firstLine = lines[0]!
-    const versionRegex = /^osu file format v(\d+)$/m
-    const match = firstLine.match(versionRegex)
-    if (!match || !match[1]) return null
-    const version = parseInt(match[1])
-
-    const beatmap = new Beatmap(version)
-
-    return beatmap
+    this.General = {}
+    this.TimingPoints = []
+    this.HitObjects = []
+    this.Colours = {}
+    this.Events = []
+    this.Difficulty = {}
+    this.Metadata = {}
+    this.Editor = {}
   }
 
   replaceEvents(sb: Container) {
-    const breaks = this.events.filter(e => e instanceof Break)
-    const videos = this.events.filter(e => e instanceof Video)
-    const bgs = this.events.filter(e => e instanceof Background)
-    this.events = [...breaks, ...videos, ...bgs, ...sb.flatten()]
+    const breaks = this.Events.filter(e => e instanceof Break)
+    const videos = this.Events.filter(e => e instanceof Video)
+    const bgs = this.Events.filter(e => e instanceof Background)
+    this.Events = [...breaks, ...videos, ...bgs, ...sb.flatten()]
   }
 
   toString() {
