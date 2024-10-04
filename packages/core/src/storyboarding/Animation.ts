@@ -1,7 +1,7 @@
+import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 import { Graphic } from './Graphic'
 import type { Layer } from './Layer'
 import type { Origin } from './Origin'
-import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 
 /**  A moving image. */
 export class Animation extends Graphic {
@@ -15,16 +15,7 @@ export class Animation extends Graphic {
   readonly frameDelay: number
   /** Indicates if the animation should loop or not. */
   readonly repeat: boolean
-  /**
-   * @param options - The options for initializing the animation.
-   * @param options.path - The path to the image's file relative to the beatmap folder.
-   * @param [options.layer] - The layer on which the animation resides.
-   * @param [options.origin] - The origin point of the animation.
-   * @param [options.position] - The position of the animation.
-   * @param options.frameCount - Indicates how many frames the animation has.
-   * @param options.frameDelay - Indicates how many milliseconds should be in between each frame.
-   * @param options.repeat - Indicates if the animation should loop or not.
-   */
+
   constructor({
     path,
     layer,
@@ -34,12 +25,39 @@ export class Animation extends Graphic {
     frameDelay,
     repeat,
   }: {
+    /**
+     * The path to the image's file relative to the beatmap folder.
+     */
     path: string
+
+    /**
+     * The layer on which the animation resides.
+     */
     layer: Layer
+
+    /**
+     * The origin point of the animation.
+     */
     origin: Origin
+
+    /**
+     * The position of the animation.
+     */
     position: IVector2 | Vector2Tuple | Vector2
+
+    /**
+     * Indicates how many frames the animation has.
+     */
     frameCount: number
+
+    /**
+     * Indicates how many milliseconds should be in between each frame.
+     */
     frameDelay: number
+
+    /**
+     * Indicates if the animation should loop or not.
+     */
     repeat: boolean
   }) {
     super({ path, position })

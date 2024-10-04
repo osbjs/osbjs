@@ -1,12 +1,12 @@
 import { Color3, type Color3Tuple, type IColor3 } from '../types/Color3'
+import { Timestamp } from '../types/Timestamp'
+import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 import { Command } from './Command'
 import type { CompoundCommand } from './CompoundCommand'
 import type { Easing } from './Easing'
 import { LoopCommand } from './LoopCommand'
-import { Timestamp } from '../types/Timestamp'
 import { TriggerCommand, type TriggerType } from './TriggerCommand'
 import { TypedCommand } from './TypedCommand'
-import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 
 export abstract class Graphic {
   /** The path to the element's resource. */
@@ -32,12 +32,6 @@ export abstract class Graphic {
 
   /**
    * Change the opacity of the object (how transparent it is).
-   * @param params - Parameters for the fade animation.
-   * @param params.startTime - The start time of the animation.
-   * @param [params.endTime] - The end time of the animation.
-   * @param params.startValue - The starting value of the fade.
-   * @param [params.endValue] - The ending value of the fade.
-   * @param [params.easing] - The easing function for the fade animation.
    */
   fade({
     startTime,
@@ -46,10 +40,29 @@ export abstract class Graphic {
     endValue,
     easing,
   }: {
+    /**
+     * The start time of the animation.
+     */
     startTime: number | string
+
+    /**
+     * The end time of the animation.
+     */
     endTime?: number | string
+
+    /**
+     * The starting value of the fade.
+     */
     startValue: number
+
+    /**
+     * The ending value of the fade.
+     */
     endValue?: number
+
+    /**
+     * The easing function for the fade animation.
+     */
     easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
@@ -80,12 +93,6 @@ export abstract class Graphic {
 
   /**
    * Move the object to a new position in the play area.
-   * @param params - Parameters for the move animation.
-   * @param params.startTime - The start time of the animation.
-   * @param [params.endTime] - The end time of the animation.
-   * @param params.startValue - The starting position of the move.
-   * @param [params.endValue] - The ending position of the move.
-   * @param [params.easing] - The easing function for the move animation.
    */
   move({
     startTime,
@@ -94,10 +101,29 @@ export abstract class Graphic {
     endValue,
     easing,
   }: {
+    /**
+     * The start time of the animation.
+     */
     startTime: number | string
+
+    /**
+     * The end time of the animation.
+     */
     endTime?: number | string
+
+    /**
+     * The starting position of the move.
+     */
     startValue: IVector2 | Vector2Tuple
+
+    /**
+     * The ending position of the move.
+     */
     endValue?: IVector2 | Vector2Tuple
+
+    /**
+     * The easing function for the move animation.
+     */
     easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
@@ -128,12 +154,6 @@ export abstract class Graphic {
 
   /**
    * Move the object along the x axis.
-   * @param params - Parameters for the moveX animation.
-   * @param params.startTime - The start time of the animation.
-   * @param [params.endTime] - The end time of the animation.
-   * @param params.startValue - The starting X position of the move.
-   * @param [params.endValue] - The ending X position of the move.
-   * @param [params.easing] - The easing function for the moveX animation.
    */
   moveX({
     startTime,
@@ -142,10 +162,19 @@ export abstract class Graphic {
     endValue,
     easing,
   }: {
+    /** The start time of the animation. */
     startTime: number | string
+
+    /** The end time of the animation. */
     endTime?: number | string
+
+    /** The starting X position of the move. */
     startValue: number
+
+    /** The ending X position of the move. */
     endValue?: number
+
+    /** The easing function for the moveX animation. */
     easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
@@ -176,12 +205,6 @@ export abstract class Graphic {
 
   /**
    * Move the object along the y axis.
-   * @param params - Parameters for the moveY animation.
-   * @param params.startTime - The start time of the animation.
-   * @param [params.endTime] - The end time of the animation.
-   * @param params.startValue - The starting Y position of the move.
-   * @param [params.endValue] - The ending Y position of the move.
-   * @param [params.easing] - The easing function for the moveY animation.
    */
   moveY({
     startTime,
@@ -190,10 +213,19 @@ export abstract class Graphic {
     endValue,
     easing,
   }: {
+    /** The start time of the animation. */
     startTime: number | string
+
+    /** The end time of the animation. */
     endTime?: number | string
+
+    /** The starting Y position of the move. */
     startValue: number
+
+    /** The ending Y position of the move. */
     endValue?: number
+
+    /** The easing function for the moveY animation. */
     easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
@@ -224,12 +256,6 @@ export abstract class Graphic {
 
   /**
    * Change the size of the object relative to its original size.
-   * @param params - Parameters for the scale animation.
-   * @param params.startTime - The start time of the animation.
-   * @param [params.endTime] - The end time of the animation.
-   * @param params.startValue - The starting scale value or vector.
-   * @param [params.endValue] - The ending scale value or vector.
-   * @param [params.easing] - The easing function for the scale animation.
    */
   scale({
     startTime,
@@ -238,10 +264,19 @@ export abstract class Graphic {
     endValue,
     easing,
   }: {
+    /** The start time of the animation. */
     startTime: number | string
+
+    /** The end time of the animation. */
     endTime?: number | string
+
+    /** The starting scale value or vector. */
     startValue: number
+
+    /** The ending scale value or vector. */
     endValue?: number
+
+    /** The easing function for the scale animation. */
     easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
@@ -270,13 +305,7 @@ export abstract class Graphic {
   }
 
   /**
-   * Scale the object each side invidually.
-   * @param params - Parameters for the scale animation.
-   * @param params.startTime - The start time of the animation.
-   * @param [params.endTime] - The end time of the animation.
-   * @param params.startValue - The starting scale value or vector.
-   * @param [params.endValue] - The ending scale value or vector.
-   * @param [params.easing] - The easing function for the scale animation.
+   * Scale the object each side individually.
    */
   scaleVec({
     startTime,
@@ -285,10 +314,19 @@ export abstract class Graphic {
     endValue,
     easing,
   }: {
+    /** The start time of the animation. */
     startTime: number | string
+
+    /** The end time of the animation. */
     endTime?: number | string
+
+    /** The starting scale value or vector. */
     startValue: IVector2 | Vector2Tuple
+
+    /** The ending scale value or vector. */
     endValue?: IVector2 | Vector2Tuple
+
+    /** The easing function for the scale animation. */
     easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
@@ -318,12 +356,6 @@ export abstract class Graphic {
 
   /**
    * Rotate the object around its origin.
-   * @param params - Parameters for the rotate animation.
-   * @param params.startTime - The start time of the animation.
-   * @param [params.endTime] - The end time of the animation.
-   * @param params.startValue - The starting rotation angle.
-   * @param [params.endValue] - The ending rotation angle.
-   * @param [params.easing] - The easing function for the rotate animation.
    */
   rotate({
     startTime,
@@ -332,10 +364,19 @@ export abstract class Graphic {
     endValue,
     easing,
   }: {
+    /** The start time of the animation. */
     startTime: number | string
+
+    /** The end time of the animation. */
     endTime?: number | string
+
+    /** The starting rotation angle. */
     startValue: number
+
+    /** The ending rotation angle. */
     endValue?: number
+
+    /** The easing function for the rotate animation. */
     easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
@@ -366,12 +407,6 @@ export abstract class Graphic {
 
   /**
    * The virtual light source color on the object. The colors of the pixels on the object are determined subtractively.
-   * @param params - Parameters for the rotate animation.
-   * @param params.startTime - The start time of the animation.
-   * @param [params.endTime] - The end time of the animation.
-   * @param params.startValue - The starting rotation angle.
-   * @param [params.endValue] - The ending rotation angle.
-   * @param [params.easing] - The easing function for the rotate animation.
    */
   color({
     startTime,
@@ -380,10 +415,19 @@ export abstract class Graphic {
     endValue,
     easing,
   }: {
+    /** The start time of the animation. */
     startTime: number | string
+
+    /** The end time of the animation. */
     endTime?: number | string
+
+    /** The starting color value. */
     startValue: IColor3 | Color3Tuple
+
+    /** The ending color value. */
     endValue?: IColor3 | Color3Tuple
+
+    /** The easing function for the color animation. */
     easing?: Easing
   }) {
     if (this._currentCompoundCommand) {
@@ -414,15 +458,15 @@ export abstract class Graphic {
 
   /**
    * Flip the element horizontally.
-   * @param params - Parameters for the horizontal flip effect.
-   * @param params.startTime - The start time of the effect.
-   * @param [params.endTime] - The end time of the effect.
    */
   flipH({
     startTime,
     endTime,
   }: {
+    /** The start time of the effect. */
     startTime: number | string
+
+    /** The end time of the effect. */
     endTime?: number | string
   }) {
     if (this._currentCompoundCommand) {
@@ -449,15 +493,15 @@ export abstract class Graphic {
 
   /**
    * Flip the element vertically.
-   * @param params - Parameters for the vertical flip effect.
-   * @param params.startTime - The start time of the effect.
-   * @param [params.endTime] - The end time of the effect.
    */
   flipV({
     startTime,
     endTime,
   }: {
+    /** The start time of the effect. */
     startTime: number | string
+
+    /** The end time of the effect. */
     endTime?: number | string
   }) {
     if (this._currentCompoundCommand) {
@@ -484,15 +528,15 @@ export abstract class Graphic {
 
   /**
    * Use additive-color blending instead of alpha-blending.
-   * @param params - Parameters for the additive color blending effect.
-   * @param params.startTime - The start time of the effect.
-   * @param [params.endTime] - The end time of the effect.
    */
   additive({
     startTime,
     endTime,
   }: {
+    /** The start time of the effect. */
     startTime: number | string
+
+    /** The end time of the effect. */
     endTime?: number | string
   }) {
     if (this._currentCompoundCommand) {
@@ -519,14 +563,15 @@ export abstract class Graphic {
 
   /**
    * Start a loop group.
-   * @param params - Parameters for the loop group.
-   * @param params.loopCount -
    */
   startLoopGroup({
     loopCount,
     startTime,
   }: {
+    /** The number of times to loop. */
     loopCount: number
+
+    /** The start time of the loop group. */
     startTime: number | string
   }) {
     this._currentCompoundCommand = new LoopCommand({
@@ -539,15 +584,19 @@ export abstract class Graphic {
 
   /**
    * Start a trigger group command.
-   * @param params - Parameters for the trigger group.
    */
   startTriggerGroup({
     triggerType,
     startTime,
     endTime,
   }: {
+    /** The type of trigger for the group. */
     triggerType: TriggerType
+
+    /** The start time of the trigger group. */
     startTime: number | string
+
+    /** The end time of the trigger group. */
     endTime: number | string
   }) {
     this._currentCompoundCommand = new TriggerCommand({

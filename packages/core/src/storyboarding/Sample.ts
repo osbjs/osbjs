@@ -29,21 +29,30 @@ export class Sample {
   /** The volume of the sample. */
   readonly volume: number
 
-  /**
-   * @param time - The time at which the sample is played.
-   * @param layer - The layer on which the sample is placed.
-   * @param path - The file path of the sample.
-   * @param volume - The volume of the sample, clamped between 0 and 100.
-   */
   constructor({
     time,
     layer,
     path,
     volume = 100,
   }: {
+    /**
+     * The time at which the sample is played.
+     */
     time: number | string
+
+    /**
+     * The layer on which the sample is placed.
+     */
     layer: SampleLayer
+
+    /**
+     * The file path of the sample.
+     */
     path: string
+
+    /**
+     * The volume of the sample, clamped between 0 and 100.
+     */
     volume?: number
   }) {
     this.time = new Timestamp(time)
