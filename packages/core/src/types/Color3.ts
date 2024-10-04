@@ -8,15 +8,12 @@ export interface IColor3 {
 
 export type Color3Tuple = [number, number, number]
 
-/**
- * Represents a color with red, green, and blue components.
- */
 export class Color3 implements IColor3 {
   r: number
   g: number
   b: number
 
-  constructor(input: Color3Tuple | IColor3 | string) {
+  constructor(input: IColor3 | number[] | string) {
     if (typeof input === 'string') {
       input = input.replace(/^#/, '') // Remove the leading '#' if present
 
@@ -26,6 +23,15 @@ export class Color3 implements IColor3 {
       this.b = clamp(bigint & 255, 0, 255)
     } else if (Array.isArray(input)) {
       const [r, g, b] = input
+
+      if (
+        typeof r !== 'number' ||
+        typeof g !== 'number' ||
+        typeof b !== 'number'
+      ) {
+        throw new TypeError('Invalid input type for Vector2')
+      }
+
       this.r = clamp(r, 0, 255)
       this.g = clamp(g, 0, 255)
       this.b = clamp(b, 0, 255)
@@ -33,7 +39,10 @@ export class Color3 implements IColor3 {
       typeof input === 'object' &&
       typeof input.r === 'number' &&
       typeof input.g === 'number' &&
-      typeof input.b === 'number'
+      typeof input.b === 'number' &&
+      !isNaN(input.r) &&
+      !isNaN(input.g) &&
+      !isNaN(input.b)
     ) {
       this.r = clamp(input.r, 0, 255)
       this.g = clamp(input.g, 0, 255)

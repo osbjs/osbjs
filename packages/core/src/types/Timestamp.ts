@@ -1,8 +1,5 @@
 import { clamp } from '../maths'
 
-/**
- * Represents a timestamp in the format mm:ss:msmsms.
- */
 export class Timestamp {
   private minutes: number
   private seconds: number

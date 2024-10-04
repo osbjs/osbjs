@@ -1,11 +1,9 @@
-import type {
-  Animation,
-  Color3,
-  Container,
-  Sample,
-  Sprite,
-  Timestamp,
-} from '@osbjs/core'
+import type { Animation } from '../storyboarding/Animation'
+import type { Container } from '../storyboarding/Container'
+import type { Sample } from '../storyboarding/Sample'
+import type { Sprite } from '../storyboarding/Sprite'
+import type { Color3 } from '../types/Color3'
+import type { Timestamp } from '../types/Timestamp'
 import { Background } from './Background'
 import { Break } from './Break'
 import type { HitObject } from './HitObject'
@@ -61,10 +59,9 @@ export class Beatmap {
   }
   Events: (Sprite | Animation | Sample | Break | Video | Background)[]
   TimingPoints: TimingPoint[]
-  Colours: Record<number, Color3> & {
-    SliderTrackOverride?: Color3
-    SliderBorder?: Color3
-  }
+  Colours: Partial<
+    Record<`Combo${number}` | 'SliderTrackOverride' | 'SliderBorder', Color3>
+  >
   HitObjects: HitObject[]
 
   constructor(version: number) {
