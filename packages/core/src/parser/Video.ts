@@ -1,9 +1,5 @@
-import {
-  Timestamp,
-  Vector2,
-  type IVector2,
-  type Vector2Tuple,
-} from '@osbjs/core'
+import { Timestamp } from '../types/Timestamp'
+import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 
 export class Video {
   /** The start time of the video. */

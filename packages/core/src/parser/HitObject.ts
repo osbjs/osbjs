@@ -1,4 +1,4 @@
-import type { Vector2 } from '@osbjs/core'
+import type { Vector2 } from '../types/Vector2'
 import type { HitSample } from './HitSample'
 
 export abstract class HitObject {

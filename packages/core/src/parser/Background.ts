@@ -1,4 +1,4 @@
-import { Vector2, type IVector2, type Vector2Tuple } from '@osbjs/core'
+import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 
 /**
  * Background image.
