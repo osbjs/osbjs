@@ -1,3 +1,5 @@
+import { Timestamp } from '../types/Timestamp'
+
 export const SampleSet = {
   Default: 0,
   Normal: 1,
@@ -7,8 +9,17 @@ export const SampleSet = {
 
 export type SampleSet = (typeof SampleSet)[keyof typeof SampleSet]
 
+export function isValidSampleSet(sampleSet: any): sampleSet is SampleSet {
+  return (
+    sampleSet === SampleSet.Default ||
+    sampleSet === SampleSet.Normal ||
+    sampleSet === SampleSet.Soft ||
+    sampleSet === SampleSet.Drum
+  )
+}
+
 export class TimingPoint {
-  time: number
+  time: Timestamp
   sampleSet: SampleSet
   sampleIndex: number
   volume: number
@@ -36,7 +47,7 @@ export class TimingPoint {
     beatLength: number
     meter?: number
   }) {
-    this.time = time
+    this.time = new Timestamp(time)
     this.sampleIndex = sampleIndex
     this.sampleSet = sampleSet
     this.volume = volume
@@ -44,6 +55,10 @@ export class TimingPoint {
     this.beatLength = beatLength
     this.uninherited = uninherited
     this.meter = meter
+  }
+
+  get speedMultiplier() {
+    return this.beatLength < 0 ? 100.0 / -this.beatLength : 1
   }
 
   get kiaiEnabled() {

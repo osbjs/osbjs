@@ -1,5 +1,3 @@
-export * from './maths'
-
 export * from './parser/Background'
 export * from './parser/Beatmap'
 export * from './parser/Break'

@@ -1,6 +1,8 @@
+import { Container } from '../storyboarding/Container'
 import { Color3 } from '../types/Color3'
 import { Timestamp } from '../types/Timestamp'
 import { Beatmap } from './Beatmap'
+import { isValidSampleSet, TimingPoint } from './TimingPoint'
 
 function isWhiteSpace(line: string) {
   return !line.replace(/\s/g, '').length
@@ -28,7 +30,7 @@ function splitKeyValue(line: string, separator = ':', trim = true) {
   return [trim ? k.trim() : k, v?.length ? (trim ? v.trim() : v) : ''] as const
 }
 
-function ensureValue<T>(key: string, val: any, ...possibleValues: T[]): T {
+function ensureKeyValue<T>(key: string, val: any, ...possibleValues: T[]): T {
   if (!possibleValues.includes(val))
     throw new Error(
       `Key ${key} expected ${possibleValues.map(v => `'${v}'`).join(', ')} but received ${val}`,
@@ -46,7 +48,9 @@ function parseColor3(k: string, v: string): Color3 {
   return new Color3(split)
 }
 
-export function parse(input: string): Beatmap {
+const SUPPORTED_OSU_VERSIONS = [14]
+
+export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
   const lines = input
     .split('\n')
     .filter(line => isWhiteSpace(line) || isComment(line))
@@ -55,6 +59,9 @@ export function parse(input: string): Beatmap {
   let match = input.match(/osu file format v(\d+)/)
   if (!match || !match[1]) throw new Error('Unknown .osu version')
   const version = parseInt(match[1])
+
+  if (isNaN(version) || !SUPPORTED_OSU_VERSIONS.includes(version))
+    throw new Error('Unsupported .osu version')
 
   const beatmap = new Beatmap(version)
 
@@ -70,7 +77,7 @@ export function parse(input: string): Beatmap {
     if (line.startsWith('[') && line.endsWith(']')) {
       let possibleSection = extractSection(line)
 
-      if (!possibleSection) throw new Error(`Unknown section`)
+      if (!possibleSection) throw new Error(`Unknown section: ${line}`)
 
       section = possibleSection
     }
@@ -92,12 +99,12 @@ export function parse(input: string): Beatmap {
             break
 
           case 'SampleSet':
-            beatmap[section][k] = ensureValue(k, v, 'Normal', 'Soft', 'Drum')
+            beatmap[section][k] = ensureKeyValue(k, v, 'Normal', 'Soft', 'Drum')
             break
 
           case 'Countdown':
           case 'Mode':
-            beatmap[section][k] = ensureValue(k, parseInt(v), 0, 1, 2, 3)
+            beatmap[section][k] = ensureKeyValue(k, parseInt(v), 0, 1, 2, 3)
             break
 
           case 'StackLeniency':
@@ -110,11 +117,11 @@ export function parse(input: string): Beatmap {
           case 'SpecialStyle':
           case 'WidescreenStoryboard':
           case 'SamplesMatchPlaybackRate':
-            beatmap[section][k] = ensureValue(k, parseInt(v), 0, 1)
+            beatmap[section][k] = Boolean(ensureKeyValue(k, parseInt(v), 0, 1))
             break
 
           case 'OverlayPosition':
-            beatmap[section][k] = ensureValue(
+            beatmap[section][k] = ensureKeyValue(
               k,
               v,
               'NoChange',
@@ -189,7 +196,45 @@ export function parse(input: string): Beatmap {
       } else if (section === 'Events') {
         // todo
       } else if (section === 'TimingPoints') {
-        // todo
+        const [
+          time,
+          sampleIndex,
+          _sampleSet,
+          volume,
+          effects,
+          uninherited,
+          beatLength,
+          meter,
+        ] = line.split(',')
+
+        if (
+          !time ||
+          !sampleIndex ||
+          !_sampleSet ||
+          !volume ||
+          !effects ||
+          !uninherited ||
+          !beatLength ||
+          !meter
+        )
+          throw new Error(`Invalid timing point: ${line}`)
+
+        const sampleSet = parseInt(_sampleSet)
+        if (!isValidSampleSet(sampleSet))
+          throw new Error(`Invalid sample set for timing point: ${line}`)
+
+        beatmap.TimingPoints.push(
+          new TimingPoint({
+            time: parseInt(time),
+            beatLength: parseFloat(beatLength),
+            meter: parseInt(meter),
+            sampleSet,
+            sampleIndex: parseInt(sampleIndex),
+            volume: parseInt(volume),
+            uninherited: Boolean(parseInt(uninherited)),
+            effects: parseInt(effects),
+          }),
+        )
       } else if (section === 'Colours') {
         const [k, v] = splitKeyValue(line)
 
@@ -220,4 +265,15 @@ export function parse(input: string): Beatmap {
   }
 
   return beatmap
+}
+
+export function parseStoryboard(input: string): Container {
+  const lines = input
+    .split('\n')
+    .filter(line => isWhiteSpace(line) || isComment(line))
+  if (lines.length === 0) throw new Error('Empty storyboard')
+
+  const sb = new Container()
+
+  return sb
 }

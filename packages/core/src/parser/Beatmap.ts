@@ -20,15 +20,15 @@ export class Beatmap {
     SampleSet?: 'Normal' | 'Soft' | 'Drum'
     StackLeniency?: number
     Mode?: 0 | 1 | 2 | 3
-    LetterboxInBreaks?: 0 | 1
-    UseSkinSprites?: 0 | 1
+    LetterboxInBreaks?: boolean
+    UseSkinSprites?: boolean
     OverlayPosition?: 'NoChange' | 'Below' | 'Above'
     SkinPreference?: string
-    EpilepsyWarning?: 0 | 1
+    EpilepsyWarning?: boolean
     CountdownOffset?: number
-    SpecialStyle?: 0 | 1
-    WidescreenStoryboard?: 0 | 1
-    SamplesMatchPlaybackRate?: 0 | 1
+    SpecialStyle?: boolean
+    WidescreenStoryboard?: boolean
+    SamplesMatchPlaybackRate?: boolean
   }
   Editor: {
     Bookmarks?: Timestamp[]
