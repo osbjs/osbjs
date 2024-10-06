@@ -1,8 +1,10 @@
 # @osbjs/core
 
-This package contains only the functionality necessary to define osu! storyboard elements, but it should be enough for you to create a simple storyboard. For more functionality, check out other official packages.
+This package contains the functionality necessary for defining osu! storyboard elements and parsing .osu/.osb file.
 
 ## Usage
+
+### Creating storyboard
 
 ```ts
 import { Container, Sprite } from '@osbjs/core'
@@ -27,6 +29,16 @@ fs.writeFileSync(
   'path/to/your/beatmap/folder/your-storyboard.osb',
   osb,
   'utf-8',
+)
+```
+
+### Parsing beatmap
+
+```ts
+import { parseBeatmap } from '@osbjs/core'
+
+const beatmap = parseBeatmap(
+  fs.readFileSync('path/to/your/beatmap/folder/your-storyboard.osu', 'utf-8'),
 )
 ```
 
