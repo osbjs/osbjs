@@ -1,25 +1,26 @@
+import { Timestamp } from '../types/Timestamp'
 import type { Vector2 } from '../types/Vector2'
 import type { HitSample } from './HitSample'
 
 export abstract class HitObject {
   position: Vector2
-  time: number
+  time: Timestamp
   type: number
   hitSound: number
-  hitSample: HitSample
+  hitSample?: HitSample
 
   constructor({
     position,
     time,
     type,
-    hitSample,
     hitSound,
+    hitSample,
   }: {
     position: Vector2
-    time: number
+    time: Timestamp
     type: number
     hitSound: number
-    hitSample: HitSample
+    hitSample?: HitSample
   }) {
     this.position = position
     this.time = time

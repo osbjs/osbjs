@@ -1,22 +1,5 @@
 import { Timestamp } from '../types/Timestamp'
-
-export const SampleSet = {
-  Default: 0,
-  Normal: 1,
-  Soft: 2,
-  Drum: 3,
-} as const
-
-export type SampleSet = (typeof SampleSet)[keyof typeof SampleSet]
-
-export function isValidSampleSet(sampleSet: any): sampleSet is SampleSet {
-  return (
-    sampleSet === SampleSet.Default ||
-    sampleSet === SampleSet.Normal ||
-    sampleSet === SampleSet.Soft ||
-    sampleSet === SampleSet.Drum
-  )
-}
+import type { SampleSet } from './SampleSet'
 
 export class TimingPoint {
   time: Timestamp
@@ -38,7 +21,7 @@ export class TimingPoint {
     beatLength,
     meter,
   }: {
-    time: number
+    time: Timestamp
     sampleSet: SampleSet
     sampleIndex: number
     volume: number
@@ -47,7 +30,7 @@ export class TimingPoint {
     beatLength: number
     meter?: number
   }) {
-    this.time = new Timestamp(time)
+    this.time = time
     this.sampleIndex = sampleIndex
     this.sampleSet = sampleSet
     this.volume = volume
