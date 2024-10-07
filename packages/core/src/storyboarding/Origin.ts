@@ -19,3 +19,17 @@ export const Origin = {
   BottomCentre: 'BottomCentre',
   BottomRight: 'BottomRight',
 } as const
+
+export function isOrigin(origin: unknown): origin is Origin {
+  return (
+    origin === 'TopLeft' ||
+    origin === 'TopCentre' ||
+    origin === 'TopRight' ||
+    origin === 'CentreLeft' ||
+    origin === 'Centre' ||
+    origin === 'CentreRight' ||
+    origin === 'BottomLeft' ||
+    origin === 'BottomRight' ||
+    origin === 'BottomCentre'
+  )
+}

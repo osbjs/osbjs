@@ -13,7 +13,7 @@ export const CurveType = {
 
 export type CurveType = (typeof CurveType)[keyof typeof CurveType]
 
-export function isValidCurveType(curveType: any): curveType is CurveType {
+export function isCurveType(curveType: unknown): curveType is CurveType {
   return (
     curveType === 'B' ||
     curveType === 'C' ||

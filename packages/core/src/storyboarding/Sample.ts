@@ -16,6 +16,10 @@ export const SampleLayer = {
  */
 export type SampleLayer = (typeof SampleLayer)[keyof typeof SampleLayer]
 
+export function isSampleLayer(layer: unknown): layer is SampleLayer {
+  return layer === 0 || layer === 1 || layer === 2 || layer === 3
+}
+
 /**
  * Represents an audio sample in the storyboard.
  */

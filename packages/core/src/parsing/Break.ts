@@ -1,10 +1,12 @@
+import { Timestamp } from '../types/Timestamp'
+
 export class Break {
-  startTime: number
-  endTime: number
+  startTime: Timestamp
+  endTime: Timestamp
 
   constructor({ startTime, endTime }: { startTime: number; endTime: number }) {
-    this.startTime = startTime
-    this.endTime = endTime
+    this.startTime = new Timestamp(startTime)
+    this.endTime = new Timestamp(endTime)
   }
 
   toString() {

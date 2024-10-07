@@ -15,7 +15,7 @@ export class Video {
     position,
   }: {
     path: string
-    startTime: number | string
+    startTime: number
     position: IVector2 | Vector2Tuple | Vector2
   }) {
     this.startTime = new Timestamp(startTime)

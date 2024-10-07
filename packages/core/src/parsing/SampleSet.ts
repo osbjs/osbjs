@@ -1,4 +1,4 @@
-export function isValidSampleSet(sampleSet: any): sampleSet is SampleSet {
+export function isSampleSet(sampleSet: unknown): sampleSet is SampleSet {
   return (
     sampleSet === 0 || sampleSet === 1 || sampleSet === 2 || sampleSet === 3
   )
