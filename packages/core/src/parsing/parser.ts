@@ -89,16 +89,6 @@ function parseHitSample(v: string, line: string): HitSample {
   return new HitSample({ normalSet, additionSet, index, volume, filename })
 }
 
-function applyVariables(line: string, variables: Record<string, string>) {
-  let result = line.trim()
-
-  for (const [variable, value] of Object.entries(variables)) {
-    result.replaceAll(variable, value)
-  }
-
-  return result
-}
-
 const SUPPORTED_OSU_VERSION = 14
 
 export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
@@ -117,7 +107,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
   const beatmap = new Beatmap(version)
 
   let section: string | undefined = undefined
-  let isInEventSection = false
+  let isEventsSection = false
 
   let event:
     | Sprite
@@ -143,12 +133,14 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
       if (!possibleSection) throw new Error(`Unknown section: ${line}`)
 
       section = possibleSection
-      isInEventSection = section === 'Events'
+      isEventsSection = section === 'Events'
 
-      if (!isInEventSection && event) {
+      if (!isEventsSection && event) {
         beatmap.Events.push(event)
         event = undefined
       }
+
+      continue
     }
 
     if (section) {
@@ -890,12 +882,56 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
           throw new Error(`Unknown hit object type: ${line}`)
         }
       } else {
-        throw new Error(`Unknown section: ${section}`)
+        throw new Error(`Unknown section: ${line}`)
       }
     }
+
+    if (event) beatmap.Events.push(event)
   }
 
   return beatmap
+}
+
+function parseVariablesSection(lines: string[]) {
+  let isVariablesSection = false
+  const variables: Record<string, string> = {}
+  let section: string | undefined
+
+  for (let line of lines) {
+    line = line.trim()
+
+    if (line.startsWith('[') && line.endsWith(']')) {
+      let possibleSection = extractSection(line)
+
+      if (!possibleSection) throw new Error(`Unknown section: ${line}`)
+
+      section = possibleSection
+      isVariablesSection = section === 'Variables'
+
+      continue
+    }
+
+    if (isVariablesSection) {
+      const [identifier, value] = line.split('=')
+
+      if (!identifier || !value)
+        throw new Error(`Failed to parse variable: ${line}`)
+
+      variables[identifier] = value
+    }
+  }
+
+  return variables
+}
+
+function applyVariables(line: string, variables: Record<string, string>) {
+  let result = line.trim()
+
+  for (const [identifier, value] of Object.entries(variables)) {
+    result.replaceAll(identifier, value)
+  }
+
+  return result
 }
 
 export function parseStoryboard(input: string): Container {
@@ -905,6 +941,417 @@ export function parseStoryboard(input: string): Container {
   if (lines.length === 0) throw new Error('Empty storyboard')
 
   const sb = new Container()
+
+  let event: Sprite | Animation | Sample | undefined
+  let depth = 0
+  let isInCommandGroup = false
+  const variables = parseVariablesSection(lines)
+  let isEventsSection = false
+  let section: string | undefined
+
+  for (let line of lines) {
+    line = stripComments(line).trimEnd()
+
+    if (line.startsWith('[') && line.endsWith(']')) {
+      let possibleSection = extractSection(line)
+
+      if (!possibleSection) throw new Error(`Unknown section: ${line}`)
+
+      section = possibleSection
+      isEventsSection = section === 'Events'
+
+      continue
+    }
+
+    if (isEventsSection) {
+      while (line.substring(depth).startsWith(' ')) depth++
+
+      if (depth > 2) throw new Error(`Failed to parse event: ${line}`)
+
+      const split = applyVariables(line.trim(), variables).split(',')
+
+      if (
+        isInCommandGroup &&
+        depth < 2 &&
+        (event instanceof Animation || event instanceof Sprite)
+      ) {
+        event.endGroup()
+        isInCommandGroup = false
+      }
+
+      if (depth === 0) {
+        if (event) sb.children.push(event)
+
+        if (split[0] === 'Sprite') {
+          const layer = split[1]
+          const origin = split[2]
+          const path = split[3]
+          const x = split[4]
+          const y = split[5]
+
+          if (
+            !isLayer(layer) ||
+            !isOrigin(origin) ||
+            path === undefined ||
+            x === undefined ||
+            y === undefined
+          )
+            throw new Error(`Missing required Sprite parameters: ${line}`)
+
+          event = new Sprite({
+            path: path.replaceAll('"', ''),
+            layer,
+            origin,
+            position: new Vector2(parseFloat(x), parseFloat(x)),
+          })
+        } else if (split[0] === 'Animation') {
+          const layer = split[1]
+          const origin = split[2]
+          const path = split[3]
+          const x = split[4]
+          const y = split[5]
+          const frameCount = split[6]
+          const frameDelay = split[7]
+          const loopType = split[8]
+
+          if (
+            !isLayer(layer) ||
+            !isOrigin(origin) ||
+            path === undefined ||
+            x === undefined ||
+            y === undefined ||
+            frameCount === undefined ||
+            frameDelay === undefined ||
+            (loopType !== 'LoopOnce' && loopType !== 'LoopForever')
+          )
+            throw new Error(`Missing required Animation parameters: ${line}`)
+
+          event = new Animation({
+            path: path.replaceAll('"', ''),
+            layer,
+            origin,
+            position: new Vector2(parseFloat(x), parseFloat(x)),
+            frameCount: parseInt(frameCount),
+            frameDelay: parseInt(frameDelay),
+            repeat: loopType === 'LoopOnce',
+          })
+        } else if (split[0] === 'Sample') {
+          const time = split[1]
+          const layer = split[2]
+          const path = split[3]
+          const volume = split[4]
+
+          if (time === undefined || !isSampleLayer(layer) || path === undefined)
+            throw new Error(`Missing required Sample parameters: ${line}`)
+
+          event = new Sample({
+            path: path.replaceAll('"', ''),
+            layer,
+            time,
+            volume: volume !== undefined ? parseInt(volume) : undefined,
+          })
+        } else {
+          throw new Error(`Unknown event: ${line}`)
+        }
+      } else {
+        if (!event)
+          throw new Error(`Expected event object, found command: ${line}`)
+
+        if (split[0] === 'T') {
+          if (depth !== 1)
+            throw new Error(
+              `Cannot call trigger command inside another command group: ${line}`,
+            )
+
+          if (!(event instanceof Sprite) || !(event instanceof Animation))
+            throw new Error(
+              'Trigger command can only be called on Sprite and Animation object',
+            )
+
+          isInCommandGroup = true
+
+          const triggerType = split[1]
+          const startTime = split[2]
+          const endTime = split[3]
+
+          if (
+            !isTriggerType(triggerType) ||
+            startTime === undefined ||
+            endTime === undefined
+          )
+            throw new Error(
+              `Missing required trigger command parameters: ${line}`,
+            )
+
+          event.startTriggerGroup({ triggerType, startTime, endTime })
+        } else if (split[0] === 'L') {
+          if (depth !== 1)
+            throw new Error(
+              `Cannot call loop command inside another command group: ${line}`,
+            )
+
+          if (!(event instanceof Sprite) || !(event instanceof Animation))
+            throw new Error(
+              'Loop command can only be called on Sprite and Animation object',
+            )
+
+          isInCommandGroup = true
+
+          const startTime = split[1]
+          const loopCount = split[2]
+
+          if (startTime === undefined || loopCount === undefined)
+            throw new Error(`Missing required loop command parameters: ${line}`)
+
+          event.startLoopGroup({
+            startTime: parseInt(startTime),
+            loopCount: parseInt(loopCount),
+          })
+        } else {
+          const commandType = split[0]
+          const _easing = split[1]
+          const _startTime = split[2]
+          const _endTime = split[3]
+
+          if (
+            commandType === undefined ||
+            _easing === undefined ||
+            _startTime === undefined ||
+            _endTime === undefined
+          )
+            throw new Error(`Missing required command parameter: ${line}`)
+
+          const easing = parseInt(_easing)
+          if (!isEasing(easing)) throw new Error(`Invalid easing: ${line}`)
+          const startTime = parseInt(_startTime)
+          const endTime = _endTime.length ? parseInt(_endTime) : undefined
+
+          if (commandType === 'F') {
+            if (!(event instanceof Sprite) || !(event instanceof Animation))
+              throw new Error(
+                'Fade command can only be called on Sprite and Animation object',
+              )
+            const startValue = split[4]
+            const endValue = split[5]
+
+            if (startValue === undefined)
+              throw new Error(
+                `Missing required fade command parameter: ${line}`,
+              )
+
+            event.fade({
+              startTime,
+              endTime,
+              startValue: parseFloat(startValue),
+              endValue: endValue ? parseFloat(endValue) : undefined,
+              easing,
+            })
+          } else if (commandType === 'S') {
+            if (!(event instanceof Sprite) || !(event instanceof Animation))
+              throw new Error(
+                'Scale command can only be called on Sprite and Animation object',
+              )
+            const startValue = split[4]
+            const endValue = split[5]
+
+            if (startValue === undefined)
+              throw new Error(
+                `Missing required scale command parameter: ${line}`,
+              )
+
+            event.scale({
+              startTime,
+              endTime,
+              startValue: parseFloat(startValue),
+              endValue: endValue ? parseFloat(endValue) : undefined,
+              easing,
+            })
+          } else if (commandType === 'V') {
+            if (!(event instanceof Sprite) || !(event instanceof Animation))
+              throw new Error(
+                'Vector scale command can only be called on Sprite and Animation object',
+              )
+            const startX = split[4]
+            const startY = split[5]
+            const endX = split[6]
+            const endY = split[7]
+
+            if (startX === undefined || startY === undefined)
+              throw new Error(
+                `Missing required vector scale command parameter: ${line}`,
+              )
+
+            event.scaleVec({
+              startTime,
+              endTime,
+              startValue: new Vector2(parseFloat(startX), parseFloat(startY)),
+              endValue: new Vector2(
+                endX ? parseFloat(endX) : parseFloat(startX),
+                endY ? parseFloat(endY) : parseFloat(startY),
+              ),
+              easing,
+            })
+          } else if (commandType === 'R') {
+            if (!(event instanceof Sprite) || !(event instanceof Animation))
+              throw new Error(
+                'Rotate command can only be called on Sprite and Animation object',
+              )
+            const startValue = split[4]
+            const endValue = split[5]
+
+            if (startValue === undefined)
+              throw new Error(
+                `Missing required rotate command parameter: ${line}`,
+              )
+
+            event.rotate({
+              startTime,
+              endTime,
+              startValue: parseFloat(startValue),
+              endValue: endValue ? parseFloat(endValue) : undefined,
+              easing,
+            })
+          } else if (commandType === 'MX') {
+            if (!(event instanceof Sprite) || !(event instanceof Animation))
+              throw new Error(
+                'Move X command can only be called on Sprite and Animation object',
+              )
+            const startValue = split[4]
+            const endValue = split[5]
+
+            if (startValue === undefined)
+              throw new Error(
+                `Missing required move X command parameter: ${line}`,
+              )
+
+            event.moveX({
+              startTime,
+              endTime,
+              startValue: parseFloat(startValue),
+              endValue: endValue ? parseFloat(endValue) : undefined,
+              easing,
+            })
+          } else if (commandType === 'MY') {
+            if (!(event instanceof Sprite) || !(event instanceof Animation))
+              throw new Error(
+                'Move Y command can only be called on Sprite and Animation object',
+              )
+            const startValue = split[4]
+            const endValue = split[5]
+
+            if (startValue === undefined)
+              throw new Error(
+                `Missing required move Y command parameter: ${line}`,
+              )
+
+            event.moveY({
+              startTime,
+              endTime,
+              startValue: parseFloat(startValue),
+              endValue: endValue ? parseFloat(endValue) : undefined,
+              easing,
+            })
+          } else if (commandType === 'M') {
+            if (!(event instanceof Sprite) || !(event instanceof Animation))
+              throw new Error(
+                'Move command can only be called on Sprite and Animation object',
+              )
+            const startX = split[4]
+            const startY = split[5]
+            const endX = split[6]
+            const endY = split[7]
+
+            if (startX === undefined || startY === undefined)
+              throw new Error(
+                `Missing required move command parameter: ${line}`,
+              )
+
+            event.move({
+              startTime,
+              endTime,
+              startValue: new Vector2(parseFloat(startX), parseFloat(startY)),
+              endValue: new Vector2(
+                endX ? parseFloat(endX) : parseFloat(startX),
+                endY ? parseFloat(endY) : parseFloat(startY),
+              ),
+              easing,
+            })
+          } else if (commandType === 'P') {
+            if (!(event instanceof Sprite) || !(event instanceof Animation))
+              throw new Error(
+                'Parameter command can only be called on Sprite and Animation object',
+              )
+            const parameter = split[4]
+
+            switch (parameter) {
+              case 'H':
+                event.flipH({
+                  startTime,
+                  endTime,
+                })
+                break
+
+              case 'V':
+                event.flipV({
+                  startTime,
+                  endTime,
+                })
+                break
+
+              case 'A':
+                event.additive({
+                  startTime,
+                  endTime,
+                })
+
+              default:
+                throw new Error(`Unknown command parameter: ${line}`)
+            }
+          } else if (commandType === 'C') {
+            if (!(event instanceof Sprite) || !(event instanceof Animation))
+              throw new Error(
+                'Color command can only be called on Sprite and Animation object',
+              )
+            const startR = split[4]
+            const startG = split[5]
+            const startB = split[6]
+            const endR = split[7]
+            const endG = split[8]
+            const endB = split[9]
+
+            if (
+              startR === undefined ||
+              startG === undefined ||
+              startB === undefined
+            )
+              throw new Error(
+                `Missing required color command parameter: ${line}`,
+              )
+
+            event.color({
+              startTime,
+              endTime,
+              startValue: [
+                parseFloat(startR),
+                parseFloat(startG),
+                parseFloat(startB),
+              ],
+              endValue: [
+                endR ? parseFloat(endR) : parseFloat(startR),
+                endG ? parseFloat(endG) : parseFloat(startG),
+                endB ? parseFloat(endB) : parseFloat(startB),
+              ],
+              easing,
+            })
+          } else {
+            throw new Error(`Unknown command: ${line}`)
+          }
+        }
+      }
+    }
+
+    if (event) sb.children.push(event)
+  }
 
   return sb
 }

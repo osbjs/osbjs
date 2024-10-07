@@ -5,7 +5,7 @@ import type { Sample } from './Sample'
  * A container of storyboard objects.
  */
 export class Container {
-  children: (Container | Graphic | Sample)[]
+  readonly children: (Container | Graphic | Sample)[]
 
   constructor() {
     this.children = []
