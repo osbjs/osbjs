@@ -1,4 +1,5 @@
 import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
+import type { Command } from './Command'
 import { Graphic } from './Graphic'
 import type { Layer } from './Layer'
 import type { Origin } from './Origin'
@@ -24,6 +25,7 @@ export class Animation extends Graphic {
     frameCount,
     frameDelay,
     repeat,
+    commands,
   }: {
     /**
      * The path to the image's file relative to the beatmap folder.
@@ -59,8 +61,13 @@ export class Animation extends Graphic {
      * Indicates if the animation should loop or not.
      */
     repeat: boolean
+
+    /**
+     * The commands of this animation.
+     */
+    commands?: Command[]
   }) {
-    super({ path, position })
+    super({ path, position, commands })
     this.layer = layer
     this.origin = origin
     this.frameCount = frameCount
@@ -72,7 +79,7 @@ export class Animation extends Graphic {
     const loopType = this.repeat ? 'LoopForever' : 'LoopOnce'
     let result = `Animation,${this.layer},${this.origin},"${this.path}",${this.position},${
       this.frameCount
-    },${this.frameDelay},${loopType}\n${this.compileCommands()}`
+    },${this.frameDelay},${loopType}\n${this.compiledCommands()}`
     return result
   }
 }

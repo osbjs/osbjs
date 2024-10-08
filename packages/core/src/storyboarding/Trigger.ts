@@ -1,5 +1,6 @@
-import type { Timestamp } from '../types/Timestamp'
+import { Timestamp } from '../types/Timestamp'
 import { CompoundCommand } from './CompoundCommand'
+import type { TypedCommand } from './TypedCommand'
 
 type SampleSet = 'All' | 'Normal' | 'Soft' | 'Drum' | ''
 type Addition = 'Whistle' | 'Finish' | 'Clap' | ''
@@ -21,25 +22,30 @@ export function isTriggerType(input: unknown): input is TriggerType {
   )
 }
 
-export class TriggerCommand extends CompoundCommand {
-  readonly triggerType: TriggerType
-  readonly startTime: Timestamp
-  readonly endTime: Timestamp
+export class Trigger extends CompoundCommand {
+  triggerType: TriggerType
+  startTime: Timestamp
+  endTime: Timestamp
 
   constructor({
     triggerType,
     startTime,
     endTime,
+    commands,
   }: {
     triggerType: TriggerType
-    startTime: Timestamp
-    endTime: Timestamp
+    startTime: string | number | Timestamp
+    endTime: string | number | Timestamp
+    commands?: TypedCommand[]
   }) {
     super({
       event: 'T',
+      commands,
     })
     this.triggerType = triggerType
-    this.startTime = startTime
-    this.endTime = endTime
+    this.startTime =
+      startTime instanceof Timestamp ? startTime : new Timestamp(startTime)
+    this.endTime =
+      endTime instanceof Timestamp ? endTime : new Timestamp(endTime)
   }
 }

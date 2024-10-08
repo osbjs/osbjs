@@ -4,7 +4,8 @@
     "declaration": true,
     "noEmit": false,
     "emitDeclarationOnly": true,
-    "outDir": "dist/types"
+    "outDir": "dist/types",
+    "types": ["vitest/globals"]
   },
-  "include": ["src"]
+  "include": ["src", "tests"]
 }

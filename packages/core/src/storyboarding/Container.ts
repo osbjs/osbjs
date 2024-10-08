@@ -7,16 +7,19 @@ import type { Sample } from './Sample'
 export class Container {
   readonly children: (Container | Graphic | Sample)[]
 
-  constructor() {
-    this.children = []
+  constructor(props?: { children?: (Container | Graphic | Sample)[] }) {
+    this.children = props?.children || []
   }
 
-  flatten() {
+  /**
+   * Returns the flattened container tree.
+   */
+  toFlatten() {
     const result: (Graphic | Sample)[] = []
 
     for (const child of this.children) {
       if (child instanceof Container) {
-        result.push(...child.flatten())
+        result.push(...child.toFlatten())
       } else {
         result.push(child)
       }

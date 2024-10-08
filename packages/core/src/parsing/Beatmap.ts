@@ -80,7 +80,7 @@ export class Beatmap {
     const breaks = this.Events.filter(e => e instanceof Break)
     const videos = this.Events.filter(e => e instanceof Video)
     const bgs = this.Events.filter(e => e instanceof Background)
-    this.Events = [...breaks, ...videos, ...bgs, ...sb.flatten()]
+    this.Events = [...breaks, ...videos, ...bgs, ...sb.toFlatten()]
   }
 
   toString() {

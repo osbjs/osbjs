@@ -1,33 +1,49 @@
-import { Color3, type Color3Tuple, type IColor3 } from '../types/Color3'
+import { type Color3Tuple, type IColor3 } from '../types/Color3'
 import { Timestamp } from '../types/Timestamp'
 import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 import { Command } from './Command'
 import type { CompoundCommand } from './CompoundCommand'
 import type { Easing } from './Easing'
-import { LoopCommand } from './LoopCommand'
-import { TriggerCommand, type TriggerType } from './TriggerCommand'
-import { TypedCommand } from './TypedCommand'
+import { Loop } from './Loop'
+import { Trigger, type TriggerType } from './Trigger'
+import {
+  Additive,
+  Color,
+  Fade,
+  FlipH,
+  FlipV,
+  Move,
+  MoveX,
+  MoveY,
+  Rotate,
+  Scale,
+  ScaleVec,
+  TypedCommand,
+} from './TypedCommand'
 
 export abstract class Graphic {
   /** The path to the element's resource. */
-  readonly path: string
+  path: string
   /** The position of the element. */
-  readonly position: Vector2
+  position: Vector2
   /** Array of commands for animations and transformations. */
-  readonly commands: Command[] = []
+  commands: Command[]
 
   private _currentCompoundCommand: CompoundCommand | null
 
   constructor({
     path,
     position,
+    commands,
   }: {
     path: string
     position: IVector2 | Vector2Tuple
+    commands?: Command[]
   }) {
     this.path = path
     this.position = new Vector2(position)
     this._currentCompoundCommand = null
+    this.commands = commands || []
   }
 
   /**
@@ -43,12 +59,12 @@ export abstract class Graphic {
     /**
      * The start time of the animation.
      */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /**
      * The end time of the animation.
      */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
 
     /**
      * The starting value of the fade.
@@ -67,24 +83,22 @@ export abstract class Graphic {
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new Fade({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'F',
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new Fade({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'F',
         }),
       )
     }
@@ -104,12 +118,12 @@ export abstract class Graphic {
     /**
      * The start time of the animation.
      */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /**
      * The end time of the animation.
      */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
 
     /**
      * The starting position of the move.
@@ -128,24 +142,22 @@ export abstract class Graphic {
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: new Vector2(startValue),
-          endValue: endValue ? new Vector2(endValue) : undefined,
+        new Move({
+          startTime,
+          endTime,
+          startValue,
+          endValue,
           easing,
-          event: 'M',
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: new Vector2(startValue),
-          endValue: endValue ? new Vector2(endValue) : undefined,
+        new Move({
+          startTime,
+          endTime,
+          startValue,
+          endValue,
           easing,
-          event: 'M',
         }),
       )
     }
@@ -163,10 +175,10 @@ export abstract class Graphic {
     easing,
   }: {
     /** The start time of the animation. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the animation. */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
 
     /** The starting X position of the move. */
     startValue: number
@@ -179,24 +191,22 @@ export abstract class Graphic {
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new MoveX({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'MX',
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new MoveX({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'MX',
         }),
       )
     }
@@ -214,10 +224,10 @@ export abstract class Graphic {
     easing,
   }: {
     /** The start time of the animation. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the animation. */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
 
     /** The starting Y position of the move. */
     startValue: number
@@ -230,24 +240,22 @@ export abstract class Graphic {
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new MoveY({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'MY',
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new MoveY({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'MY',
         }),
       )
     }
@@ -265,10 +273,10 @@ export abstract class Graphic {
     easing,
   }: {
     /** The start time of the animation. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the animation. */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
 
     /** The starting scale value or vector. */
     startValue: number
@@ -281,24 +289,22 @@ export abstract class Graphic {
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new Scale({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'S',
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new Scale({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'S',
         }),
       )
     }
@@ -315,10 +321,10 @@ export abstract class Graphic {
     easing,
   }: {
     /** The start time of the animation. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the animation. */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
 
     /** The starting scale value or vector. */
     startValue: IVector2 | Vector2Tuple
@@ -331,24 +337,22 @@ export abstract class Graphic {
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: new Vector2(startValue),
-          endValue: endValue ? new Vector2(endValue) : undefined,
+        new ScaleVec({
+          startTime,
+          endTime,
+          startValue,
+          endValue,
           easing,
-          event: 'V',
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: new Vector2(startValue),
-          endValue: endValue ? new Vector2(endValue) : undefined,
+        new ScaleVec({
+          startTime,
+          endTime,
+          startValue,
+          endValue,
           easing,
-          event: 'V',
         }),
       )
     }
@@ -365,10 +369,10 @@ export abstract class Graphic {
     easing,
   }: {
     /** The start time of the animation. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the animation. */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
 
     /** The starting rotation angle. */
     startValue: number
@@ -381,24 +385,22 @@ export abstract class Graphic {
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new Rotate({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'R',
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
+        new Rotate({
+          startTime,
+          endTime,
           startValue,
           endValue,
           easing,
-          event: 'R',
         }),
       )
     }
@@ -416,10 +418,10 @@ export abstract class Graphic {
     easing,
   }: {
     /** The start time of the animation. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the animation. */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
 
     /** The starting color value. */
     startValue: IColor3 | Color3Tuple
@@ -432,24 +434,22 @@ export abstract class Graphic {
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: new Color3(startValue),
-          endValue: endValue ? new Color3(endValue) : undefined,
+        new Color({
+          startTime,
+          endTime,
+          startValue,
+          endValue,
           easing,
-          event: 'C',
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: new Color3(startValue),
-          endValue: endValue ? new Color3(endValue) : undefined,
+        new Color({
+          startTime,
+          endTime,
+          startValue,
+          endValue,
           easing,
-          event: 'C',
         }),
       )
     }
@@ -464,27 +464,23 @@ export abstract class Graphic {
     endTime,
   }: {
     /** The start time of the effect. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the effect. */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: 'H',
-          event: 'P',
+        new FlipH({
+          startTime,
+          endTime,
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: 'H',
-          event: 'P',
+        new FlipH({
+          startTime,
+          endTime,
         }),
       )
     }
@@ -499,27 +495,23 @@ export abstract class Graphic {
     endTime,
   }: {
     /** The start time of the effect. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the effect. */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: 'V',
-          event: 'P',
+        new FlipV({
+          startTime,
+          endTime,
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: 'V',
-          event: 'P',
+        new FlipV({
+          startTime,
+          endTime,
         }),
       )
     }
@@ -534,27 +526,23 @@ export abstract class Graphic {
     endTime,
   }: {
     /** The start time of the effect. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the effect. */
-    endTime?: number | string
+    endTime?: number | string | Timestamp
   }) {
     if (this._currentCompoundCommand) {
       this._currentCompoundCommand.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: 'A',
-          event: 'P',
+        new Additive({
+          startTime,
+          endTime,
         }),
       )
     } else {
       this.commands.push(
-        new TypedCommand({
-          startTime: new Timestamp(startTime),
-          endTime: endTime ? new Timestamp(endTime) : undefined,
-          startValue: 'A',
-          event: 'P',
+        new Additive({
+          startTime,
+          endTime,
         }),
       )
     }
@@ -572,11 +560,11 @@ export abstract class Graphic {
     loopCount: number
 
     /** The start time of the loop group. */
-    startTime: number | string
+    startTime: number | string | Timestamp
   }) {
-    this._currentCompoundCommand = new LoopCommand({
+    this._currentCompoundCommand = new Loop({
       loopCount,
-      startTime: new Timestamp(startTime),
+      startTime,
     })
     this.commands.push(this._currentCompoundCommand)
     return this
@@ -594,15 +582,15 @@ export abstract class Graphic {
     triggerType: TriggerType
 
     /** The start time of the trigger group. */
-    startTime: number | string
+    startTime: number | string | Timestamp
 
     /** The end time of the trigger group. */
-    endTime: number | string
+    endTime: number | string | Timestamp
   }) {
-    this._currentCompoundCommand = new TriggerCommand({
+    this._currentCompoundCommand = new Trigger({
       triggerType,
-      startTime: new Timestamp(startTime),
-      endTime: new Timestamp(endTime),
+      startTime,
+      endTime,
     })
     this.commands.push(this._currentCompoundCommand)
     return this
@@ -616,29 +604,29 @@ export abstract class Graphic {
     return this
   }
 
-  protected compileCommands(): string {
+  protected compiledCommands(): string {
     let result = ''
     for (const command of this.commands) {
-      if (command instanceof TriggerCommand) {
+      if (command instanceof Trigger) {
         result += ` T,${command.triggerType},${command.startTime},${command.endTime}\n`
         for (const childCommand of command.commands) {
-          result += `  ${childCommand.event},${childCommand.easing},${childCommand.startTime},${childCommand.startValue}`
+          result += `  ${childCommand.event},${childCommand.easing},${childCommand.startTime},${childCommand.endTime || ''},${childCommand.startValue}`
           if (childCommand.event !== 'P' && childCommand.endValue)
             result += `,${childCommand.endValue}`
           result += '\n'
         }
       }
-      if (command instanceof LoopCommand) {
-        result += ` L,${command.loopCount}\n`
+      if (command instanceof Loop) {
+        result += ` L,${command.startTime},${command.loopCount}\n`
         for (const childCommand of command.commands) {
-          result += `  ${childCommand.event},${childCommand.easing},${childCommand.startTime},${childCommand.startValue}`
+          result += `  ${childCommand.event},${childCommand.easing},${childCommand.startTime},${childCommand.endTime || ''},${childCommand.startValue}`
           if (childCommand.event !== 'P' && childCommand.endValue)
             result += `,${childCommand.endValue}`
           result += '\n'
         }
       }
       if (command instanceof TypedCommand) {
-        result += ` ${command.event},${command.easing},${command.startTime},${command.endTime},${command.startValue}`
+        result += ` ${command.event},${command.easing},${command.startTime},${command.endTime || ''},${command.startValue}`
         if (command.event !== 'P' && command.endValue)
           result += `,${command.endValue}`
         result += '\n'

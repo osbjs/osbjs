@@ -9,5 +9,10 @@ export default {
     { file: pkg.module, format: 'es' },
     { file: pkg.browser, format: 'umd', name: '@osbjs/core' },
   ],
-  plugins: [typescript(), terser()],
+  plugins: [
+    typescript({
+      tsconfig: './tsconfig.build.json',
+    }),
+    terser(),
+  ],
 }
