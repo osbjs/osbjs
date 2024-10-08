@@ -1,0 +1,80 @@
+osu file format v14
+
+[General]
+AudioFilename: audio.mp3
+AudioLeadIn: 0
+PreviewTime: 117436
+Countdown: 0
+SampleSet: Soft
+StackLeniency: 0.3
+Mode: 0
+LetterboxInBreaks: 0
+WidescreenStoryboard: 0
+
+[Editor]
+Bookmarks: 4936,14536,24136
+DistanceSpacing: 1
+BeatDivisor: 4
+GridSize: 32
+TimelineZoom: 4.899998
+
+[Metadata]
+Title:Test title
+TitleUnicode:Test title
+Artist:Test artist
+ArtistUnicode:Test artist
+Creator:Test creator
+Version:Test diff name
+Source:Test source
+Tags:Test tags
+BeatmapID:3829478
+BeatmapSetID:1862420
+
+[Difficulty]
+HPDrainRate:4
+CircleSize:4.5
+OverallDifficulty:9
+ApproachRate:9.8
+SliderMultiplier:2
+SliderTickRate:1
+
+[Events]
+//Background and Video events
+0,0,"bg.jpg",0,0
+//Break Periods
+2,53136,60827
+2,74736,75827
+
+Sprite,Background,Centre,"/test.png",320,240
+ F,0,0,1000,0,1
+ M,0,1000,2000,100,100,300,200
+ C,0,2000,3000,0,0,0,255,255,255
+ P,0,5000,6000,H
+ S,0,10000,,2
+Animation,Background,Centre,"/test.png",320,240,1,0,LoopOnce
+ T,Failing,0,1
+  F,0,0,,1
+ L,0,10
+  S,0,0,,1
+Sample,0,0,"audio.ogg",90
+
+[TimingPoints]
+136,300,4,2,1,50,1,0
+4336,-200,4,2,1,50,0,0
+
+[Colours]
+Combo1 : 255,0,0
+Combo2 : 255,128,192
+Combo3 : 128,128,255
+Combo4 : 255,128,128
+Combo5 : 0,128,255
+Combo6 : 0,255,255
+Combo7 : 255,128,0
+Combo8 : 128,255,128
+
+[HitObjects]
+152,144,346,1,2,0:0:0:0:
+179,212,533,2,0,L|424:179,1,245,0|0,1:0|0:0,0:0:0:0:
+202,63,1377,2,4,B|275:69|255:126|376:136,1,175
+345,286,2033,2,0,P|320:189|279:313,1,315
+256,192,3064,12,0,4283,0:0:0:0:

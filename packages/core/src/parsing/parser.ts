@@ -12,7 +12,7 @@ import { Vector2 } from '../types/Vector2'
 import { Background } from './Background'
 import { Beatmap } from './Beatmap'
 import { Break } from './Break'
-import { HitCircle } from './HitCircle'
+import { Circle } from './Circle'
 import { HitSample } from './HitSample'
 import { Hold } from './Hold'
 import { isSampleSet, SampleSet } from './SampleSet'
@@ -56,7 +56,8 @@ function ensureKeyValue<T>(key: string, val: any, ...possibleValues: T[]): T {
 }
 
 function parseColor3(k: string, v: string): Color3 {
-  const split = v.split(',').map(parseInt)
+  const split = v.split(',').map(p => parseInt(p, 10))
+
   if (split.length < 3)
     throw new Error(
       `Invalid color format (should be R,G,B or R,G,B,A) for key Combo${k}: ${v}`,
@@ -79,6 +80,11 @@ function parseHitSample(v: string, line: string): HitSample {
 
   const normalSet = parseInt(_normalSet)
   const additionSet = parseInt(_additionSet)
+
+  if (!isSampleSet(normalSet) || !isSampleSet(additionSet)) {
+    throw new Error(`Invalid hit sample set: ${line}`)
+  }
+
   const index = parseInt(_index)
   const volume = parseInt(_volume)
   let filename: string | undefined
@@ -94,7 +100,7 @@ const SUPPORTED_OSU_VERSION = 14
 export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
   const lines = input
     .split('\n')
-    .filter(line => isWhiteSpace(line) || isComment(line))
+    .filter(line => !isWhiteSpace(line) && !isComment(line))
   if (lines.length === 0) throw new Error('Empty beatmap')
 
   let match = input.match(/osu file format v(\d+)/)
@@ -109,15 +115,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
   let section: string | undefined = undefined
   let isEventsSection = false
 
-  let event:
-    | Sprite
-    | Animation
-    | Sample
-    | Break
-    | Video
-    | Background
-    | undefined
-  let depth = 0
+  let event: Sprite | Animation | Sample | undefined
   let isInCommandGroup = false
 
   for (let line of lines) {
@@ -134,11 +132,6 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
 
       section = possibleSection
       isEventsSection = section === 'Events'
-
-      if (!isEventsSection && event) {
-        beatmap.Events.push(event)
-        event = undefined
-      }
 
       continue
     }
@@ -199,7 +192,9 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
 
         switch (k) {
           case 'Bookmarks':
-            beatmap[section][k] = v.split(',').map(ts => new Timestamp(ts))
+            beatmap[section][k] = v
+              .split(',')
+              .map(ts => new Timestamp(parseInt(ts)))
             break
 
           case 'BeatDivisor':
@@ -242,7 +237,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
         const [k, v] = splitKeyValue(line)
 
         switch (k) {
-          case 'HpDrainRate':
+          case 'HPDrainRate':
           case 'CircleSize':
           case 'OverallDifficulty':
           case 'ApproachRate':
@@ -255,6 +250,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
             throw new Error(`Unknown key in [${section}] section: ${k}`)
         }
       } else if (section === 'Events') {
+        let depth = 0
         while (line.substring(depth).startsWith(' ')) depth++
 
         if (depth > 2) throw new Error(`Failed to parse event: ${line}`)
@@ -271,9 +267,8 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
         }
 
         if (depth === 0) {
-          if (event) beatmap[section].push(event)
-
           if (split[0] === 'Sprite') {
+            if (ignoreStoryboard) continue
             const layer = split[1]
             const origin = split[2]
             const path = split[3]
@@ -293,9 +288,12 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
               path: path.replaceAll('"', ''),
               layer,
               origin,
-              position: new Vector2(parseFloat(x), parseFloat(x)),
+              position: new Vector2(parseFloat(x), parseFloat(y)),
             })
+
+            beatmap[section].push(event)
           } else if (split[0] === 'Animation') {
+            if (ignoreStoryboard) continue
             const layer = split[1]
             const origin = split[2]
             const path = split[3]
@@ -321,23 +319,32 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
               path: path.replaceAll('"', ''),
               layer,
               origin,
-              position: new Vector2(parseFloat(x), parseFloat(x)),
+              position: new Vector2(parseFloat(x), parseFloat(y)),
               frameCount: parseInt(frameCount),
               frameDelay: parseInt(frameDelay),
-              repeat: loopType === 'LoopOnce',
+              repeat: loopType !== 'LoopOnce',
             })
+
+            beatmap[section].push(event)
           } else if (split[0] === 'Sample') {
-            const time = split[1]
-            const layer = split[2]
+            if (ignoreStoryboard) continue
+            const _time = split[1]
+            const _layer = split[2]
             const path = split[3]
             const volume = split[4]
 
             if (
-              time === undefined ||
-              !isSampleLayer(layer) ||
+              _time === undefined ||
+              _layer === undefined ||
               path === undefined
             )
               throw new Error(`Missing required Sample parameters: ${line}`)
+
+            const layer = parseInt(_layer)
+            if (!isSampleLayer(layer))
+              throw new Error(`${layer} is not a valid sample layer: ${line}`)
+
+            const time = parseInt(_time)
 
             event = new Sample({
               path: path.replaceAll('"', ''),
@@ -345,18 +352,21 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
               time,
               volume: volume !== undefined ? parseInt(volume) : undefined,
             })
+
+            beatmap[section].push(event)
           } else if (split[0] === '0') {
-            const path = split[1]
-            const x = split[2]
-            const y = split[3]
+            const path = split[2]
+            const x = split[3]
+            const y = split[4]
 
             if (path === undefined || x === undefined || y === undefined)
               throw new Error(`Missing required Background parameters: ${line}`)
-
-            event = new Background({
-              path: path.replaceAll('"', ''),
-              position: new Vector2(parseFloat(x), parseFloat(y)),
-            })
+            beatmap.Events.push(
+              new Background({
+                path: path.replaceAll('"', ''),
+                position: new Vector2(parseFloat(x), parseFloat(y)),
+              }),
+            )
           } else if (split[0] === '1' || split[0] === 'Video') {
             const startTime = split[1]
             const path = split[2]
@@ -371,11 +381,13 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
             )
               throw new Error(`Missing required Video parameters: ${line}`)
 
-            event = new Video({
-              startTime: parseInt(startTime),
-              path: path.replaceAll('"', ''),
-              position: new Vector2(parseFloat(x), parseFloat(y)),
-            })
+            beatmap.Events.push(
+              new Video({
+                startTime: parseInt(startTime),
+                path: path.replaceAll('"', ''),
+                position: new Vector2(parseFloat(x), parseFloat(y)),
+              }),
+            )
           } else if (split[0] === '2' || split[0] === 'Break') {
             const startTime = split[1]
             const endTime = split[2]
@@ -383,14 +395,17 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
             if (startTime === undefined || endTime === undefined)
               throw new Error(`Missing required Background parameters: ${line}`)
 
-            event = new Break({
-              startTime: parseInt(startTime),
-              endTime: parseInt(endTime),
-            })
+            beatmap.Events.push(
+              new Break({
+                startTime: parseInt(startTime),
+                endTime: parseInt(endTime),
+              }),
+            )
           } else {
             throw new Error(`Unknown event: ${line}`)
           }
         } else {
+          if (ignoreStoryboard) continue
           if (!event)
             throw new Error(`Expected event object, found command: ${line}`)
 
@@ -400,7 +415,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                 `Cannot call trigger command inside another command group: ${line}`,
               )
 
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Trigger command can only be called on Sprite and Animation object',
               )
@@ -420,14 +435,18 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                 `Missing required trigger command parameters: ${line}`,
               )
 
-            event.startTriggerGroup({ triggerType, startTime, endTime })
+            event.startTriggerGroup({
+              triggerType,
+              startTime: parseInt(startTime),
+              endTime: parseInt(endTime),
+            })
           } else if (split[0] === 'L') {
             if (depth !== 1)
               throw new Error(
                 `Cannot call loop command inside another command group: ${line}`,
               )
 
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Loop command can only be called on Sprite and Animation object',
               )
@@ -466,7 +485,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
             const endTime = _endTime.length ? parseInt(_endTime) : undefined
 
             if (commandType === 'F') {
-              if (!(event instanceof Sprite) || !(event instanceof Animation))
+              if (!(event instanceof Sprite) && !(event instanceof Animation))
                 throw new Error(
                   'Fade command can only be called on Sprite and Animation object',
                 )
@@ -486,7 +505,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                 easing,
               })
             } else if (commandType === 'S') {
-              if (!(event instanceof Sprite) || !(event instanceof Animation))
+              if (!(event instanceof Sprite) && !(event instanceof Animation))
                 throw new Error(
                   'Scale command can only be called on Sprite and Animation object',
                 )
@@ -506,7 +525,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                 easing,
               })
             } else if (commandType === 'V') {
-              if (!(event instanceof Sprite) || !(event instanceof Animation))
+              if (!(event instanceof Sprite) && !(event instanceof Animation))
                 throw new Error(
                   'Vector scale command can only be called on Sprite and Animation object',
                 )
@@ -531,7 +550,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                 easing,
               })
             } else if (commandType === 'R') {
-              if (!(event instanceof Sprite) || !(event instanceof Animation))
+              if (!(event instanceof Sprite) && !(event instanceof Animation))
                 throw new Error(
                   'Rotate command can only be called on Sprite and Animation object',
                 )
@@ -551,7 +570,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                 easing,
               })
             } else if (commandType === 'MX') {
-              if (!(event instanceof Sprite) || !(event instanceof Animation))
+              if (!(event instanceof Sprite) && !(event instanceof Animation))
                 throw new Error(
                   'Move X command can only be called on Sprite and Animation object',
                 )
@@ -571,7 +590,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                 easing,
               })
             } else if (commandType === 'MY') {
-              if (!(event instanceof Sprite) || !(event instanceof Animation))
+              if (!(event instanceof Sprite) && !(event instanceof Animation))
                 throw new Error(
                   'Move Y command can only be called on Sprite and Animation object',
                 )
@@ -591,7 +610,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                 easing,
               })
             } else if (commandType === 'M') {
-              if (!(event instanceof Sprite) || !(event instanceof Animation))
+              if (!(event instanceof Sprite) && !(event instanceof Animation))
                 throw new Error(
                   'Move command can only be called on Sprite and Animation object',
                 )
@@ -616,7 +635,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                 easing,
               })
             } else if (commandType === 'P') {
-              if (!(event instanceof Sprite) || !(event instanceof Animation))
+              if (!(event instanceof Sprite) && !(event instanceof Animation))
                 throw new Error(
                   'Parameter command can only be called on Sprite and Animation object',
                 )
@@ -647,7 +666,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
                   throw new Error(`Unknown command parameter: ${line}`)
               }
             } else if (commandType === 'C') {
-              if (!(event instanceof Sprite) || !(event instanceof Animation))
+              if (!(event instanceof Sprite) && !(event instanceof Animation))
                 throw new Error(
                   'Color command can only be called on Sprite and Animation object',
                 )
@@ -690,13 +709,13 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
       } else if (section === 'TimingPoints') {
         const [
           time,
-          sampleIndex,
-          _sampleSet,
-          volume,
-          effects,
-          uninherited,
           beatLength,
           meter,
+          _sampleSet,
+          sampleIndex,
+          volume,
+          _uninherited,
+          effects,
         ] = line.split(',')
 
         if (
@@ -705,7 +724,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
           _sampleSet === undefined ||
           volume === undefined ||
           effects === undefined ||
-          uninherited === undefined ||
+          _uninherited === undefined ||
           beatLength === undefined ||
           meter === undefined
         )
@@ -715,15 +734,17 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
         if (!isSampleSet(sampleSet))
           throw new Error(`Invalid sample set for timing point: ${line}`)
 
+        const uninherited = Boolean(parseInt(_uninherited))
+
         beatmap.TimingPoints.push(
           new TimingPoint({
             time: new Timestamp(parseInt(time)),
             beatLength: parseFloat(beatLength),
-            meter: parseInt(meter),
+            meter: uninherited ? parseInt(meter) : undefined,
             sampleSet,
             sampleIndex: parseInt(sampleIndex),
             volume: parseInt(volume),
-            uninherited: Boolean(parseInt(uninherited)),
+            uninherited,
             effects: parseInt(effects),
           }),
         )
@@ -771,7 +792,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
           if (split.length > 5) hitSample = parseHitSample(split[5]!, line)
 
           beatmap.HitObjects.push(
-            new HitCircle({
+            new Circle({
               position: new Vector2(x, y),
               time: new Timestamp(time),
               type,
@@ -779,7 +800,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
               hitSample,
             }),
           )
-        } else if ((type & 2) === 1) {
+        } else if ((type & 2) === 2) {
           if (split.length < 8)
             throw new Error(`Missing required slider parameters: ${line}`)
 
@@ -808,7 +829,7 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
           let edgeSets: [SampleSet, SampleSet][] | undefined
           let hitSample: HitSample | undefined
           if (split.length > 10) {
-            edgeSounds = split[8]!.split('|').map(parseInt)
+            edgeSounds = split[8]!.split('|').map(v => parseInt(v, 10))
 
             edgeSets = split[9]!.split('|').map(s => {
               const [_normalSet, _additionSet] = s.split(':')
@@ -842,32 +863,34 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
               edgeSounds,
             }),
           )
-        } else if ((type & 8) === 1) {
+        } else if ((type & 8) === 8) {
           if (split.length < 6)
             throw new Error(`Missing required spinner parameters: ${line}`)
 
           const endTime = new Timestamp(parseInt(split[5]!))
 
           let hitSample: HitSample | undefined
-          if (split.length > 6) hitSample = parseHitSample(split[6]!, line)
+          if (split[6]) hitSample = parseHitSample(split[6], line)
 
           beatmap.HitObjects.push(
             new Spinner({
-              time: new Timestamp(time),
+              startTime: new Timestamp(time),
               endTime,
               type,
               hitSound,
               hitSample,
             }),
           )
-        } else if ((type & 128) === 1) {
+        } else if ((type & 128) === 128) {
           if (split.length < 6)
             throw new Error(`Missing required hold parameters: ${line}`)
 
-          const endTime = new Timestamp(parseInt(split[5]!))
+          const [_endTime, _hitSample] = split[5]!.split(':')
+
+          const endTime = new Timestamp(parseInt(_endTime!))
 
           let hitSample: HitSample | undefined
-          if (split.length > 6) hitSample = parseHitSample(split[6]!, line)
+          if (_hitSample) hitSample = parseHitSample(_hitSample, line)
 
           beatmap.HitObjects.push(
             new Hold({
@@ -885,8 +908,6 @@ export function parseBeatmap(input: string, ignoreStoryboard = false): Beatmap {
         throw new Error(`Unknown section: ${line}`)
       }
     }
-
-    if (event) beatmap.Events.push(event)
   }
 
   return beatmap
@@ -937,13 +958,12 @@ function applyVariables(line: string, variables: Record<string, string>) {
 export function parseStoryboard(input: string): Container {
   const lines = input
     .split('\n')
-    .filter(line => isWhiteSpace(line) || isComment(line))
+    .filter(line => !isWhiteSpace(line) && !isComment(line))
   if (lines.length === 0) throw new Error('Empty storyboard')
 
   const sb = new Container()
 
   let event: Sprite | Animation | Sample | undefined
-  let depth = 0
   let isInCommandGroup = false
   const variables = parseVariablesSection(lines)
   let isEventsSection = false
@@ -964,6 +984,8 @@ export function parseStoryboard(input: string): Container {
     }
 
     if (isEventsSection) {
+      let depth = 0
+
       while (line.substring(depth).startsWith(' ')) depth++
 
       if (depth > 2) throw new Error(`Failed to parse event: ${line}`)
@@ -980,8 +1002,6 @@ export function parseStoryboard(input: string): Container {
       }
 
       if (depth === 0) {
-        if (event) sb.children.push(event)
-
         if (split[0] === 'Sprite') {
           const layer = split[1]
           const origin = split[2]
@@ -1002,8 +1022,10 @@ export function parseStoryboard(input: string): Container {
             path: path.replaceAll('"', ''),
             layer,
             origin,
-            position: new Vector2(parseFloat(x), parseFloat(x)),
+            position: new Vector2(parseFloat(x), parseFloat(y)),
           })
+
+          sb.children.push(event)
         } else if (split[0] === 'Animation') {
           const layer = split[1]
           const origin = split[2]
@@ -1030,19 +1052,27 @@ export function parseStoryboard(input: string): Container {
             path: path.replaceAll('"', ''),
             layer,
             origin,
-            position: new Vector2(parseFloat(x), parseFloat(x)),
+            position: new Vector2(parseFloat(x), parseFloat(y)),
             frameCount: parseInt(frameCount),
             frameDelay: parseInt(frameDelay),
-            repeat: loopType === 'LoopOnce',
+            repeat: loopType !== 'LoopOnce',
           })
+
+          sb.children.push(event)
         } else if (split[0] === 'Sample') {
-          const time = split[1]
-          const layer = split[2]
+          const _time = split[1]
+          const _layer = split[2]
           const path = split[3]
           const volume = split[4]
 
-          if (time === undefined || !isSampleLayer(layer) || path === undefined)
+          if (_time === undefined || _layer === undefined || path === undefined)
             throw new Error(`Missing required Sample parameters: ${line}`)
+
+          const layer = parseInt(_layer)
+          if (!isSampleLayer(layer))
+            throw new Error(`${layer} is not a valid sample layer: ${line}`)
+
+          const time = parseInt(_time)
 
           event = new Sample({
             path: path.replaceAll('"', ''),
@@ -1050,6 +1080,8 @@ export function parseStoryboard(input: string): Container {
             time,
             volume: volume !== undefined ? parseInt(volume) : undefined,
           })
+
+          sb.children.push(event)
         } else {
           throw new Error(`Unknown event: ${line}`)
         }
@@ -1063,7 +1095,7 @@ export function parseStoryboard(input: string): Container {
               `Cannot call trigger command inside another command group: ${line}`,
             )
 
-          if (!(event instanceof Sprite) || !(event instanceof Animation))
+          if (!(event instanceof Sprite) && !(event instanceof Animation))
             throw new Error(
               'Trigger command can only be called on Sprite and Animation object',
             )
@@ -1083,14 +1115,18 @@ export function parseStoryboard(input: string): Container {
               `Missing required trigger command parameters: ${line}`,
             )
 
-          event.startTriggerGroup({ triggerType, startTime, endTime })
+          event.startTriggerGroup({
+            triggerType,
+            startTime: parseInt(startTime),
+            endTime: parseInt(endTime),
+          })
         } else if (split[0] === 'L') {
           if (depth !== 1)
             throw new Error(
               `Cannot call loop command inside another command group: ${line}`,
             )
 
-          if (!(event instanceof Sprite) || !(event instanceof Animation))
+          if (!(event instanceof Sprite) && !(event instanceof Animation))
             throw new Error(
               'Loop command can only be called on Sprite and Animation object',
             )
@@ -1127,7 +1163,7 @@ export function parseStoryboard(input: string): Container {
           const endTime = _endTime.length ? parseInt(_endTime) : undefined
 
           if (commandType === 'F') {
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Fade command can only be called on Sprite and Animation object',
               )
@@ -1147,7 +1183,7 @@ export function parseStoryboard(input: string): Container {
               easing,
             })
           } else if (commandType === 'S') {
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Scale command can only be called on Sprite and Animation object',
               )
@@ -1167,7 +1203,7 @@ export function parseStoryboard(input: string): Container {
               easing,
             })
           } else if (commandType === 'V') {
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Vector scale command can only be called on Sprite and Animation object',
               )
@@ -1192,7 +1228,7 @@ export function parseStoryboard(input: string): Container {
               easing,
             })
           } else if (commandType === 'R') {
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Rotate command can only be called on Sprite and Animation object',
               )
@@ -1212,7 +1248,7 @@ export function parseStoryboard(input: string): Container {
               easing,
             })
           } else if (commandType === 'MX') {
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Move X command can only be called on Sprite and Animation object',
               )
@@ -1232,7 +1268,7 @@ export function parseStoryboard(input: string): Container {
               easing,
             })
           } else if (commandType === 'MY') {
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Move Y command can only be called on Sprite and Animation object',
               )
@@ -1252,7 +1288,7 @@ export function parseStoryboard(input: string): Container {
               easing,
             })
           } else if (commandType === 'M') {
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Move command can only be called on Sprite and Animation object',
               )
@@ -1277,7 +1313,7 @@ export function parseStoryboard(input: string): Container {
               easing,
             })
           } else if (commandType === 'P') {
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Parameter command can only be called on Sprite and Animation object',
               )
@@ -1308,7 +1344,7 @@ export function parseStoryboard(input: string): Container {
                 throw new Error(`Unknown command parameter: ${line}`)
             }
           } else if (commandType === 'C') {
-            if (!(event instanceof Sprite) || !(event instanceof Animation))
+            if (!(event instanceof Sprite) && !(event instanceof Animation))
               throw new Error(
                 'Color command can only be called on Sprite and Animation object',
               )
@@ -1349,8 +1385,6 @@ export function parseStoryboard(input: string): Container {
         }
       }
     }
-
-    if (event) sb.children.push(event)
   }
 
   return sb

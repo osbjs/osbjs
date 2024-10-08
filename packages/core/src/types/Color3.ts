@@ -13,7 +13,13 @@ export class Color3 implements IColor3 {
   g: number
   b: number
 
-  constructor(input: IColor3 | number[] | string) {
+  constructor(input: IColor3 | number[])
+  constructor(r: number, g: number, b: number)
+  constructor(
+    input: IColor3 | number[] | string | number,
+    g?: number,
+    b?: number,
+  ) {
     if (typeof input === 'string') {
       input = input.replace(/^#/, '') // Remove the leading '#' if present
 
@@ -47,6 +53,14 @@ export class Color3 implements IColor3 {
       this.r = clamp(input.r, 0, 255)
       this.g = clamp(input.g, 0, 255)
       this.b = clamp(input.b, 0, 255)
+    } else if (
+      typeof input === 'number' &&
+      typeof g === 'number' &&
+      typeof b === 'number'
+    ) {
+      this.r = clamp(input, 0, 255)
+      this.g = clamp(g, 0, 255)
+      this.b = clamp(b, 0, 255)
     } else {
       throw new TypeError('Invalid input type for Color3')
     }

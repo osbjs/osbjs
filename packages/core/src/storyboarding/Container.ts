@@ -31,9 +31,9 @@ export class Container {
   toString() {
     let result = ''
     for (const child of this.children) {
-      result += child.toString()
+      result += `${child}\n`
     }
 
-    return result
+    return result.trimEnd()
   }
 }

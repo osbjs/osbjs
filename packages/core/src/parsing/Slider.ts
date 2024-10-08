@@ -2,7 +2,6 @@ import type { Timestamp } from '../types/Timestamp'
 import type { Vector2 } from '../types/Vector2'
 import { HitObject } from './HitObject'
 import type { HitSample } from './HitSample'
-import type { SampleSet } from './SampleSet'
 
 export const CurveType = {
   Bezier: 'B',
@@ -28,7 +27,7 @@ export class Slider extends HitObject {
   slides: number
   length: number
   edgeSounds?: number[]
-  edgeSets?: [SampleSet, SampleSet][]
+  edgeSets?: [number, number][]
 
   constructor({
     position,
@@ -53,7 +52,7 @@ export class Slider extends HitObject {
     slides: number
     length: number
     edgeSounds?: number[]
-    edgeSets?: [SampleSet, SampleSet][]
+    edgeSets?: [number, number][]
   }) {
     super({ position, time, type, hitSound, hitSample })
     this.curvePoints = curvePoints
@@ -72,4 +71,9 @@ export class Slider extends HitObject {
 
     return result
   }
+
+  // todo: get slider ball position at a specific time
+  // positionAt(time: number | string | Timestamp): Vector2 {
+
+  // }
 }

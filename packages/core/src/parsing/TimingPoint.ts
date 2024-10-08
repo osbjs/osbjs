@@ -2,14 +2,14 @@ import { Timestamp } from '../types/Timestamp'
 import type { SampleSet } from './SampleSet'
 
 export class TimingPoint {
-  time: Timestamp
-  sampleSet: SampleSet
-  sampleIndex: number
-  volume: number
-  effects: number
-  uninherited: boolean
-  beatLength: number
-  meter?: number
+  readonly time: Timestamp
+  readonly sampleSet: SampleSet
+  readonly sampleIndex: number
+  readonly volume: number
+  readonly effects: number
+  readonly uninherited: boolean
+  readonly beatLength: number
+  readonly meter?: number
 
   constructor({
     time,

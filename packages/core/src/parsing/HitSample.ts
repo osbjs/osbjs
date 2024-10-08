@@ -1,6 +1,8 @@
+import type { SampleSet } from './SampleSet'
+
 export class HitSample {
-  normalSet: number
-  additionSet: number
+  normalSet: SampleSet
+  additionSet: SampleSet
   index: number
   volume: number
   filename: string
@@ -12,8 +14,8 @@ export class HitSample {
     volume,
     filename = '',
   }: {
-    normalSet: number
-    additionSet: number
+    normalSet: SampleSet
+    additionSet: SampleSet
     index: number
     volume: number
     filename?: string

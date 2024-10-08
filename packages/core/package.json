@@ -12,13 +12,15 @@
     "build-dts": "rollup --config rollup.config.dts.js",
     "build": "rimraf dist && npm run build-all && npm run build-dts && rimraf dist/types",
     "tsc": "tsc",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:ui": "vitest --ui"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
     "@total-typescript/tsconfig": "^1.0.4",
     "@types/node": "^22.7.5",
+    "@vitest/ui": "^2.1.2",
     "rimraf": "^6.0.1",
     "rollup": "^4.19.1",
     "rollup-plugin-dts": "^6.1.1",

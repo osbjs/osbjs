@@ -100,7 +100,7 @@ describe('Storyboarding', () => {
     })
 
     const expectedSb = readFileSync(
-      join(process.cwd(), 'tests/data/expectedStoryboard.osb'),
+      join(process.cwd(), 'tests/data/testStoryboard.osb'),
       'utf-8',
     ).replace(/\r/g, '')
 

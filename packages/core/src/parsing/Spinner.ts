@@ -7,19 +7,19 @@ export class Spinner extends HitObject {
   endTime: Timestamp
 
   constructor({
-    time,
+    startTime,
     endTime,
     type,
     hitSound,
     hitSample,
   }: {
-    time: Timestamp
+    startTime: Timestamp
     endTime: Timestamp
     type: number
     hitSound: number
     hitSample?: HitSample
   }) {
-    super({ position: new Vector2(256, 192), time, type, hitSound, hitSample })
+    super({ position: new Vector2(256, 192), time: startTime, type, hitSound, hitSample })
     this.endTime = endTime
   }
 

@@ -24,6 +24,6 @@ export class Video {
   }
 
   toString(): string {
-    return `Video,${this.startTime},"${this.path}",${this.position}\n`
+    return `Video,${this.startTime},"${this.path}",${this.position}`
   }
 }

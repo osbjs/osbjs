@@ -27,6 +27,6 @@ export class Background {
   }
 
   toString(): string {
-    return `0,0,"${this.path},${this.position}\n`
+    return `0,0,"${this.path}",${this.position}`
   }
 }

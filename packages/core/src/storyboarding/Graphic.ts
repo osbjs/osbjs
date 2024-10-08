@@ -633,7 +633,7 @@ export abstract class Graphic {
       }
     }
 
-    return result
+    return result.trimEnd()
   }
 
   abstract toString(): string
