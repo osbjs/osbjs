@@ -1,5 +1,0 @@
-export * from './Core'
-export * from './Math'
-export * from './PrebuiltComponents'
-export * from './Beatmap'
-export * from './TxtGen'

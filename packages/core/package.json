@@ -1,0 +1,40 @@
+{
+  "name": "@osbjs/core",
+  "version": "3.0.0-alpha",
+  "description": "A minimalist osu! storyboarding library.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "browser": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build-all": "rollup --config rollup.config.js",
+    "build-dts": "rollup --config rollup.config.dts.js",
+    "build": "rimraf dist && npm run build-all && npm run build-dts && rimraf dist/types",
+    "tsc": "tsc",
+    "test": "vitest run",
+    "test:ui": "vitest --ui"
+  },
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@total-typescript/tsconfig": "^1.0.4",
+    "@types/node": "^22.7.5",
+    "@vitest/ui": "^2.1.2",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.19.1",
+    "rollup-plugin-dts": "^6.1.1",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.2"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Nanachi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osbjs/osbjs.git",
+    "directory": "packages/core"
+  }
+}

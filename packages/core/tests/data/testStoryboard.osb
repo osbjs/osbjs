@@ -1,0 +1,13 @@
+[Events]
+Sprite,Background,Centre,"/test.png",320,240
+ F,0,0,1000,0,1
+ M,0,1000,2000,100,100,300,200
+ C,0,2000,3000,0,0,0,255,255,255
+ P,0,5000,6000,H
+ S,0,10000,,2
+Animation,Background,Centre,"/test.png",320,240,1,0,LoopOnce
+ T,Failing,0,1
+  F,0,0,,1
+ L,0,10
+  S,0,0,,1
+Sample,0,0,"audio.ogg",90

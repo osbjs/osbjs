@@ -1,16 +1,10 @@
-# osbjs
+# @osbjs/core
 
-A minimalist osu! storyboarding library.
+This package contains the functionality necessary for defining osu! storyboard elements and parsing .osu/.osb file.
 
-## Getting started
+## Usage
 
-```bash
-npm i @osbjs/core@latest
-```
-
-## Examples
-
-Here's how you add a falling star effect to your beatmap set:
+### Creating storyboard
 
 ```ts
 import { Container, Sprite } from '@osbjs/core'
@@ -38,10 +32,16 @@ fs.writeFileSync(
 )
 ```
 
+### Parsing beatmap
+
+```ts
+import { parseBeatmap } from '@osbjs/core'
+
+const beatmap = parseBeatmap(
+  fs.readFileSync('path/to/your/beatmap/folder/your-storyboard.osu', 'utf-8'),
+)
+```
+
 ## Documentation
 
 Visit the [documentation page](https://osbjs.vercel.app).
-
-## License
-
-osbjs is MIT licensed.
