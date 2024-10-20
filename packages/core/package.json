@@ -1,19 +1,23 @@
 {
   "name": "@osbjs/core",
-  "version": "3.0.0-alpha",
+  "version": "1.0.0-alpha.0",
   "description": "A minimalist osu! storyboarding library.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "browser": "dist/index.umd.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "private": "false",
   "scripts": {
     "build-all": "rollup --config rollup.config.js",
     "build-dts": "rollup --config rollup.config.dts.js",
     "build": "rimraf dist && npm run build-all && npm run build-dts && rimraf dist/types",
     "tsc": "tsc",
     "test": "vitest run",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "prepare": "npm run build",
+    "preversion": "tsc && npm run test",
+    "postversion": "git push --follow-tags && npm publish"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
@@ -34,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/osbjs/osbjs.git",
+    "url": "git+https://github.com/osbjs/osbjs.git",
     "directory": "packages/core"
   }
 }
