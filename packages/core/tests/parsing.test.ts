@@ -38,8 +38,6 @@ describe('Parsing', () => {
 
     const beatmap = parseBeatmap(data)
 
-    console.log(beatmap.Events);
-    
     const expectedBeatmap = new Beatmap(14)
 
     expectedBeatmap.General = {
