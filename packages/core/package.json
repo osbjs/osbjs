@@ -7,7 +7,10 @@
   "browser": "dist/index.umd.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "private": "false",
+  "private": false,
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build-all": "rollup --config rollup.config.js",
     "build-dts": "rollup --config rollup.config.dts.js",
@@ -16,8 +19,7 @@
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "prepare": "npm run build",
-    "preversion": "tsc && npm run test",
-    "postversion": "git push --follow-tags && npm publish"
+    "preversion": "tsc && npm run test"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",

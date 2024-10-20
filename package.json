@@ -1,5 +1,5 @@
 {
-  "name": "osbjs",
+  "name": "@osbjs/osbjs",
   "private": true,
   "scripts": {
     "format": "npx prettier . --write"
@@ -10,5 +10,6 @@
   "devDependencies": {
     "prettier": "^3.3.2",
     "prettier-plugin-organize-imports": "^4.0.0"
-  }
+  },
+  "version": ""
 }
