@@ -1,4 +1,5 @@
 {
+  "name": "osbjs",
   "private": true,
   "scripts": {
     "format": "npx prettier . --write"
