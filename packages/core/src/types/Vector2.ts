@@ -44,7 +44,7 @@ export class Vector2 implements IVector2 {
    * Checks if this vector is equal to another vector.
    * @param v - The vector to compare with.
    */
-  equals(v: Vector2): boolean {
+  eq(v: Vector2): boolean {
     return this.x === v.x && this.y === v.y
   }
 
@@ -60,7 +60,7 @@ export class Vector2 implements IVector2 {
    * Subtracts another vector from this vector.
    * @param v The vector to subtract.
    */
-  subtract(v: Vector2): Vector2 {
+  sub(v: Vector2): Vector2 {
     return new Vector2(this.x - v.x, this.y - v.y)
   }
 
@@ -68,7 +68,7 @@ export class Vector2 implements IVector2 {
    * Multiplies this vector by a scalar.
    * @param scalar - The scalar to multiply by.
    */
-  multiply(scalar: number): Vector2 {
+  mul(scalar: number): Vector2 {
     return new Vector2(this.x * scalar, this.y * scalar)
   }
 
@@ -76,7 +76,7 @@ export class Vector2 implements IVector2 {
    * Divides this vector by a scalar.
    * @param scalar - The scalar to divide by.
    */
-  divide(scalar: number): Vector2 {
+  div(scalar: number): Vector2 {
     if (scalar === 0) throw new Error('Cannot divide by zero')
     return new Vector2(this.x / scalar, this.y / scalar)
   }
@@ -91,24 +91,31 @@ export class Vector2 implements IVector2 {
   /**
    * Calculates the magnitude (length) of the vector.
    */
-  length(): number {
+  len(): number {
     return Math.sqrt(this.x * this.x + this.y * this.y)
+  }
+
+  /**
+   * Gets the square of the length of this vector.
+   */
+  lenSqr(): number {
+    return Math.sqrt(this.len())
   }
 
   /**
    * Normalizes the vector (makes it unit length).
    */
   normalize(): Vector2 {
-    const mag = this.length()
+    const mag = this.len()
     if (mag === 0) return new Vector2()
-    return this.divide(mag)
+    return this.div(mag)
   }
 
   /**
    * Calculates the distance between this vector and another vector.
    * @param v The vector to calculate the distance to.
    */
-  distance(v: Vector2): number {
+  dist(v: Vector2): number {
     return Math.sqrt((this.x - v.x) ** 2 + (this.y - v.y) ** 2)
   }
 
@@ -118,7 +125,7 @@ export class Vector2 implements IVector2 {
    */
   angle(v: Vector2): number {
     const dotProduct = this.dot(v)
-    const magnitudes = this.length() * v.length()
+    const magnitudes = this.len() * v.len()
     if (magnitudes === 0)
       throw new RangeError('Cannot calculate angle with zero-length vector')
     return Math.acos(dotProduct / magnitudes)
