@@ -66,6 +66,6 @@ export class Sample {
   }
 
   toString() {
-    return `Sample,${this.time},${this.layer},"${this.path}",${this.volume}\n`
+    return `Sample,${this.time},${this.layer},"${this.path}",${this.volume}`
   }
 }

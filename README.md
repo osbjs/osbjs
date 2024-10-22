@@ -20,6 +20,9 @@ const sb = new Container()
 
 const starImage = new Sprite({
   path: 'star.png',
+  layer: 'Background',
+  origin: 'Centre',
+  position: [320, 240]
 })
 starImage.move({
   startTime: 0,
@@ -29,7 +32,7 @@ starImage.move({
 })
 sb.children.push(starImage)
 
-const osb = `[Events]\n${sb.toString()}`
+const osb = sb.toOsbString()
 
 fs.writeFileSync(
   'path/to/your/beatmap/folder/your-storyboard.osb',

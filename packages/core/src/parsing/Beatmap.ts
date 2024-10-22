@@ -201,6 +201,6 @@ export class Beatmap {
       timingPointsSection +
       coloursSection +
       hitObjectsSection
-    )
+    ).trimEnd()
   }
 }

@@ -50,6 +50,6 @@ export class Sprite extends Graphic {
 
   toString(): string {
     let result = `Sprite,${this.layer},${this.origin},"${this.path}",${this.position}\n${this.compiledCommands()}`
-    return result
+    return result.trimEnd()
   }
 }
