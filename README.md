@@ -13,10 +13,10 @@ npm i @osbjs/core@latest
 Here's how you add a falling star effect to your beatmap set:
 
 ```ts
-import { Container, Sprite } from '@osbjs/core'
+import { Storyboard, Sprite } from '@osbjs/core'
 import fs from 'fs'
 
-const sb = new Container()
+const sb = new Storyboard()
 
 const starImage = new Sprite({
   path: 'star.png',

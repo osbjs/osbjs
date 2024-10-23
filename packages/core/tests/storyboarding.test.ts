@@ -3,7 +3,7 @@ import { join } from 'path'
 import {
   Animation,
   Color,
-  Container,
+  Component,
   Fade,
   FlipH,
   Loop,
@@ -17,7 +17,7 @@ import {
 
 describe('Storyboarding', () => {
   it('creates a storyboard with every objects and commands present', () => {
-    const sb = new Container({
+    const sb = new Component({
       children: [
         new Sprite({
           path: '/test.png',

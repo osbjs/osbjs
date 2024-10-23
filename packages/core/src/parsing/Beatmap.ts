@@ -1,5 +1,5 @@
 import type { Animation } from '../storyboarding/Animation'
-import type { Container } from '../storyboarding/Container'
+import type { Component } from '../storyboarding/Component'
 import type { Sample } from '../storyboarding/Sample'
 import type { Sprite } from '../storyboarding/Sprite'
 import type { Color3 } from '../types/Color3'
@@ -76,7 +76,7 @@ export class Beatmap {
     this.Editor = {}
   }
 
-  replaceEvents(sb: Container) {
+  replaceEvents(sb: Component) {
     const breaks = this.Events.filter(e => e instanceof Break)
     const videos = this.Events.filter(e => e instanceof Video)
     const bgs = this.Events.filter(e => e instanceof Background)

@@ -49,7 +49,7 @@ class RainingScene extends Component {
   }
 }
 
-const sb = new Container()
+const sb = new Storyboard()
 
 // ..
 
@@ -89,14 +89,14 @@ function RainParticle({ startTime, endTime }) {
 }
 
 function RainingScene({ startTime, endTime, duration, step = 1000 }) {
-  return new Container({
+  return new Component({
     children: range(startTime, endTime, step).map(i =>
       RainParticle({ startTime: i, endTime: i + duration }),
     ),
   })
 }
 
-const sb = new Container({
+const sb = new Storyboard({
   children: [
     // ..
     RainingScene({

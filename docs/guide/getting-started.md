@@ -2,7 +2,7 @@
 
 ## Overview
 
-osbjs is a osu! storyboard library designed to create complex storyboards while staying close to the original .osb scripting language, making it easy to pick up for beginners. It also let you create reusable and nestable components (Containers).
+osbjs is a osu! storyboard library designed to create complex storyboards while staying close to the original .osb scripting language, making it easy to pick up for beginners. It also let you create reusable and nestable components.
 
 ## Installation
 

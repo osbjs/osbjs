@@ -8,7 +8,7 @@ import {
   Circle,
   Color,
   Color3,
-  Container,
+  Component,
   Fade,
   FlipH,
   HitSample,
@@ -282,7 +282,7 @@ describe('Parsing', () => {
       'utf-8',
     ).replace(/\r/g, '')
 
-    const expectedSb = new Container({
+    const expectedSb = new Component({
       children: [
         new Sprite({
           path: '/test.png',

@@ -1,10 +1,10 @@
 import { Animation } from '../storyboarding/Animation'
-import { Container } from '../storyboarding/Container'
 import { isEasing } from '../storyboarding/Easing'
 import { isLayer } from '../storyboarding/Layer'
 import { isOrigin } from '../storyboarding/Origin'
 import { isSampleLayer, Sample } from '../storyboarding/Sample'
 import { Sprite } from '../storyboarding/Sprite'
+import { Storyboard } from '../storyboarding/Storyboard'
 import { isTriggerType } from '../storyboarding/Trigger'
 import { Color3 } from '../types/Color3'
 import { Timestamp } from '../types/Timestamp'
@@ -955,13 +955,13 @@ function applyVariables(line: string, variables: Record<string, string>) {
   return result
 }
 
-export function parseStoryboard(input: string): Container {
+export function parseStoryboard(input: string): Storyboard {
   const lines = input
     .split('\n')
     .filter(line => !isWhiteSpace(line) && !isComment(line))
   if (lines.length === 0) throw new Error('Empty storyboard')
 
-  const sb = new Container()
+  const sb = new Storyboard()
 
   let event: Sprite | Animation | Sample | undefined
   let isInCommandGroup = false

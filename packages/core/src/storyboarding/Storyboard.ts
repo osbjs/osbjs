@@ -1,33 +1,12 @@
 import { Animation } from './Animation'
-import { Graphic } from './Graphic'
+import type { Graphic } from './Graphic'
 import { Sample } from './Sample'
+import { Component } from './Component'
 import { Sprite } from './Sprite'
 
-/**
- * A container of storyboard objects.
- */
-export class Container {
-  readonly children: (Container | Graphic | Sample)[]
-
-  constructor(props?: { children?: (Container | Graphic | Sample)[] }) {
-    this.children = props?.children || []
-  }
-
-  /**
-   * Returns the flattened container tree.
-   */
-  toFlatten() {
-    const result: (Graphic | Sample)[] = []
-
-    for (const child of this.children) {
-      if (child instanceof Container) {
-        result.push(...child.toFlatten())
-      } else {
-        result.push(child)
-      }
-    }
-
-    return result
+export class Storyboard extends Component {
+  constructor(props?: { children?: (Component | Graphic | Sample)[] }) {
+    super(props)
   }
 
   toOsbString() {
@@ -101,15 +80,6 @@ export class Container {
     result += '//Storyboard Sound Samples\n'
     for (const o of layers.s) {
       result += o
-    }
-
-    return result.trimEnd()
-  }
-
-  toString() {
-    let result = ''
-    for (const child of this.children) {
-      result += `${child}\n`
     }
 
     return result.trimEnd()

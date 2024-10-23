@@ -8,10 +8,10 @@ Create a `main.js` file and add the following code:
 ::: code-group
 
 ```js [main.js] {9}
-import { Container } from '@osbjs/core'
+import { Storyboard } from '@osbjs/core'
 import fs from 'fs'
 
-const sb = new Container()
+const sb = new Storyboard()
 
 const osb = sb.toOsbString()
 
@@ -68,10 +68,10 @@ Suppose you have downloaded backgrounds from somewhere and put them in your curr
 ::: code-group
 
 ```js [main.js] {1,6-12,14-20}
-import { Container, Sprite } from '@osbjs/core'
+import { Storyboard, Sprite } from '@osbjs/core'
 import fs from 'fs'
 
-const sb = new Container()
+const sb = new Storyboard()
 
 const bg1 = new Sprite({
   path: 'bg1.jpg',
@@ -124,10 +124,10 @@ Let's say I want the `bg1` to show from 00:00:000 to 01:00:000 and the `bg2` to 
 ::: code-group
 
 ```js [main.js] {12-16,25-29}
-import { Container, Sprite } from '@osbjs/core'
+import { Storyboard, Sprite } from '@osbjs/core'
 import fs from 'fs'
 
-const sb = new Container()
+const sb = new Storyboard()
 
 const bg1 = new Sprite({
   path: 'bg1.jpg',
@@ -190,10 +190,10 @@ If you use normal HD or Full HD resolution image, you will notice the background
 ::: code-group
 
 ```js [main.js] {17-20,34-37}
-import { Container, Sprite } from '@osbjs/core'
+import { Storyboard, Sprite } from '@osbjs/core'
 import fs from 'fs'
 
-const sb = new Container()
+const sb = new Storyboard()
 
 const bg1 = new Sprite({
   path: 'bg1.jpg',
