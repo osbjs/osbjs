@@ -47,4 +47,4 @@ const beatmap = parseBeatmap(
 
 ## Documentation
 
-Visit the [documentation page](https://osbjs.vercel.app).
+Visit the [documentation page](https://osbjs-alpha.vercel.app).
