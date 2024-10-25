@@ -13,11 +13,11 @@ export class Color3 implements IColor3 {
   g: number
   b: number
 
-  constructor(color: IColor3 | Color3Tuple[])
+  constructor(color: IColor3 | Color3Tuple)
   constructor(r: number, g: number, b: number)
   constructor(hex: string)
   constructor(
-    input: IColor3 | Color3Tuple[] | string | number,
+    input: IColor3 | Color3Tuple | string | number,
     g?: number,
     b?: number,
   ) {
