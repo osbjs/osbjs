@@ -29,6 +29,9 @@ export class Timestamp {
     return this.toMilliseconds().toString()
   }
 
+  /**
+   * Returns a number equals to the total milliseconds.
+   */
   toMilliseconds(): number {
     return this.minutes * 60000 + this.seconds * 1000 + this.milliseconds
   }

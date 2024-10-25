@@ -22,10 +22,12 @@ export function isTriggerType(input: unknown): input is TriggerType {
   )
 }
 
+/**
+ * A command group that will trigger when a specific condition is satisfied.
+ */
 export class Trigger extends CompoundCommand {
-  triggerType: TriggerType
-  startTime: Timestamp
-  endTime: Timestamp
+  readonly triggerType: TriggerType
+  readonly endTime: Timestamp
 
   constructor({
     triggerType,
@@ -33,18 +35,29 @@ export class Trigger extends CompoundCommand {
     endTime,
     commands,
   }: {
+    /**
+     * The condition to trigger this group.
+     */
     triggerType: TriggerType
+    /**
+     * The start time of the trigger group.
+     */
     startTime: string | number | Timestamp
+    /**
+     * The end time of the trigger group.
+     */
     endTime: string | number | Timestamp
+    /**
+     * List of child commands that will be triggered.
+     */
     commands?: TypedCommand[]
   }) {
     super({
       event: 'T',
       commands,
+      startTime,
     })
     this.triggerType = triggerType
-    this.startTime =
-      startTime instanceof Timestamp ? startTime : new Timestamp(startTime)
     this.endTime =
       endTime instanceof Timestamp ? endTime : new Timestamp(endTime)
   }

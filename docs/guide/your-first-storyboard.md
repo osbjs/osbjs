@@ -13,7 +13,7 @@ import fs from 'fs'
 
 const sb = new Storyboard()
 
-const osb = sb.toOsbString()
+const osb = sb.toString()
 
 fs.writeFileSync(
   'path/to/your/beatmap/folder/your-storyboard.osb', // <- change this
@@ -89,7 +89,7 @@ const bg2 = new Sprite({
 })
 sb.children.push(bg2)
 
-const osb = sb.toOsbString()
+const osb = sb.toString()
 
 fs.writeFileSync(
   'path/to/your/beatmap/folder/your-storyboard.osb',
@@ -155,7 +155,7 @@ bg2.fade({
 })
 sb.children.push(bg2)
 
-const osb = sb.toOsbString()
+const osb = sb.toString()
 
 fs.writeFileSync(
   'path/to/your/beatmap/folder/your-storyboard.osb',
@@ -229,7 +229,7 @@ bg2.scale({
 })
 sb.children.push(bg2)
 
-const osb = sb.toOsbString()
+const osb = sb.toString()
 
 fs.writeFileSync(
   'path/to/your/beatmap/folder/your-storyboard.osb',

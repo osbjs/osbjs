@@ -1,7 +1,7 @@
 import { Animation } from './Animation'
+import { Component } from './Component'
 import type { Graphic } from './Graphic'
 import { Sample } from './Sample'
-import { Component } from './Component'
 import { Sprite } from './Sprite'
 
 export class Storyboard extends Component {
@@ -9,7 +9,7 @@ export class Storyboard extends Component {
     super(props)
   }
 
-  toOsbString() {
+  override toString() {
     let result = '[Events]\n//Background and Video events\n'
 
     const layers: Record<

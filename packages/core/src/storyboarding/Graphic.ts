@@ -4,7 +4,9 @@ import { Vector2, type IVector2, type Vector2Tuple } from '../types/Vector2'
 import { Command } from './Command'
 import type { CompoundCommand } from './CompoundCommand'
 import type { Easing } from './Easing'
+import type { Layer } from './Layer'
 import { Loop } from './Loop'
+import type { Origin } from './Origin'
 import { Trigger, type TriggerType } from './Trigger'
 import {
   Additive,
@@ -22,12 +24,16 @@ import {
 } from './TypedCommand'
 
 export abstract class Graphic {
+  /** The layer on which the element resides. */
+  readonly layer: Layer
+  /** The origin point of the element. */
+  readonly origin: Origin
   /** The path to the element's resource. */
-  path: string
+  readonly path: string
   /** The position of the element. */
-  position: Vector2
+  readonly position: Vector2
   /** Array of commands for animations and transformations. */
-  commands: Command[]
+  readonly commands: Command[]
 
   private _currentCompoundCommand: CompoundCommand | null
 
@@ -35,11 +41,33 @@ export abstract class Graphic {
     path,
     position,
     commands,
+    layer,
+    origin,
   }: {
+    /**
+     * The path to the element's resource.
+     */
     path: string
+    /**
+     * The position of the element.
+     */
     position: IVector2 | Vector2Tuple
+    /**
+     * The commands of this animation.
+     */
     commands?: Command[]
+    /**
+     * The layer on which the animation resides.
+     */
+    layer: Layer
+
+    /**
+     * The origin point of the animation.
+     */
+    origin: Origin
   }) {
+    this.layer = layer
+    this.origin = origin
     this.path = path
     this.position = new Vector2(position)
     this._currentCompoundCommand = null
@@ -374,10 +402,10 @@ export abstract class Graphic {
     /** The end time of the animation. */
     endTime?: number | string | Timestamp
 
-    /** The starting rotation angle. */
+    /** The starting rotation angle in radians. */
     startValue: number
 
-    /** The ending rotation angle. */
+    /** The ending rotation angle in radians. */
     endValue?: number
 
     /** The easing function for the rotate animation. */
@@ -571,14 +599,14 @@ export abstract class Graphic {
   }
 
   /**
-   * Start a trigger group command.
+   * Start a trigger group.
    */
   startTriggerGroup({
     triggerType,
     startTime,
     endTime,
   }: {
-    /** The type of trigger for the group. */
+    /** The condition to trigger this group. */
     triggerType: TriggerType
 
     /** The start time of the trigger group. */

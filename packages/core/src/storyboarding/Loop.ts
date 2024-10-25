@@ -2,9 +2,11 @@ import { Timestamp } from '../types/Timestamp'
 import { CompoundCommand } from './CompoundCommand'
 import type { TypedCommand } from './TypedCommand'
 
+/**
+ * 
+ */
 export class Loop extends CompoundCommand {
-  loopCount: number
-  startTime: Timestamp
+  readonly loopCount: number
 
   constructor({
     loopCount,
@@ -18,9 +20,8 @@ export class Loop extends CompoundCommand {
     super({
       event: 'L',
       commands,
+      startTime,
     })
     this.loopCount = loopCount
-    this.startTime =
-      startTime instanceof Timestamp ? startTime : new Timestamp(startTime)
   }
 }

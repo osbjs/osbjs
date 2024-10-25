@@ -7,7 +7,6 @@ import type { Easing } from './Easing'
 export class TypedCommand<
   T = string | number | Vector2 | Color3,
 > extends Command {
-  readonly startTime: Timestamp
   readonly endTime?: Timestamp
   readonly startValue: T
   readonly endValue?: T
@@ -30,9 +29,8 @@ export class TypedCommand<
   }) {
     super({
       event,
+      startTime,
     })
-    this.startTime =
-      startTime instanceof Timestamp ? startTime : new Timestamp(startTime)
     this.endTime = endTime
       ? endTime instanceof Timestamp
         ? endTime

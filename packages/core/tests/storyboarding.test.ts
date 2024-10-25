@@ -3,7 +3,6 @@ import { join } from 'path'
 import {
   Animation,
   Color,
-  Component,
   Fade,
   FlipH,
   Loop,
@@ -12,12 +11,13 @@ import {
   SampleLayer,
   Scale,
   Sprite,
+  Storyboard,
   Trigger,
 } from '../src'
 
 describe('Storyboarding', () => {
   it('creates a storyboard with every objects and commands present', () => {
-    const sb = new Component({
+    const sb = new Storyboard({
       children: [
         new Sprite({
           path: '/test.png',
@@ -104,6 +104,6 @@ describe('Storyboarding', () => {
       'utf-8',
     ).replace(/\r/g, '')
 
-    expect(`[Events]\n${sb}`).toEqual(expectedSb)
+    expect(sb.toString()).toEqual(expectedSb)
   })
 })

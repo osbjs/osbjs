@@ -8,7 +8,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
-      { text: 'Reference', link: '/reference/storyboarding-api' },
+      { text: 'Reference', link: '/reference/graphic' },
     ],
 
     sidebar: {
@@ -27,18 +27,57 @@ export default defineConfig({
           },
           {
             text: 'Diving deeper',
-            items: [
-              { text: 'Components', link: 'components' },
-
-            ]
-          }
+            items: [{ text: 'Components', link: 'components' }],
+          },
         ],
       },
       '/reference': {
         base: '/reference/',
         items: [
-          { text: 'Storyboarding API', link: 'storyboarding-api' },
-          { text: 'Parser API', link: 'parser-api' },
+          {
+            text: 'Storyboard elements',
+            items: [
+              { text: 'Graphic', link: 'graphic' },
+              { text: 'Sprite', link: 'sprite' },
+              { text: 'Animation', link: 'animation' },
+              { text: 'Sample', link: 'sample' },
+              { text: 'Component', link: 'component' },
+              { text: 'Storyboard', link: 'storyboard' },
+            ],
+          },
+          {
+            text: 'Storyboard commands',
+            items: [
+              { text: 'Command', link: 'command' },
+              { text: 'TypedCommand', link: 'typedcommand' },
+              { text: 'Fade', link: 'fade' },
+              { text: 'Rotate', link: 'rotate' },
+              { text: 'Move', link: 'move' },
+              { text: 'Scale', link: 'scale' },
+              { text: 'ScaleVec', link: 'scalevec' },
+              { text: 'Color', link: 'color' },
+              { text: 'FlipH', link: 'fliph' },
+              { text: 'FlipV', link: 'flipv' },
+              { text: 'Additive', link: 'additive' },
+              { text: 'CompoundCommand', link: 'compoundcommand' },
+              { text: 'Trigger', link: 'trigger' },
+              { text: 'Loop', link: 'loop' },
+            ],
+          },
+
+          {
+            text: 'Utilities',
+            items: [
+              { text: 'Layer', link: 'layer' },
+              { text: 'Origin', link: 'origin' },
+              { text: 'Easing', link: 'easing' },
+              { text: 'SampleLayer', link: 'samplelayer' },
+              { text: 'Vector2', link: 'vector2' },
+              { text: 'Timestamp', link: 'timestamp' },
+              { text: 'Color3', link: 'color3' },
+              { text: 'TriggerType', link: 'triggertype' },
+            ],
+          },
         ],
       },
     },

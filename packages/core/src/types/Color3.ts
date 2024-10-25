@@ -13,10 +13,11 @@ export class Color3 implements IColor3 {
   g: number
   b: number
 
-  constructor(input: IColor3 | number[])
+  constructor(color: IColor3 | Color3Tuple[])
   constructor(r: number, g: number, b: number)
+  constructor(hex: string)
   constructor(
-    input: IColor3 | number[] | string | number,
+    input: IColor3 | Color3Tuple[] | string | number,
     g?: number,
     b?: number,
   ) {
@@ -35,7 +36,7 @@ export class Color3 implements IColor3 {
         typeof g !== 'number' ||
         typeof b !== 'number'
       ) {
-        throw new TypeError('Invalid input type for Vector2')
+        throw new TypeError('Invalid input type for Color3')
       }
 
       this.r = clamp(r, 0, 255)

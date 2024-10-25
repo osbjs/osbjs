@@ -9,10 +9,6 @@ export class Vector2 implements IVector2 {
   x: number
   y: number
 
-  /**
-   * @param input - The x component as a number, a tuple of [x, y], or an object with x and y properties. Defaults to 0.
-   * @param y - The y component as a number if the input is a number. Defaults to 0.
-   */
   constructor(vector?: Vector2Tuple | IVector2)
   constructor(x?: number, y?: number)
   constructor(input: number | Vector2Tuple | IVector2 = 0, y: number = 0) {
@@ -103,7 +99,7 @@ export class Vector2 implements IVector2 {
   }
 
   /**
-   * Normalizes the vector (makes it unit length).
+   * Returns a normalized vector (a vector with unit length) of this vector.
    */
   normalize(): Vector2 {
     const mag = this.len()
@@ -139,7 +135,7 @@ export class Vector2 implements IVector2 {
   }
 
   /**
-   * Negates the vector (inverts its direction).
+   * Returns a negated vector of this one (inverts its direction).
    */
   negate(): Vector2 {
     return new Vector2(-this.x, -this.y)

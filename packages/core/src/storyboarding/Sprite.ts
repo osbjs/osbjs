@@ -6,11 +6,6 @@ import type { Origin } from './Origin'
 
 /** A basic image. */
 export class Sprite extends Graphic {
-  /** The layer on which the element resides. */
-  readonly layer: Layer
-  /** The origin point of the element. */
-  readonly origin: Origin
-
   constructor({
     path,
     layer,
@@ -43,9 +38,7 @@ export class Sprite extends Graphic {
      */
     commands?: Command[]
   }) {
-    super({ path, position, commands })
-    this.layer = layer
-    this.origin = origin
+    super({ path, position, commands, layer, origin })
   }
 
   toString(): string {

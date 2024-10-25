@@ -6,10 +6,6 @@ import type { Origin } from './Origin'
 
 /**  A moving image. */
 export class Animation extends Graphic {
-  /** The layer on which the element resides. */
-  readonly layer: Layer
-  /** The origin point of the element. */
-  readonly origin: Origin
   /** Indicates how many frames the animation has. */
   readonly frameCount: number
   /** Indicates how many milliseconds should be in between each frame. */
@@ -67,9 +63,8 @@ export class Animation extends Graphic {
      */
     commands?: Command[]
   }) {
-    super({ path, position, commands })
-    this.layer = layer
-    this.origin = origin
+    super({ path, position, commands, layer, origin })
+
     this.frameCount = frameCount
     this.frameDelay = frameDelay
     this.repeat = repeat

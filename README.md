@@ -32,7 +32,7 @@ starImage.move({
 })
 sb.children.push(starImage)
 
-const osb = sb.toOsbString()
+const osb = sb.toString()
 
 fs.writeFileSync(
   'path/to/your/beatmap/folder/your-storyboard.osb',

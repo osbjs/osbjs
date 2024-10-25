@@ -10,7 +10,7 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: Reference
-      link: /reference/storyboarding-api
+      link: /reference/graphic
 
 features:
   - title: Easy to pick up
