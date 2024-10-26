@@ -1,6 +1,6 @@
 {
   "name": "@osbjs/core",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.4",
   "description": "A minimalist osu! storyboarding library.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
